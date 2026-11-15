@@ -37,52 +37,80 @@ private struct ProfileRun {
         self.covered = covered
     }
 
+    /// The values of the properties the profile reads, from one pass over the
+    /// component's properties (nil for a value that is missing or not a string).
+    struct Properties {
+        var level: [String?] = [], filename: [String?] = [], executable: [String?] = []
+        var archive: [String?] = [], structured: [String?] = []
+
+        init(_ c: Component) {
+            for p in c.properties {
+                switch p.name {
+                case TR031832.levelProperty?: level.append(p.value)
+                case "bsi:component:filename"?: filename.append(p.value)
+                case "bsi:component:executable"?: executable.append(p.value)
+                case "bsi:component:archive"?: archive.append(p.value)
+                case "bsi:component:structured"?: structured.append(p.value)
+                default: break
+                }
+            }
+        }
+
+        static func one(_ values: [String?], _ allowed: [String]) -> Bool {
+            values.count == 1 && values[0].map(allowed.contains) == true
+        }
+    }
+
     func check(_ c: Component) -> Checked {
         var out = Checked()
         guard let obj = c.node else {
             out.missing = Level.full.fields
             return out
         }
-        (out.level, out.detail) = resolveLevel(obj)
+        let props = Properties(c)
+        (out.level, out.detail) = resolveLevel(c, props)
         if out.detail != nil { out.missing.insert(.level) }
-        for r in Requirement.profileFields where r != .level && out.level.applies(r) && !passes(r, obj) {
+        for r in Requirement.profileFields where r != .level && out.level.applies(r) && !passes(r, c, obj, props) {
             out.missing.insert(r)
         }
         return out
     }
 
-    func passes(_ r: Requirement, _ obj: NodeID) -> Bool {
+    func passes(_ r: Requirement, _ c: Component, _ obj: NodeID, _ props: Properties) -> Bool {
         switch r {
         case .creator: return fields.validCreator(tree.member(obj, "manufacturer"))
-        case .filename: return fields.validFilename(obj)
+        case .filename:
+            guard props.filename.count == 1, let s = props.filename[0] else { return false }
+            return !TR031832.blank(s) && !s.contains("/") && !s.contains("\\")
         case .dependencies:
-            guard let ref = tree.memberString(obj, "bom-ref"), !TR031832.blank(ref) else { return false }
+            guard let ref = c.bomRef, !TR031832.blank(ref) else { return false }
             return deps.contains(ref) && covered.contains(ref)
         case .distributionLicences: return fields.validLicences(obj)
-        case .deployableHash: return fields.validDeployableHash(obj)
-        case .executable: return fields.oneProperty(obj, "bsi:component:executable", ["executable", "non-executable"])
-        case .archive: return fields.oneProperty(obj, "bsi:component:archive", ["archive", "no archive"])
-        case .structured: return fields.oneProperty(obj, "bsi:component:structured", ["structured", "unstructured"])
+        case .deployableHash:
+            return c.externalReferences.contains { ref in
+                ref.type == "distribution" && ref.hashes.contains { $0.alg == "SHA-512" && $0.content.map { FieldChecks.validHex($0, 128) } == true }
+            }
+        case .executable: return Properties.one(props.executable, ["executable", "non-executable"])
+        case .archive: return Properties.one(props.archive, ["archive", "no archive"])
+        case .structured: return Properties.one(props.structured, ["structured", "unstructured"])
         default: return true
         }
     }
 
     /// A `bom` reference with a nonblank url makes a component referenced; an
     /// unusable level property leaves it full, with a detail.
-    func resolveLevel(_ obj: NodeID) -> (Level, String?) {
-        for ref in tree.objectElements(tree.member(obj, "externalReferences")) {
-            if tree.memberString(ref, "type") == "bom", let url = tree.memberString(ref, "url"), !TR031832.blank(url) {
-                return (.referenced, nil)
-            }
+    func resolveLevel(_ c: Component, _ props: Properties) -> (Level, String?) {
+        if c.externalReferences.contains(where: { $0.type == "bom" && $0.url.map { !TR031832.blank($0) } == true }) {
+            return (.referenced, nil)
         }
-        let values = fields.properties(obj, TR031832.levelProperty)
+        let values = props.level
         let p = TR031832.levelProperty
         switch values.count {
         case 0: return (.full, nil)
         case 1: break
         default: return (.full, "the \(p) property appears \(values.count) times; it may appear once")
         }
-        guard let s = tree.string(values[0]) else { return (.full, "the \(p) value is not a string") }
+        guard let s = values[0] else { return (.full, "the \(p) value is not a string") }
         if let level = Level(rawValue: s), [.logical, .identified, .assembled].contains(level) { return (level, nil) }
         return (.full, "the \(p) value \(goQuote(s)) is not logical, identified or assembled")
     }
@@ -145,7 +173,7 @@ private struct ProfileRun {
         if let s = subjectChecked { levels[s.level, default: 0] += 1 }
         let subjectHolder: Evidence = bom.metadata.map { tree.evidence($0, "component") } ?? tree.evidence(bom.root, "metadata")
         let subjectID = subject.map(identity) ?? "metadata.component"
-        for r in [Requirement.name, .version] + Requirement.profileFields {
+        for r in Requirement.componentOrder {
             let fails: Bool
             switch r {
             case .name: fails = TR031832.blank(subject?.name)
@@ -164,7 +192,7 @@ private struct ProfileRun {
             levels[checked.level, default: 0] += 1
             children[checked.level, default: 0] += 1
             let id = identity(c)
-            for r in [Requirement.name, .version] + Requirement.profileFields {
+            for r in Requirement.componentOrder {
                 let fails: Bool
                 switch r {
                 case .name: fails = TR031832.blank(c.name)
@@ -177,12 +205,12 @@ private struct ProfileRun {
             }
         }
 
-        var failedCount: [RuleID: Int] = [:]
-        for o in offenders { failedCount[o.rule, default: 0] += 1 }
+        var failedCount = [Int](repeating: 0, count: RuleID.count)
+        for o in offenders { failedCount[o.rule.index] += 1 }
         var evaluations: [Evaluation] = []
         func add(_ scope: Scope, _ r: Requirement, _ n: Int) {
             let rule = RuleID(scope, r)
-            evaluations.append(Evaluation(rule: rule, evaluated: n, failed: failedCount[rule] ?? 0))
+            evaluations.append(Evaluation(rule: rule, evaluated: n, failed: failedCount[rule.index]))
         }
         for r in Requirement.sbomFields { add(.sbom, r, 1) }
         add(.subject, .name, 1)

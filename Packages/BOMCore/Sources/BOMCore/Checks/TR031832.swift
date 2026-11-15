@@ -65,6 +65,10 @@ public enum Requirement: String, Sendable, Hashable, CaseIterable {
     static let profileFields: [Requirement] = [.level, .creator, .filename, .dependencies, .distributionLicences,
                                                .deployableHash, .executable, .archive, .structured]
     static let sbomFields: [Requirement] = [.specVersion, .creator, .timestamp, .vulnerabilities]
+    static let componentOrder: [Requirement] = [.name, .version] + profileFields
+
+    var bit: UInt32 { 1 << UInt32(Requirement.allCases.firstIndex(of: self)!) }
+    static func mask(_ rs: [Requirement]) -> UInt32 { rs.reduce(0) { $0 | $1.bit } }
 }
 
 /// A rule id such as `components.creator`.
@@ -81,6 +85,12 @@ public struct RuleID: Hashable, Sendable, CustomStringConvertible {
         self.init(sc, r)
     }
     public var description: String { "\(scope.rawValue).\(requirement.rawValue)" }
+
+    /// A dense index for counting: 0 ..< RuleID.count.
+    var index: Int {
+        Scope.allCases.firstIndex(of: scope)! * Requirement.allCases.count + Requirement.allCases.firstIndex(of: requirement)!
+    }
+    static let count = Scope.allCases.count * Requirement.allCases.count
 }
 
 /// The level a component is described at (rio's `rio:tr-03183-2:level`).
@@ -88,15 +98,21 @@ public enum Level: String, Sendable, Hashable, CaseIterable {
     case full, logical, assembled, identified, referenced
 
     /// What each level demands beyond name, version and level (§3.2.1).
-    var fields: Set<Requirement> {
+    var fields: Set<Requirement> { Set(Requirement.allCases.filter { mask & $0.bit != 0 }) }
+
+    private static let fullMask = Requirement.mask([.creator, .filename, .dependencies, .distributionLicences, .deployableHash, .executable, .archive, .structured])
+    private static let partMask = Requirement.mask([.creator, .dependencies, .distributionLicences])
+    private static let identifiedMask = Requirement.mask([.creator])
+
+    var mask: UInt32 {
         switch self {
-        case .full: return [.creator, .filename, .dependencies, .distributionLicences, .deployableHash, .executable, .archive, .structured]
-        case .assembled, .logical: return [.creator, .dependencies, .distributionLicences]
-        case .identified, .referenced: return [.creator]
+        case .full: Self.fullMask
+        case .assembled, .logical: Self.partMask
+        case .identified, .referenced: Self.identifiedMask
         }
     }
 
-    func applies(_ r: Requirement) -> Bool { r == .level || fields.contains(r) }
+    func applies(_ r: Requirement) -> Bool { r == .level || mask & r.bit != 0 }
 }
 
 public struct Evaluation: Sendable, Hashable {

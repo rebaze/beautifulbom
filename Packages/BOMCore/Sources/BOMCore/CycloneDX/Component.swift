@@ -34,29 +34,48 @@ public struct Component: Sendable, Hashable {
             return
         }
         node = entry
-        let o = entry
-        bomRef = tree.memberString(o, "bom-ref")
-        type = tree.memberString(o, "type")
-        group = tree.memberString(o, "group")
-        name = tree.memberString(o, "name")
-        version = tree.memberString(o, "version")
-        purl = tree.memberString(o, "purl")
-        description = tree.memberString(o, "description")
+        // One pass over the members; a later duplicate key wins, as in rio.
+        var authorNode, authorsNode, supplierNode, manufacturerNode, licensesNode, hashesNode, refsNode, propsNode: NodeID?
+        var unknown: [String] = []
+        var c = tree.firstChildren[entry.index]
+        while c >= 0 {
+            let n = NodeID(rawValue: c)
+            c = tree.nextSiblings[Int(c)]
+            guard let k = tree.key(n) else { continue }
+            switch k {
+            case "bom-ref": bomRef = tree.string(n)
+            case "type": type = tree.string(n)
+            case "group": group = tree.string(n)
+            case "name": name = tree.string(n)
+            case "version": version = tree.string(n)
+            case "purl": purl = tree.string(n)
+            case "description": description = tree.string(n)
+            case "author": authorNode = n
+            case "authors": authorsNode = n
+            case "supplier": supplierNode = n
+            case "manufacturer": manufacturerNode = n
+            case "licenses": licensesNode = n
+            case "hashes": hashesNode = n
+            case "externalReferences": refsNode = n
+            case "properties": propsNode = n
+            default:
+                if !Self.knownKeys.contains(k), !unknown.contains(k) { unknown.append(k) }
+            }
+        }
+        unknownKeys = unknown
         packageURL = purl.flatMap(PackageURL.parse)
-        author = tree.memberString(o, "author") ?? Self.names(tree, tree.member(o, "authors"))
-        supplierName = tree.member(o, "supplier").flatMap { tree.memberString($0, "name") }
-        manufacturerName = tree.member(o, "manufacturer").flatMap { tree.memberString($0, "name") }
-        licenses = License.read(tree, tree.member(o, "licenses"))
-        hashes = Hash.read(tree, tree.member(o, "hashes"))
-        externalReferences = tree.objectElements(tree.member(o, "externalReferences")).map {
+        author = tree.string(authorNode) ?? Self.names(tree, authorsNode)
+        supplierName = supplierNode.flatMap { tree.memberString($0, "name") }
+        manufacturerName = manufacturerNode.flatMap { tree.memberString($0, "name") }
+        licenses = License.read(tree, licensesNode)
+        hashes = Hash.read(tree, hashesNode)
+        externalReferences = tree.objectElements(refsNode).map {
             ExternalReference(type: tree.memberString($0, "type"), url: tree.memberString($0, "url"),
                               hashes: Hash.read(tree, tree.member($0, "hashes")), node: $0)
         }
-        properties = tree.objectElements(tree.member(o, "properties")).map {
+        properties = tree.objectElements(propsNode).map {
             Property(name: tree.memberString($0, "name"), value: tree.memberString($0, "value"), node: $0)
         }
-        var seen = Set<String>()
-        unknownKeys = tree.keys(o).filter { !Self.knownKeys.contains($0) && seen.insert($0).inserted }
     }
 
     static func names(_ tree: JSONTree, _ list: NodeID?) -> String? {

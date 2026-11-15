@@ -32,6 +32,7 @@ fixtures: bench-build
 
 bench: bench-build
 	for f in Fixtures/public/*.json $(foreach s,$(SIZES),$(GEN)/$(s)mb.json $(GEN)/$(s)mb-min.json); do $(BENCH) parse $$f; done
+	for f in Fixtures/public/*.json $(foreach s,$(SIZES),$(GEN)/$(s)mb.json $(GEN)/$(s)mb-min.json); do $(BENCH) analyse $$f; done
 
 project:
 	xcodegen generate --quiet

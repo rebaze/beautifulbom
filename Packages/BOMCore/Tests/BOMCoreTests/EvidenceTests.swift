@@ -37,6 +37,14 @@ import Testing
         #expect(PackageURL.parse("pkg:npm/") == nil)
     }
 
+    @Test func purlEscapesAndEdges() {
+        #expect(PackageURL.parse("pkg:maven/org.apache/commons%2Dlang@1.0%") ==
+            PackageURL(type: "maven", namespace: "org.apache", name: "commons-lang", version: "1.0%"))
+        #expect(PackageURL.parse(" pkg:/deb//debian/curl@8.4.0?distro=bookworm&arch= ")?.qualifiers == ["distro": "bookworm"])
+        #expect(PackageURL.parse("pkg:golang/github.com/gorilla/mux@v1.8.0")?.namespace == "github.com/gorilla")
+        #expect(PackageURL.parse("pkg:npm/lodash@")?.version == nil)
+    }
+
     @Test func purlTypeLowercasedAndNoNamespace() {
         let p = PackageURL.parse("pkg:NPM/lodash@4.17.21")
         #expect(p == PackageURL(type: "npm", namespace: nil, name: "lodash", version: "4.17.21"))
