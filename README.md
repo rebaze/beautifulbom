@@ -27,7 +27,7 @@ make fixtures && make bench    # synthetic 1/10/50 MB fixtures and engine timing
 make snapshot CONFIG=Release FILE=Fixtures/public/laravel-7.12.0.cdx-1.4.json OUT=build/shot.png SELECT=/components/3
 ```
 
-Launch options for checks and agents: `--open <file>`, `--select <json-pointer>`, `--copy pointer|value|source`, `--snapshot <png>` (renders the window and quits; needs no Screen Recording permission), `--text-size <pt>`, `--appearance dark|light`, and `BBOM_TIMING=1`.
+Launch options for checks and agents: `--window-size <WxH>`, `--open <file>`, `--select <json-pointer>`, `--copy pointer|value|source`, `--snapshot <png>` (renders the window and quits; needs no Screen Recording permission), `--text-size <pt>`, `--appearance dark|light`, and `BBOM_TIMING=1`.
 
 Tested on macOS 27.2.1 (Apple Silicon) with Xcode 27.2.
 

@@ -7,6 +7,7 @@ import SwiftUI
 ///   --copy pointer|value|source  copy the selected node, after --select
 ///   --appearance dark|light  force an appearance (checks without changing system settings)
 ///   --text-size <pt>     start with this text size (24 = presentation size)
+///   --window-size <WxH>  resize the document window (points), e.g. for screenshots
 ///   --snapshot <png>     render the front window into a PNG, then quit
 ///   BBOM_TIMING=1        print open→parsed and open→first layout times
 enum LaunchOptions {
@@ -27,6 +28,10 @@ enum LaunchOptions {
     default: nil
     }
     static let textSize = value("--text-size").flatMap(Double.init).map { CGFloat($0) }
+    static let windowSize: NSSize? = value("--window-size").flatMap { spec in
+        let parts = spec.split(separator: "x").compactMap { Double($0) }
+        return parts.count == 2 ? NSSize(width: parts[0], height: parts[1]) : nil
+    }
     static let timing = ProcessInfo.processInfo.environment["BBOM_TIMING"] == "1"
 }
 
@@ -59,6 +64,10 @@ enum Snapshot {
     /// Screen Recording permission, so agents can check visuals.
     static func take(to path: String, after delay: Duration = .milliseconds(1200)) {
         Task { @MainActor in
+            if let size = LaunchOptions.windowSize,
+               let window = NSApp.orderedWindows.first(where: { $0.isVisible && $0.contentView != nil }) {
+                window.setContentSize(size)
+            }
             try? await Task.sleep(for: delay)
             guard let window = NSApp.orderedWindows.first(where: { $0.isVisible && $0.contentView != nil }),
                   let view = window.contentView?.superview ?? window.contentView,
