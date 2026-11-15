@@ -1,0 +1,40 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-15T10:00:00+01:00",
+    "tools": {
+      "components": [
+        { "type": "application", "group": "acme", "name": "acme-sbom", "version": "2.1.0" }
+      ]
+    },
+    "manufacturer": { "name": "Acme Devices GmbH", "url": ["https://acme.example"] },
+    "component": {
+      "type": "firmware",
+      "bom-ref": "acme/router",
+      "name": "router-firmware",
+      "version": "4.2.0",
+      "components": [
+        { "type": "file", "bom-ref": "file-1", "name": "router.bin", "version": "4.2.0" }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "pkg:generic/zlib@1.3.1",
+      "name": "zlib",
+      "version": "1.3.1",
+      "purl": "pkg:generic/zlib@1.3.1",
+      "licenses": [{ "expression": "MIT OR Apache-2.0", "acknowledgement": "concluded" }],
+      "components": [
+        { "type": "library", "bom-ref": "inner-a", "name": "inner-a", "version": "1" },
+        { "type": "library", "bom-ref": "inner-b", "name": "inner-b", "version": "2", "x-vendor": "custom" }
+      ]
+    },
+    "oops",
+    { "type": "library", "bom-ref": "numver", "name": "numver", "version": 1.2 },
+    { "type": "library", "bom-ref": "objlic", "name": "objlic", "version": "1", "licenses": {} }
+  ]
+}
