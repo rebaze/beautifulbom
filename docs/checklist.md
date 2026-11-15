@@ -48,3 +48,21 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ⏳ Presentation size full-screen on a 1920×1080 display: source readable from the back of a room, no one-word lines.
 - ⏳ VoiceOver: outline rows read "key, value"; the source reads as text; breadcrumb buttons are named; the diagnostics banner announces its summary.
 - ⏳ Increase Contrast and Reduce Transparency: nothing disappears.
+
+## Workshop views (plan-workshop-views.md, Tasks 10–16)
+
+- ✅ A CycloneDX file opens on the Overview with tabs; any other JSON opens in the source reader without tabs (snapshots `w-overview-laravel`, `w-source-only`).
+- ✅ Overview at 1440×900 and at 24 pt, light and dark, English and German: nothing clips (`make screenshots`).
+- ✅ Evidence drawer: a located statement selects its exact range; an absent field shows the red "would be here" marker after the parent's opening line (`--evidence sbom.timestamp`, `--evidence components.deployableHash`).
+- ✅ Composition: Laravel vendors (symfony 27 first), licences (MIT 57), depth histogram 1/5/30/21/4/1; CERN says "no dependency data".
+- ✅ Completeness: Laravel shows the version gap and "field introduced in CycloneDX 1.6" on manufacturer and concluded licence; rio's bsi-pass shows every row present and the all-present sentence.
+- ✅ Component page for doctrine/lexer: path product → laravel/laravel → laravel/framework → egulias/email-validator → doctrine/lexer; used by egulias/email-validator.
+- ✅ 50 MB minified (120 686 components) opens on Components with a lazy list (Release: open→parsed 1.8 s).
+- ⏳ Clicking a statement opens the drawer; Esc closes it; ⌥⌘E (View › Keep Evidence Open) keeps it open and Esc then does nothing.
+- ⏳ Back/Forward (⌘[ ⌘]) walk tab → component page → another component page (via "Why is it here?") → tab, and back.
+- ⏳ ⌘1–⌘5 switch tabs; clicking a bar segment or histogram bar opens Components with that filter; Clear resets it.
+- ⏳ Dragging the line above the drawer resizes it; dragging the line beside the outline resizes the outline.
+- ⏳ View › Language switches all workshop views at once; the choice survives a restart.
+- ⏳ Typing in the Components search with the 50 MB file stays responsive.
+- ⏳ Full-screen 1920×1080 at presentation size (⌥⌘P): the room can read the Overview and Completeness from the back.
+- ⏳ VoiceOver: tab buttons, stat cards, rows and evidence buttons are named.

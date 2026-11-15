@@ -60,8 +60,35 @@ A fresh whole-branch review measured triggers the plan's tests missed. Fixed, ea
 | `{"a":,"b":1}` | `a` took `"b"` as its value | `a` is an empty invalid value, `b` is kept |
 | Latin-1 bytes in a string | silent `�` | warning with the byte range |
 
+## Workshop views (2026-11-15)
+
+Analysis = CycloneDX model, dependency graph, TR-03183-2 checks, composition and completeness report, after the parse (`make bench`, `bbom-bench analyse`, Release, Apple Silicon). Generated files now carry a dependency tree (six children per node) and one composition.
+
+| File | Components | Offenders | Parse | Analysis |
+|---|---:|---:|---:|---:|
+| Laravel (public) | 62 | 507 | 0.9 ms | 1.5 ms |
+| 10 MB pretty | 15 315 | 107 213 | 96 ms | 139 ms |
+| 10 MB minified | 24 265 | 169 863 | 133 ms | 224 ms |
+| 50 MB pretty | 76 289 | 534 031 | 494 ms | 711 ms |
+| 50 MB minified | 120 686 | 844 810 | 650 ms | 1 178 ms |
+
+App, Release, `BBOM_TIMING=1`: 50 MB pretty open→parsed 1 222 ms, first layout 1 503 ms; 50 MB minified 1 812 ms and 2 131 ms. The display text is built while the tree is parsed and analysed.
+
+The first version took 2 056 ms for the minified 50 MB file. What it cost, and the fix:
+
+- Every field lookup scanned the component's members again (about 25 scans per component): one pass now.
+- The checks re-read properties and references from the tree for each rule: they read the component model, except creator and licences, which keep rio's raw-JSON semantics.
+- `Level.fields` built a new `Set` on every rule check (about a million allocations): bit masks.
+- Package URLs were parsed with Foundation string functions (≈ 270 ms): a byte-level parser.
+
+Parity with rio: the port agrees with rio 0.10.2 on all five parity files (both public SBOMs, rio's pass and fail fixtures, a synthetic edge file with duplicate keys, every level, a URL without host, lower-case and `WITH` expressions). The one deliberate difference: rio raises a pre-1.6 file to 1.6 before checking, so its receipt passes `sbom.specVersion`; the app judges the file as it is.
+
 ## Open points
 
 - **Presentation size in a narrow window.** At 24 pt in a 450 pt source pane, deep JSON wraps heavily even with capped indents, and the outline's disclosure triangles sit low in the taller rows. Untested full-screen (the workshop case); a presentation layout that hides the structure pane may be the better answer.
 - **Lone CR line endings** (classic Mac) break paragraphs in the text view but not in the line index, so line numbers drift. Not seen in BOMs.
 - **Source folding** (plan Task 11) not attempted.
+- **Search on very large SBOMs** recomputes the filter on every keystroke (120 000 components); it may need debouncing.
+- **German wording** is the builder's; Toni reviews it (`App/Localizable.xcstrings`). Menu commands follow the system language, not the in-app switch.
+- **Drawer selection colour** is the inactive grey when the source view is not focused; the node highlight underneath is light.
+- **Plural forms** are not handled ("1 Komponenten" cannot occur with the fixtures, but would with a one-component SBOM).

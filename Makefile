@@ -7,7 +7,7 @@ SIZES := 1 10 50
 
 CONFIG ?= Debug
 APP = build/Build/Products/$(CONFIG)/BeautifulBOM.app
-.PHONY: test strings-check bench-build fixtures bench project app snapshot clean parity-refresh
+.PHONY: screenshots test strings-check bench-build fixtures bench project app snapshot clean parity-refresh
 
 test: strings-check
 	cd $(PKG) && swift test
@@ -51,3 +51,23 @@ snapshot:
 
 clean:
 	rm -rf build Packages/BOMCore/.build
+
+# Every workshop view as PNG in build/screenshots (the LAN gallery serves that folder).
+LARAVEL := Fixtures/public/laravel-7.12.0.cdx-1.4.json
+CERN := Fixtures/public/cern-lhc-vdm-editor.cdx.json
+screenshots: app
+	mkdir -p build/screenshots
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-overview-laravel.png VIEW=overview UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-overview-laravel-24.png VIEW=overview TEXT=24 UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-overview-laravel-de.png VIEW=overview UILANG=de
+	$(MAKE) -s snapshot FILE=$(CERN) OUT=build/screenshots/w-overview-cern-dark.png VIEW=overview APPEARANCE=dark UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-drawer-timestamp.png VIEW=overview EVIDENCE=sbom.timestamp UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-composition-laravel.png VIEW=composition UILANG=en
+	$(MAKE) -s snapshot FILE=$(CERN) OUT=build/screenshots/w-composition-cern.png VIEW=composition UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-completeness-laravel.png VIEW=completeness UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-completeness-laravel-de.png VIEW=completeness EVIDENCE=components.deployableHash UILANG=de
+	$(MAKE) -s snapshot FILE=Fixtures/rio/bsi-pass.cdx.json OUT=build/screenshots/w-completeness-bsi-pass.png VIEW=completeness UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-components-laravel.png VIEW=components UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-component-lexer.png COMPONENT=doctrine/lexer-1.2.3.0 UILANG=en
+	$(MAKE) -s snapshot FILE=$(LARAVEL) OUT=build/screenshots/w-component-lexer-24.png COMPONENT=doctrine/lexer-1.2.3.0 TEXT=24 UILANG=en
+	$(MAKE) -s snapshot FILE=Fixtures/edge/duplicates.json OUT=build/screenshots/w-source-only.png

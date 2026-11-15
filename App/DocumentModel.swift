@@ -62,8 +62,11 @@ final class DocumentModel {
         let bytes = self.bytes
         let (source, tree, display, analysis) = await Task.detached(priority: .userInitiated) {
             let source = SourceDocument(bytes: bytes)
+            // The display text needs only the source; it is built while the tree is parsed and analysed.
+            async let display = DisplayText(source: source)
             let tree = parseJSON(source)
-            return (source, tree, DisplayText(source: source), WorkshopAnalysis.analyse(tree))
+            let analysis = WorkshopAnalysis.analyse(tree)
+            return (source, tree, await display, analysis)
         }.value
         self.source = source
         self.display = display
