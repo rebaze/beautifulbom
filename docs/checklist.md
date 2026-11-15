@@ -53,7 +53,8 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 
 - ✅ A CycloneDX file opens on the Overview with tabs; any other JSON opens in the source reader without tabs (snapshots `w-overview-laravel`, `w-source-only`).
 - ✅ Overview at 1440×900 and at 24 pt, light and dark, English and German: nothing clips (`make screenshots`).
-- ✅ Evidence drawer: a located statement selects its exact range; an absent field shows the red "would be here" marker after the parent's opening line (`--evidence sbom.timestamp`, `--evidence components.deployableHash`).
+- ✅ Evidence drawer: a located statement selects its exact range; an absent field shows the red "would be here" marker after the parent's opening line, or right-aligned on that visual line when a minified line wraps (`--evidence sbom.timestamp` on pretty and minified Laravel).
+- ✅ A CycloneDX file with parse errors never gets the all-present verdict (`Fixtures/edge/bsi-pass-broken.cdx.json`: "The file has 2 errors; the checks cover what could be read.").
 - ✅ Composition: Laravel vendors (symfony 27 first), licences (MIT 57), depth histogram 1/5/30/21/4/1; CERN says "no dependency data".
 - ✅ Completeness: Laravel shows the version gap and "field introduced in CycloneDX 1.6" on manufacturer and concluded licence; rio's bsi-pass shows every row present and the all-present sentence.
 - ✅ Component page for doctrine/lexer: path product → laravel/laravel → laravel/framework → egulias/email-validator → doctrine/lexer; used by egulias/email-validator.
@@ -61,6 +62,7 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ⏳ Clicking a statement opens the drawer; Esc closes it; ⌥⌘E (View › Keep Evidence Open) keeps it open and Esc then does nothing.
 - ⏳ Back/Forward (⌘[ ⌘]) walk tab → component page → another component page (via "Why is it here?") → tab, and back.
 - ⏳ ⌘1–⌘5 switch tabs; clicking a bar segment or histogram bar opens Components with that filter; Clear resets it.
+- ⏳ After leaving the Source tab (drawer closed), ⌘F and ⌘C do nothing in the hidden source view.
 - ⏳ Dragging the line above the drawer resizes it; dragging the line beside the outline resizes the outline.
 - ⏳ View › Language switches all workshop views at once; the choice survives a restart.
 - ⏳ Typing in the Components search with the 50 MB file stays responsive.

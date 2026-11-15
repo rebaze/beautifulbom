@@ -72,6 +72,8 @@ Analysis = CycloneDX model, dependency graph, TR-03183-2 checks, composition and
 | 50 MB pretty | 76 289 | 534 031 | 494 ms | 711 ms |
 | 50 MB minified | 120 686 | 844 810 | 650 ms | 1 178 ms |
 
+Peak memory of `bbom-bench analyse` on the 63 MB minified file: about 1.1 GB (tree, model and 845 000 findings).
+
 App, Release, `BBOM_TIMING=1`: 50 MB pretty open→parsed 1 222 ms, first layout 1 503 ms; 50 MB minified 1 812 ms and 2 131 ms. The display text is built while the tree is parsed and analysed.
 
 The first version took 2 056 ms for the minified 50 MB file. What it cost, and the fix:
@@ -92,3 +94,4 @@ Parity with rio: the port agrees with rio 0.10.2 on all five parity files (both 
 - **German wording** is the builder's; Toni reviews it (`App/Localizable.xcstrings`). Menu commands follow the system language, not the in-app switch.
 - **Drawer selection colour** is the inactive grey when the source view is not focused; the node highlight underneath is light.
 - **Plural forms** are not handled ("1 Komponenten" cannot occur with the fixtures, but would with a one-component SBOM).
+- **Deferred review minors** (2026-11-16): duplicate `dependsOn` entries can make "pulled in" negative; `pkg:npm/@scope/name` without a version does not parse; two exotic manufacturer URLs pass that Go rejects; the parse-error count includes dropped warnings; Composition counts are not evidence buttons; drag handles have no accessibility role; some dead code in `FieldChecks` and `CompletenessView`.
