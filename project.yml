@@ -1,0 +1,38 @@
+name: BeautifulBOM
+options:
+  bundleIdPrefix: de.rebaze
+  deploymentTarget:
+    macOS: "15.0"
+  createIntermediateGroups: true
+packages:
+  BOMCore:
+    path: Packages/BOMCore
+targets:
+  BeautifulBOM:
+    type: application
+    platform: macOS
+    sources: [App]
+    dependencies:
+      - package: BOMCore
+        product: BOMCore
+    info:
+      path: build/generated/Info.plist
+      properties:
+        CFBundleDisplayName: Beautiful BOM
+        CFBundleShortVersionString: "0.1.0"
+        LSApplicationCategoryType: public.app-category.developer-tools
+        CFBundleDocumentTypes:
+          - CFBundleTypeName: JSON Document
+            CFBundleTypeRole: Viewer
+            LSHandlerRank: Alternate
+            LSItemContentTypes: [public.json]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: de.rebaze.beautiful-bom
+        PRODUCT_NAME: BeautifulBOM
+        GENERATE_INFOPLIST_FILE: YES
+        SWIFT_VERSION: "6.0"
+        CODE_SIGN_IDENTITY: "-"
+        CODE_SIGN_STYLE: Manual
+        ENABLE_HARDENED_RUNTIME: YES
+        MACOSX_DEPLOYMENT_TARGET: "15.0"

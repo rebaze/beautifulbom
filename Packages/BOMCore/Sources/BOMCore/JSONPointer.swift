@@ -96,3 +96,28 @@ extension JSONTree {
         return lo
     }
 }
+
+extension JSONTree {
+    /// The node an RFC 6901 pointer string names; with duplicate keys, the first
+    /// occurrence. For launch arguments and links, never as a node identity.
+    public func resolve(pointer: String) -> NodeID? {
+        guard var current = root else { return nil }
+        if pointer.isEmpty { return current }
+        guard pointer.hasPrefix("/") else { return nil }
+        for raw in pointer.dropFirst().split(separator: "/", omittingEmptySubsequences: false) {
+            let token = raw.replacingOccurrences(of: "~1", with: "/").replacingOccurrences(of: "~0", with: "~")
+            let kids = children(current)
+            switch kind(current) {
+            case .object:
+                guard let next = kids.first(where: { key($0) == token }) else { return nil }
+                current = next
+            case .array:
+                guard let i = Int(token), kids.indices.contains(i) else { return nil }
+                current = kids[i]
+            default:
+                return nil
+            }
+        }
+        return current
+    }
+}

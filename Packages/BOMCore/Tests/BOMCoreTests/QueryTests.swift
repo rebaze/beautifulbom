@@ -47,3 +47,13 @@ import Testing
     let start = t.lexStart(atOrBefore: probe)
     #expect(start <= probe && probe.value - start.value < 32)
 }
+
+@Test func resolvePointerFindsFirstOccurrence() {
+    let t = tree(#"{"a/b":{"m~n":[0,{"k":1}]},"d":1,"d":2}"#)
+    let k = t.resolve(pointer: "/a~1b/m~0n/1/k")
+    #expect(k != nil && t.decodedValue(k!) == "1" && t.key(k!) == "k")
+    #expect(t.resolve(pointer: "/d") == t.children(t.root!)[1])
+    #expect(t.resolve(pointer: "") == t.root)
+    #expect(t.resolve(pointer: "/nope") == nil)
+    #expect(t.resolve(pointer: "/a~1b/m~0n/9") == nil)
+}
