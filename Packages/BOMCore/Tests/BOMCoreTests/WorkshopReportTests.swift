@@ -46,6 +46,14 @@ import Testing
         #expect(WorkshopAnalysis.analyse(fixtureTree("edge/workshop-broken.json")) == nil)
     }
 
+    @Test func offendersPerComponent() {
+        #expect(laravel.offenders(component: 0).count == 8)
+        #expect(laravel.gapCount(component: 0) == 8)
+        #expect(laravel.offenders(component: 0).first?.rule == RuleID(.components, .creator))
+        let nested = WorkshopAnalysis.analyse(fixtureTree("synthetic/nested-1.6.cdx.json"))!
+        #expect(nested.gapCount(component: 4) == 10)
+    }
+
     @Test func filters() {
         #expect(ComponentFilter(licence: .isNot("MIT")).apply(laravel).count == 5)
         #expect(ComponentFilter(licence: .is("BSD-3-Clause")).apply(laravel).count == 4)

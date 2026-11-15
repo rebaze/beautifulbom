@@ -37,12 +37,7 @@ struct WorkshopContent: View {
         case .completeness:
             CompletenessView(model: model, a: analysis)
         case .components:
-            ScrollView {
-                Text(model.tab.title)
-                    .font(.system(size: 30 * model.scale, weight: .semibold))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(28 * model.scale)
-            }
+            ComponentsView(model: model, a: analysis)
         case .source:
             EmptyView()
         }

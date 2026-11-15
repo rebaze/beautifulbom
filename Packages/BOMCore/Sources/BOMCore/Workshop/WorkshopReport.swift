@@ -6,22 +6,27 @@ public struct WorkshopAnalysis: Sendable {
     public let composition: Composition
     public let profile: ProfileResult
     public let report: CompletenessReport
+    /// Offenders per component index, in rule order.
+    private let byComponent: [Int: [Offender]]
 
     /// Nil when the tree is not CycloneDX 1.2 or later.
     public static func analyse(_ tree: JSONTree) -> WorkshopAnalysis? {
         guard let bom = CycloneDXDocument.recognize(tree) else { return nil }
         let graph = DependencyGraph(bom)
         let profile = checkTR031832(bom)
+        var byComponent: [Int: [Offender]] = [:]
+        for o in profile.offenders { if let i = o.component { byComponent[i, default: []].append(o) } }
         return WorkshopAnalysis(bom: bom, graph: graph, composition: Composition(bom, graph: graph),
-                                profile: profile, report: CompletenessReport(bom, profile))
+                                profile: profile, report: CompletenessReport(bom, profile), byComponent: byComponent)
     }
 
     public var verdict: Verdict { Verdict(report) }
 
     /// Offenders for one component, in rule order.
-    public func offenders(component index: Int) -> [Offender] {
-        profile.offenders.filter { $0.component == index }
-    }
+    public func offenders(component index: Int) -> [Offender] { byComponent[index] ?? [] }
+
+    /// Number of failed TR-03183-2 rules for one component.
+    public func gapCount(component index: Int) -> Int { byComponent[index]?.count ?? 0 }
 }
 
 public struct CompletenessReport: Sendable {
