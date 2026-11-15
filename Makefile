@@ -7,10 +7,14 @@ SIZES := 1 10 50
 
 CONFIG ?= Debug
 APP = build/Build/Products/$(CONFIG)/BeautifulBOM.app
-.PHONY: test bench-build fixtures bench project app snapshot clean
+.PHONY: test bench-build fixtures bench project app snapshot clean parity-refresh
 
 test:
 	cd $(PKG) && swift test
+
+# Regenerate rio's results for the parity tests (needs rio on PATH).
+parity-refresh:
+	python3 -I scripts/rio-parity.py
 
 bench-build:
 	cd $(PKG) && swift build -c release --product bbom-bench

@@ -1,0 +1,228 @@
+{
+ "rio": "rio 0.10.2 (commit: 35c8da3efe782f4cfebd64aa400e513d03bb6db1, built: 2026-11-14T20:10:55Z)",
+ "input": "Fixtures/synthetic/tr-edge-1.6.cdx.json",
+ "specVersionInput": "1.6",
+ "evaluations": [
+  {
+   "scope": "sbom",
+   "requirement": "specVersion",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "sbom",
+   "requirement": "timestamp",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "vulnerabilities",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "name",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "version",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "level",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "filename",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "dependencies",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "distributionLicences",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "deployableHash",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "executable",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "archive",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "structured",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "name",
+   "evaluated": 6,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "version",
+   "evaluated": 6,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "level",
+   "evaluated": 6,
+   "failed": 1
+  },
+  {
+   "scope": "components",
+   "requirement": "creator",
+   "evaluated": 6,
+   "failed": 4
+  },
+  {
+   "scope": "components",
+   "requirement": "filename",
+   "evaluated": 3,
+   "failed": 2
+  },
+  {
+   "scope": "components",
+   "requirement": "dependencies",
+   "evaluated": 4,
+   "failed": 2
+  },
+  {
+   "scope": "components",
+   "requirement": "distributionLicences",
+   "evaluated": 4,
+   "failed": 2
+  },
+  {
+   "scope": "components",
+   "requirement": "deployableHash",
+   "evaluated": 3,
+   "failed": 2
+  },
+  {
+   "scope": "components",
+   "requirement": "executable",
+   "evaluated": 3,
+   "failed": 2
+  },
+  {
+   "scope": "components",
+   "requirement": "archive",
+   "evaluated": 3,
+   "failed": 2
+  },
+  {
+   "scope": "components",
+   "requirement": "structured",
+   "evaluated": 3,
+   "failed": 2
+  }
+ ],
+ "profileLevels": {
+  "assembled": 1,
+  "full": 3,
+  "identified": 1,
+  "logical": 1,
+  "referenced": 1
+ },
+ "findings": [
+  {
+   "scope": "sbom",
+   "component": null,
+   "missing": [
+    "creator"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "router.bin@4.2.0",
+   "missing": [
+    "distributionLicences"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:generic/zlib@1.3.1",
+   "missing": [
+    "creator"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:generic/openssl@3.0.13",
+   "missing": [
+    "level",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "base-image@1",
+   "missing": [
+    "creator"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "plain@0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  }
+ ]
+}
