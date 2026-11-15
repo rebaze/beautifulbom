@@ -53,6 +53,9 @@ public final class SourceDocument: Sendable {
 
     public var lineCount: Int { lineStarts.count }
 
+    /// Byte offset of the first byte of a 0-based line.
+    public func lineStart(_ line: Int) -> Int { lineStarts[line] }
+
     /// 0-based line index of the line containing `offset`.
     public func line(containing offset: ByteOffset) -> Int {
         Self.lastIndex(in: lineStarts, notAfter: offset.value)

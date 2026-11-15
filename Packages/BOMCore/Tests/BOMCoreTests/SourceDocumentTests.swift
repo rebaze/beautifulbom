@@ -50,3 +50,8 @@ import Testing
     let probes = stride(from: 0, to: s.utf8.count, by: 7).map { ByteOffset(value: $0) }
     #expect(d.utf16Offsets(ofSorted: probes) == probes.map { d.utf16Offset(of: $0) })
 }
+
+@Test func lineStartsAreByteOffsets() {
+    let d = SourceDocument(bytes: Array("ä\n  b\r\n".utf8))
+    #expect((0..<d.lineCount).map { d.lineStart($0) } == [0, 3, 8])  // "ä" is 2 bytes; the last \n is byte 7
+}

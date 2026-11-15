@@ -35,6 +35,7 @@ final class DocumentModel {
 
     init(bytes: [UInt8]) {
         self.bytes = bytes
+        if let size = LaunchOptions.textSize { textSize = min(max(size, Self.textSizeRange.lowerBound), Self.textSizeRange.upperBound) }
     }
 
     var isLoaded: Bool { tree != nil }

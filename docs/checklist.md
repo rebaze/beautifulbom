@@ -40,3 +40,11 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ A broken file shows a banner with errors and warnings by line:column, while the rest stays navigable (`Fixtures/edge/workshop-broken.json`).
 - ⏳ Edit menu: Copy JSON Pointer ⌥⌘C, Copy Value ⇧⌘C, Copy Source ⌥⇧⌘C; ⌘C in the outline copies the source; the outline's context menu offers all three.
 - ⏳ Clicking a diagnostic reveals its exact range in the source.
+
+## Appearance and accessibility (Task 9)
+
+- ✅ Dark appearance: semantic colours throughout, selection and highlights readable (`--appearance dark`).
+- ✅ Presentation size starts at 24 pt in both panes (`--text-size 24`); see the open point on narrow windows in findings.md.
+- ⏳ Presentation size full-screen on a 1920×1080 display: source readable from the back of a room, no one-word lines.
+- ⏳ VoiceOver: outline rows read "key, value"; the source reads as text; breadcrumb buttons are named; the diagnostics banner announces its summary.
+- ⏳ Increase Contrast and Reduce Transparency: nothing disappears.

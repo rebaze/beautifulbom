@@ -205,6 +205,10 @@ struct StructureOutlineView: NSViewRepresentable {
             return cell
         }
 
+        func outlineView(_ outlineView: NSOutlineView, rowViewForItem item: Any) -> NSTableRowView? {
+            CentredRowView()
+        }
+
         func outlineViewSelectionDidChange(_ notification: Notification) {
             guard !applyingSelection else { return }
             let row = outline.selectedRow
@@ -233,6 +237,7 @@ final class StructureNSOutlineView: NSOutlineView {
 
     @objc func copy(_ sender: Any?) { coordinator?.copySource(sender) }
 
+
     override func expandItem(_ item: Any?, expandChildren: Bool) {
         if expandChildren, let item = item as? StructureOutlineView.Item, let coordinator,
            coordinator.subtreeSize(item.id) > Self.maxRecursiveExpansion {
@@ -240,6 +245,16 @@ final class StructureNSOutlineView: NSOutlineView {
             return
         }
         super.expandItem(item, expandChildren: expandChildren)
+    }
+}
+
+/// Keeps the disclosure triangle vertically centred in tall rows (presentation size).
+final class CentredRowView: NSTableRowView {
+    override func layout() {
+        super.layout()
+        for view in subviews where view.identifier == NSOutlineView.disclosureButtonIdentifier {
+            view.frame.origin.y = ((bounds.height - view.frame.height) / 2).rounded()
+        }
     }
 }
 

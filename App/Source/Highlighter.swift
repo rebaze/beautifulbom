@@ -12,6 +12,8 @@ final class Highlighter {
     private let tree: JSONTree
     private weak var textLayoutManager: NSTextLayoutManager?
     private var coloured = Set<Int>()
+    /// Applies hanging indents (layout attributes) to the lines of a byte window.
+    var indentLines: ((Range<ByteOffset>) -> Void)?
     private var nodeHighlight: NSTextRange?
 
     static let colours: [TokenKind: NSColor] = [
@@ -43,6 +45,7 @@ final class Highlighter {
         for w in first...last where !coloured.contains(w) {
             coloured.insert(w)
             colourWindow(w, tlm)
+            indentLines?(ByteOffset(value: w * Self.windowBytes)..<ByteOffset(value: min((w + 1) * Self.windowBytes, source.bytes.count)))
         }
     }
 

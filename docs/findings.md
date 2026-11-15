@@ -19,18 +19,36 @@ Observations, not promised limits. Machine: Apple Silicon Mac, macOS 27.2.1, Xco
 - Lexing a 64 KiB window costs the same in the middle of a 50 MB single-line file as in a 1 MB one: highlighting is bounded by the visible range, not by the line.
 - Minified files have about 1.6× the nodes per byte, because there is no whitespace.
 
-## App: source pane (Release build, `BBOM_TIMING=1`, 2026-11-15)
+## App (Release build, `BBOM_TIMING=1`, 2026-11-15)
 
-Time from document open to parsed and to the first laid-out source; peak RSS of the whole app process (`/usr/bin/time -l`), including a reveal of `/components/1200/licenses/0/license/id`.
+Whole app with structure pane, source pane, breadcrumbs and a launch reveal of `/components/1200/licenses/0/license/id`. "First layout" is when the source first shows; peak RSS is the whole process (`/usr/bin/time -l`).
 
 | File | Open → parsed | Open → first layout | Peak RSS |
 |---|---:|---:|---:|
-| synthetic 1 MB, pretty | 27 ms | 123 ms | 155 MB |
-| synthetic 10 MB, pretty | 110 ms | 165 ms | 224 MB |
-| synthetic 10 MB, minified | 153 ms | 304 ms | 251 MB |
-| synthetic 50 MB, pretty | 503 ms | 747 ms | 506 MB |
-| synthetic 50 MB, minified | 736 ms | 1 011 ms | 680 MB |
+| laravel-7.12.0 (CDX 1.4, 140 KB) | 39 ms | 154 ms | 149 MB |
+| synthetic 1 MB, pretty | 41 ms | 209 ms | 165 MB |
+| synthetic 1 MB, minified | 43 ms | 90 ms | 178 MB |
+| synthetic 10 MB, pretty | 108 ms | 180 ms | 220 MB |
+| synthetic 10 MB, minified | 159 ms | 348 ms | 259 MB |
+| synthetic 50 MB, pretty | 505 ms | 863 ms | 501 MB |
+| synthetic 50 MB, minified | 724 ms | 1 128 ms | 668 MB |
 
-- **Minified files and TextKit 2.** TextKit 2 lays out whole paragraphs. A 10 MB one-line file (one paragraph) did not display within 30 s and grew to 2.4 GB. `DisplayText` now gives very long lines invisible paragraph breaks after a comma outside a string, about every 4 KB. Wrapped on screen they look like soft wraps. All offsets pass through the mapping, and Copy takes the original bytes. Limitation: a find whose match spans such a break (e.g. searching `,"name"` exactly there) misses that one occurrence.
+The app's baseline is about 140 MB (SwiftUI, AppKit, text system); a document adds about 7–10× its size at 50 MB.
+
+## Lessons
+
+- **Minified files and TextKit 2.** TextKit 2 lays out whole paragraphs. A 10 MB one-line file (one paragraph) did not display within 30 s and grew to 2.4 GB. `DisplayText` now gives very long lines invisible paragraph breaks after a comma outside a string, about every 4 KB. Wrapped on screen they look like soft wraps. All offsets pass through the mapping, and Copy takes the original bytes. Limitation: a find whose match spans such a break (e.g. `,"name"` exactly there) misses that one occurrence.
 - **Debug builds are about 7× slower in the engine** (50 MB parse 3.4 s vs 0.5 s). Measure with `make app CONFIG=Release`.
-- **Colour.** TextKit 2 rendering attributes over 64 KiB windows, coloured when they scroll into view; token offsets are converted in one forward walk (`utf16Offsets(ofSorted:)`).
+- **Colour** is TextKit 2 rendering attributes over 64 KiB windows, applied when they scroll into view; token offsets are converted in one forward walk (`utf16Offsets(ofSorted:)`).
+- **Hanging indents.** Wrapped lines continue at their own indentation (capped at half the pane width), applied per window as they scroll in. Clearly more readable at normal size.
+- **Scroll views and rulers.** In current AppKit the line-number ruler is a content inset of a full-width clip view; scrolling to an absolute `x = 0` slides text under the ruler. Always scroll via `constrainBoundsRect` and keep `x`.
+- **Launch-time reveal** must wait until the views are in a window and sized; selections made before that silently do nothing.
+- **Setting the text fires a selection change**; attach the text view's delegate after the text is in, or the first "user" selection overwrites the launch selection.
+- **Self-snapshots** (`--snapshot`) render everything except vibrancy materials: the source-list selection draws black. The outline uses the inset style instead.
+- **Build checks** must use the exit status: filtering `xcodebuild | xcbeautify` output for "error" missed its `❌` lines, and several snapshots showed a stale binary.
+
+## Open points
+
+- **Presentation size in a narrow window.** At 24 pt in a 450 pt source pane, deep JSON wraps heavily even with capped indents, and the outline's disclosure triangles sit low in the taller rows. Untested full-screen (the workshop case); a presentation layout that hides the structure pane may be the better answer.
+- **Lone CR line endings** (classic Mac) break paragraphs in the text view but not in the line index, so line numbers drift. Not seen in BOMs.
+- **Source folding** (plan Task 11) not attempted.

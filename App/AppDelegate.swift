@@ -5,6 +5,8 @@ import SwiftUI
 ///   --open <path>        open a file at launch
 ///   --select <pointer>   select the node an RFC 6901 pointer names, once parsed
 ///   --copy pointer|value|source  copy the selected node, after --select
+///   --appearance dark|light  force an appearance (checks without changing system settings)
+///   --text-size <pt>     start with this text size (24 = presentation size)
 ///   --snapshot <png>     render the front window into a PNG, then quit
 ///   BBOM_TIMING=1        print open→parsed and open→first layout times
 enum LaunchOptions {
@@ -24,10 +26,19 @@ enum LaunchOptions {
     case "source": .source
     default: nil
     }
+    static let textSize = value("--text-size").flatMap(Double.init).map { CGFloat($0) }
     static let timing = ProcessInfo.processInfo.environment["BBOM_TIMING"] == "1"
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        switch LaunchOptions.value("--appearance") {
+        case "dark": NSApp.appearance = NSAppearance(named: .darkAqua)
+        case "light": NSApp.appearance = NSAppearance(named: .aqua)
+        default: break
+        }
+    }
+
     func applicationDidFinishLaunching(_ notification: Notification) {
         guard let path = LaunchOptions.openPath else { return }
         let url = URL(fileURLWithPath: path)

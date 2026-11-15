@@ -73,8 +73,11 @@ struct SourceTextView: NSViewRepresentable {
             appliedTextSize = model.textSize
             textView.delegate = self  // after the text is in: setting it changes the selection
             if let tlm = textView.textLayoutManager {
-                highlighter = Highlighter(display: display, tree: tree, textLayoutManager: tlm)
+                let highlighter = Highlighter(display: display, tree: tree, textLayoutManager: tlm)
+                highlighter.indentLines = { [weak self] range in self?.applyHangingIndents(in: range) }
+                self.highlighter = highlighter
             }
+            ruler.font = Self.rulerFont(model.textSize)
 
             NotificationCenter.default.addObserver(self, selector: #selector(viewportChanged),
                                                    name: NSView.boundsDidChangeNotification, object: scrollView.contentView)
@@ -85,6 +88,42 @@ struct SourceTextView: NSViewRepresentable {
                 self?.model.reportFirstLayout()
             }
             return scrollView
+        }
+
+        static func rulerFont(_ textSize: CGFloat) -> NSFont {
+            .monospacedDigitSystemFont(ofSize: max(10, textSize * 0.82), weight: .regular)
+        }
+
+        /// Wrapped lines continue at their own indentation (plus two columns), so deep
+        /// JSON stays readable at presentation size. Only for lines starting in `range`.
+        private func applyHangingIndents(in range: Range<ByteOffset>) {
+            guard let display = model.display, let storage = textView.textStorage else { return }
+            let source = display.source
+            let bytes = source.bytes
+            let advance = (" " as NSString).size(withAttributes: [.font: NSFont.monospacedSystemFont(ofSize: model.textSize, weight: .regular)]).width
+            let maxIndent = max(0, (textView.textContainer?.size.width ?? 600) * 0.5)
+            var line = source.line(containing: range.lowerBound)
+            if source.lineStart(line) < range.lowerBound.value { line += 1 }
+            storage.beginEditing()
+            while line < source.lineCount, source.lineStart(line) < range.upperBound.value {
+                let start = source.lineStart(line)
+                var i = start, columns = 0
+                while i < bytes.count, bytes[i] == 0x20 || bytes[i] == 0x09 {
+                    columns += bytes[i] == 0x09 ? 4 : 1
+                    i += 1
+                }
+                if columns > 0 {
+                    let end = line + 1 < source.lineCount ? source.lineStart(line + 1) : bytes.count
+                    let style = NSMutableParagraphStyle()
+                    style.lineHeightMultiple = 1.15
+                    // Capped, so a narrow pane at presentation size keeps room for text.
+                    style.headIndent = min(CGFloat(columns + 2) * advance, maxIndent)
+                    storage.addAttribute(.paragraphStyle, value: style,
+                                         range: display.displayRange(ByteOffset(value: start)..<ByteOffset(value: end)))
+                }
+                line += 1
+            }
+            storage.endEditing()
         }
 
         private func baseAttributes() -> [NSAttributedString.Key: Any] {
@@ -110,7 +149,7 @@ struct SourceTextView: NSViewRepresentable {
                 }
                 textView.setSelectedRange(keep)
                 applyingSelection = false
-                ruler.font = .monospacedDigitSystemFont(ofSize: max(10, textSize * 0.82), weight: .regular)
+                ruler.font = Self.rulerFont(textSize)
                 highlighter?.reset()
                 applyNodeHighlight()
                 textView.scrollRangeToVisible(keep)
