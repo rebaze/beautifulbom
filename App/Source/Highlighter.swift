@@ -52,7 +52,10 @@ final class Highlighter {
     private func colourWindow(_ w: Int, _ tlm: NSTextLayoutManager) {
         let windowStart = ByteOffset(value: w * Self.windowBytes)
         let windowEnd = ByteOffset(value: min((w + 1) * Self.windowBytes, source.bytes.count))
-        let tokens = lex(source, from: tree.lexStart(atOrBefore: windowStart), to: windowEnd)
+        // The nearer of two safe starts: the tree's (exact) and the display scan's (bounded
+        // even after content the parser could not read).
+        let from = max(tree.lexStart(atOrBefore: windowStart), display.lexStart(atOrBefore: windowStart))
+        let tokens = lex(source, from: from, to: windowEnd)
             .filter { $0.range.upperBound > windowStart }
         guard !tokens.isEmpty else { return }
         var bounds: [ByteOffset] = []

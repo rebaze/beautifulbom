@@ -35,8 +35,9 @@ struct DiagnosticsBanner: View {
 
             if model.showDiagnostics, let source = model.source {
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 2) {
-                        ForEach(Array(diagnostics.enumerated()), id: \.offset) { _, d in
+                    LazyVStack(alignment: .leading, spacing: 2) {
+                        ForEach(diagnostics.indices, id: \.self) { i in
+                            let d = diagnostics[i]
                             let position = source.lineColumn(of: d.range.lowerBound)
                             Button {
                                 model.reveal(d)
@@ -70,7 +71,10 @@ struct DiagnosticsBanner: View {
     }
 
     private var summary: String {
-        [errors > 0 ? "\(errors) \(errors == 1 ? "error" : "errors")" : nil,
+        if let tree = model.tree, tree.unlistedDiagnostics > 0 {
+            return "\(diagnostics.count - 1 + tree.unlistedDiagnostics) problems (first \(diagnostics.count - 1) listed)"
+        }
+        return [errors > 0 ? "\(errors) \(errors == 1 ? "error" : "errors")" : nil,
          warnings > 0 ? "\(warnings) \(warnings == 1 ? "warning" : "warnings")" : nil]
             .compactMap { $0 }.joined(separator: ", ")
     }

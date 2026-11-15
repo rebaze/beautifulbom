@@ -47,6 +47,19 @@ The app's baseline is about 140 MB (SwiftUI, AppKit, text system); a document ad
 - **Self-snapshots** (`--snapshot`) render everything except vibrancy materials: the source-list selection draws black. The outline uses the inset style instead.
 - **Build checks** must use the exit status: filtering `xcodebuild | xcbeautify` output for "error" missed its `❌` lines, and several snapshots showed a stale binary.
 
+## Final review fixes (2026-11-15)
+
+A fresh whole-branch review measured triggers the plan's tests missed. Fixed, each with a regression test:
+
+| Input | Before | After |
+|---|---|---|
+| 200 000 diagnostics (a comment on every line) | SwiftUI crash; 5 000 already froze for 6 s | opens in 0.19 s; first 1 000 listed, total stated |
+| 10 MB base64 string (CycloneDX attachment) | 12 s main-thread stall, 1.65 GB | first layout 0.13 s, 191 MB |
+| 50 MB minified with one stray `}` | colouring lexed from byte 782 for every window (≈150 ms, 200 MB each) | lexing starts within 4 KB of the window |
+| `{"a": [{x]}, "b": 1}` | phantom node, bracket lost | bracket re-handled, no phantom |
+| `{"a":,"b":1}` | `a` took `"b"` as its value | `a` is an empty invalid value, `b` is kept |
+| Latin-1 bytes in a string | silent `�` | warning with the byte range |
+
 ## Open points
 
 - **Presentation size in a narrow window.** At 24 pt in a 450 pt source pane, deep JSON wraps heavily even with capped indents, and the outline's disclosure triangles sit low in the taller rows. Untested full-screen (the workshop case); a presentation layout that hides the structure pane may be the better answer.

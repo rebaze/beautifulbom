@@ -15,6 +15,12 @@ public final class SourceDocument: Sendable {
     let checkpoints: [Checkpoint]
 
     static let checkpointStride = 4096
+    static let maxInvalidUTF8Ranges = 100
+
+    /// Runs of invalid UTF-8 (each shown as U+FFFD per maximal subpart); the first 100.
+    public let invalidUTF8: [Range<ByteOffset>]
+    /// Number of invalid runs in the whole file.
+    public let invalidUTF8Count: Int
 
     struct Checkpoint: Sendable {
         let byte: Int
@@ -30,6 +36,9 @@ public final class SourceDocument: Sendable {
         var cps = [Checkpoint(byte: 0, utf16: 0, scalars: 0)]
         var next = Self.checkpointStride
         var i = 0, u16 = 0, scalars = 0
+        var invalid: [Range<ByteOffset>] = []
+        var invalidCount = 0
+        var runEnd = -1
         bytes.withUnsafeBufferPointer { buf in
             while i < buf.count {
                 if i >= next {
@@ -42,6 +51,17 @@ public final class SourceDocument: Sendable {
                     i += 1; u16 += 1
                 } else {
                     let (n, u) = Self.scalarLength(buf, at: i)
+                    if n != Self.expectedLength(b) {
+                        if i == runEnd, let last = invalid.last, last.upperBound.value == i {
+                            invalid[invalid.count - 1] = last.lowerBound..<ByteOffset(value: i + n)
+                        } else if i != runEnd {
+                            invalidCount += 1
+                            if invalid.count < Self.maxInvalidUTF8Ranges {
+                                invalid.append(ByteOffset(value: i)..<ByteOffset(value: i + n))
+                            }
+                        }
+                        runEnd = i + n
+                    }
                     i += n; u16 += u
                 }
                 scalars += 1
@@ -49,6 +69,8 @@ public final class SourceDocument: Sendable {
         }
         self.lineStarts = starts
         self.checkpoints = cps
+        self.invalidUTF8 = invalid
+        self.invalidUTF8Count = invalidCount
     }
 
     public var lineCount: Int { lineStarts.count }
@@ -180,6 +202,18 @@ public final class SourceDocument: Sendable {
             if j >= buf.count || !allowed.contains(buf[j]) { return (1 + k, 1) }
         }
         return (1 + tail.count, tail.count == 3 ? 2 : 1)
+    }
+
+    /// Length of a well-formed sequence starting with `lead`; 0 for bytes that cannot start one.
+    @inline(__always)
+    static func expectedLength(_ lead: UInt8) -> Int {
+        switch lead {
+        case 0x00...0x7F: 1
+        case 0xC2...0xDF: 2
+        case 0xE0...0xEF: 3
+        case 0xF0...0xF4: 4
+        default: 0
+        }
     }
 
     static func lastIndex(in sorted: [Int], notAfter value: Int) -> Int {

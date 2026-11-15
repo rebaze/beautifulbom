@@ -4,6 +4,8 @@ public struct JSONTree: Sendable {
     public let source: SourceDocument
     public internal(set) var root: NodeID?
     public internal(set) var diagnostics: [Diagnostic] = []
+    /// Problems beyond `maxDiagnostics`, summed up in the last diagnostic.
+    public internal(set) var unlistedDiagnostics = 0
 
     // Struct-of-arrays storage, indexed by NodeID.rawValue. -1 means none.
     var kinds: [NodeKind] = []
@@ -21,6 +23,9 @@ public struct JSONTree: Sendable {
     var duplicateKeyNodes: Set<Int32> = []
 
     init(source: SourceDocument) { self.source = source }
+
+    /// At most this many diagnostics are kept; the rest are summed up in one more.
+    public static let maxDiagnostics = 1000
 
     public var nodeCount: Int { kinds.count }
 

@@ -2,7 +2,8 @@ import Foundation
 
 /// The text a source view displays. Identical to `SourceDocument.text`, except
 /// that very long lines (minified JSON) get invisible paragraph breaks after a
-/// comma outside a string, about every `maxLineBytes`. Text layout works per
+/// comma outside a string, about every `maxLineBytes`; where no such comma comes
+/// (a long string, a run without commas), at any scalar boundary after twice that. Text layout works per
 /// paragraph, and a single 10 MB paragraph is beyond it; wrapped on screen the
 /// breaks look like ordinary soft wrapping.
 ///
@@ -14,15 +15,23 @@ public struct DisplayText: Sendable {
     /// Source UTF-16 offsets before which a "\n" is inserted (each right after a comma), ascending.
     public let breaks: [UTF16Offset]
     public let source: SourceDocument
+    /// For each `safeStride` bytes of the source: the last offset at or before the
+    /// stride's start that lies outside a string, where lexing can safely begin.
+    let safeLexStarts: [Int]
+    static let safeStride = 4096
 
     public static let defaultMaxLineBytes = 4096
 
     public init(source: SourceDocument, maxLineBytes: Int = DisplayText.defaultMaxLineBytes) {
         self.source = source
         var breakBytes: [ByteOffset] = []
+        var safe: [Int] = []
         source.bytes.withUnsafeBufferPointer { b in
             var lineBytes = 0, inString = false, i = 0
+            var lastOutside = 0
             while i < b.count {
+                while safe.count * Self.safeStride <= i { safe.append(lastOutside) }
+                if !inString { lastOutside = i }
                 let c = b[i]
                 lineBytes += 1
                 if c == 0x0A || c == 0x0D {
@@ -37,8 +46,16 @@ public struct DisplayText: Sendable {
                     lineBytes = 0
                 }
                 i += 1
+                // Hard break: before any byte that starts a scalar (not 0x80...0xBF), which
+                // also keeps UTF-8 repair of invalid sequences unchanged.
+                if lineBytes >= 2 * maxLineBytes, i < b.count, !(0x80...0xBF).contains(b[i]),
+                   b[i] != 0x0A, b[i] != 0x0D, breakBytes.last?.value != i {
+                    breakBytes.append(ByteOffset(value: i))
+                    lineBytes = 0
+                }
             }
         }
+        safeLexStarts = safe
         if breakBytes.isEmpty {
             string = source.text
             breaks = []
@@ -53,9 +70,18 @@ public struct DisplayText: Sendable {
             last = b.value
         }
         display.append(contentsOf: source.bytes[last...])
-        // Breaks sit between ASCII bytes, so UTF-8 repair decodes exactly as in `source.text`.
+        // Breaks sit before a scalar's first byte, so UTF-8 repair decodes exactly as in `source.text`.
         string = String(decoding: display, as: UTF8.self)
         breaks = source.utf16Offsets(ofSorted: breakBytes)
+    }
+
+    /// A position at or before `offset`, outside any string, within about
+    /// `safeStride` bytes (plus the length of a string spanning it). Independent of
+    /// the parse tree, so it stays near after content the parser could not read.
+    public func lexStart(atOrBefore offset: ByteOffset) -> ByteOffset {
+        guard !safeLexStarts.isEmpty, offset.value >= 0 else { return ByteOffset(value: 0) }
+        let k = min(offset.value / Self.safeStride, safeLexStarts.count - 1)
+        return ByteOffset(value: min(safeLexStarts[k], offset.value))
     }
 
     /// Display UTF-16 offset of a source UTF-16 offset.

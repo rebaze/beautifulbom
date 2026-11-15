@@ -42,6 +42,9 @@ private struct Parser {
     var afterComma = false
     var pendingKey: (start: Int, end: Int)?
     var rootDone = false
+    /// A token to return again from `nextToken()` (recovery stops at a bracket it must not consume).
+    var pushback: PToken?
+    var droppedDiagnostics = 0
 
     init(source: SourceDocument) {
         self.source = source
@@ -50,6 +53,12 @@ private struct Parser {
     }
 
     mutating func run() {
+        for r in source.invalidUTF8 {
+            warn(r.lowerBound.value, r.upperBound.value, "Invalid UTF-8; shown as \u{FFFD} and copied as such")
+        }
+        if source.invalidUTF8Count > source.invalidUTF8.count {
+            warn(0, 0, "\(source.invalidUTF8Count - source.invalidUTF8.count) more invalid UTF-8 sequences are not listed")
+        }
         if bytes.starts(with: [0xEF, 0xBB, 0xBF]) {
             warn(0, 3, "Byte order mark at the start of the file (ignored)")
             pos = 3
@@ -73,6 +82,11 @@ private struct Parser {
             error(0, bytes.count, "The file contains no JSON value")
         }
         tree.diagnostics.sort { $0.range.lowerBound < $1.range.lowerBound }
+        tree.unlistedDiagnostics = droppedDiagnostics
+        if droppedDiagnostics > 0 {
+            tree.diagnostics.append(Diagnostic(severity: .warning, range: ByteOffset(value: 0)..<ByteOffset(value: 0),
+                                               message: "\(droppedDiagnostics) more problems are not listed"))
+        }
     }
 
     /// Handles one token. Returns true if the same token must be handled again
@@ -85,6 +99,12 @@ private struct Parser {
                 if afterComma { error(tok.start, tok.end, "Trailing comma before ']'") }
                 close(at: tok.start, end: tok.end)
                 return false
+            }
+            if tok.kind == .comma, !stack.isEmpty {
+                // `{"a":,"b":1}` or `[1,,2]`: an empty value, then the comma as usual.
+                error(tok.start, tok.end, "Expected a value before ','")
+                addLeaf(.invalid, tok.start, tok.start)
+                return true
             }
             if tok.kind == .endObject || tok.kind == .endArray, !stack.isEmpty {
                 error(tok.start, tok.end, "Expected a value before '\(char(tok))'")
@@ -154,7 +174,11 @@ private struct Parser {
             switch t.kind {
             case .beginObject, .beginArray: depth += 1
             case .endObject, .endArray:
-                if depth == 0 { expect = .commaOrEnd; return handle(t) }
+                if depth == 0 {
+                    expect = .commaOrEnd
+                    pushback = t  // handled next, in .commaOrEnd, against the right container
+                    return false
+                }
                 depth -= 1
             case .comma where depth == 0:
                 if let top = stack.last { expect = top.isObject ? .key : .value; afterComma = true }
@@ -272,6 +296,10 @@ private struct Parser {
     // MARK: Tokenizer
 
     mutating func nextToken() -> PToken {
+        if let t = pushback {
+            pushback = nil
+            return t
+        }
         while pos < bytes.count {
             let b = bytes[pos]
             switch b {
@@ -373,10 +401,12 @@ private struct Parser {
     func char(_ tok: PToken) -> String { text(tok) }
 
     mutating func error(_ s: Int, _ e: Int, _ message: String) {
+        guard tree.diagnostics.count < JSONTree.maxDiagnostics else { droppedDiagnostics += 1; return }
         tree.diagnostics.append(Diagnostic(severity: .error, range: ByteOffset(value: s)..<ByteOffset(value: e), message: message))
     }
 
     mutating func warn(_ s: Int, _ e: Int, _ message: String) {
+        guard tree.diagnostics.count < JSONTree.maxDiagnostics else { droppedDiagnostics += 1; return }
         tree.diagnostics.append(Diagnostic(severity: .warning, range: ByteOffset(value: s)..<ByteOffset(value: e), message: message))
     }
 }
