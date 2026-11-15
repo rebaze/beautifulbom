@@ -1,0 +1,116 @@
+/// Everything the workshop views show about one SBOM, computed once off the
+/// main thread. No UI types: the app lays it out and localises it.
+public struct WorkshopAnalysis: Sendable {
+    public let bom: CycloneDXDocument
+    public let graph: DependencyGraph?
+    public let composition: Composition
+    public let profile: ProfileResult
+    public let report: CompletenessReport
+
+    /// Nil when the tree is not CycloneDX 1.2 or later.
+    public static func analyse(_ tree: JSONTree) -> WorkshopAnalysis? {
+        guard let bom = CycloneDXDocument.recognize(tree) else { return nil }
+        let graph = DependencyGraph(bom)
+        let profile = checkTR031832(bom)
+        return WorkshopAnalysis(bom: bom, graph: graph, composition: Composition(bom, graph: graph),
+                                profile: profile, report: CompletenessReport(bom, profile))
+    }
+
+    public var verdict: Verdict { Verdict(report) }
+
+    /// Offenders for one component, in rule order.
+    public func offenders(component index: Int) -> [Offender] {
+        profile.offenders.filter { $0.component == index }
+    }
+}
+
+public struct CompletenessReport: Sendable {
+    public struct VersionGap: Sendable, Hashable {
+        public let found: String
+        public let required: String
+        public let evidence: Evidence
+    }
+
+    public struct Row: Sendable, Hashable, Identifiable {
+        public let rule: RuleID
+        public let covered: Int
+        public let total: Int
+        public let outcome: Evaluation.Outcome
+        public let section: String?
+        /// The CycloneDX version that introduced the field, only when the file is older.
+        public let introducedIn: String?
+        public let offenders: [Offender]
+        public var id: RuleID { rule }
+    }
+
+    public struct Section: Sendable, Hashable, Identifiable {
+        public let scope: Scope
+        public let rows: [Row]
+        public var id: Scope { scope }
+    }
+
+    public let versionGap: VersionGap?
+    /// Errors the parser reported; results cover what could be read.
+    public let parseErrors: Int
+    public let sections: [Section]
+
+    init(_ bom: CycloneDXDocument, _ profile: ProfileResult) {
+        let version = bom.specVersion.value
+        let spec = profile.evaluations.first { $0.rule == RuleID(.sbom, .specVersion) }
+        versionGap = (spec?.failed ?? 0) > 0
+            ? VersionGap(found: version, required: TR031832.requiredSpecVersion, evidence: .located(bom.specVersion.node))
+            : nil
+        parseErrors = bom.tree.diagnostics.filter { $0.severity == .error }.count + bom.tree.unlistedDiagnostics
+        var offenders: [RuleID: [Offender]] = [:]
+        for o in profile.offenders { offenders[o.rule, default: []].append(o) }
+        sections = Scope.allCases.map { scope in
+            let rows = profile.evaluations.filter { $0.rule.scope == scope && $0.rule.requirement != .specVersion }.map { e in
+                let introduced = TR031832.introducedIn(e.rule.requirement)
+                    .flatMap { CycloneDXDocument.compareVersions(version, $0) < 0 ? $0 : nil }
+                return Row(rule: e.rule, covered: e.evaluated - e.failed, total: e.evaluated, outcome: e.outcome,
+                           section: TR031832.section(e.rule), introducedIn: introduced, offenders: offenders[e.rule] ?? [])
+            }
+            return Section(scope: scope, rows: rows)
+        }
+    }
+}
+
+/// What failed, grouped the way a room talks about it, in the order the verdict names them.
+public enum GapTopic: String, Sendable, Hashable, CaseIterable {
+    case timestamp, manufacturer, hashes, licences, dependencies, fileProperties, identity, vulnerabilities
+
+    init(_ r: Requirement) {
+        switch r {
+        case .timestamp: self = .timestamp
+        case .creator: self = .manufacturer
+        case .deployableHash: self = .hashes
+        case .distributionLicences: self = .licences
+        case .dependencies: self = .dependencies
+        case .filename, .executable, .archive, .structured: self = .fileProperties
+        case .vulnerabilities: self = .vulnerabilities
+        case .name, .version, .level, .specVersion: self = .identity
+        }
+    }
+}
+
+/// The one sentence the Overview says about Completeness.
+public struct Verdict: Sendable, Equatable {
+    /// No rule fails and the version is 1.6 or later.
+    public let ready: Bool
+    /// The file's version when it is older than the TR requires.
+    public let versionGap: String?
+    /// Failing topics in `GapTopic` order.
+    public let gaps: [GapTopic]
+
+    public init(ready: Bool, versionGap: String?, gaps: [GapTopic]) {
+        self.ready = ready
+        self.versionGap = versionGap
+        self.gaps = gaps
+    }
+
+    init(_ report: CompletenessReport) {
+        let failing = Set(report.sections.flatMap(\.rows).filter { $0.outcome == .fail }.map { GapTopic($0.rule.requirement) })
+        let gaps = GapTopic.allCases.filter(failing.contains)
+        self.init(ready: gaps.isEmpty && report.versionGap == nil, versionGap: report.versionGap?.found, gaps: gaps)
+    }
+}
