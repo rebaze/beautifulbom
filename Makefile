@@ -5,7 +5,8 @@ GEN := Fixtures/generated
 BENCH = $(PKG)/.build/release/bbom-bench
 SIZES := 1 10 50
 
-APP := build/Build/Products/Debug/BeautifulBOM.app
+CONFIG ?= Debug
+APP = build/Build/Products/$(CONFIG)/BeautifulBOM.app
 .PHONY: test bench-build fixtures bench project app snapshot clean
 
 test:
@@ -28,7 +29,7 @@ project:
 	xcodegen generate --quiet
 
 app: project
-	set -o pipefail; xcodebuild -project BeautifulBOM.xcodeproj -scheme BeautifulBOM -configuration Debug -derivedDataPath build build | xcbeautify --quiet
+	set -o pipefail; xcodebuild -project BeautifulBOM.xcodeproj -scheme BeautifulBOM -configuration $(CONFIG) -derivedDataPath build build | xcbeautify --quiet
 
 # make snapshot FILE=<json> OUT=<png> [SELECT=<json-pointer>]
 snapshot:

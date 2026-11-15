@@ -12,11 +12,8 @@ struct DocumentView: View {
 
     var body: some View {
         Group {
-            if let tree = model.tree {
-                VStack(spacing: 0) {
-                    Text("\(tree.nodeCount) nodes, \(tree.diagnostics.count) issues")
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                }
+            if model.isLoaded {
+                SourceTextView(model: model)
             } else {
                 ProgressView("Reading…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)

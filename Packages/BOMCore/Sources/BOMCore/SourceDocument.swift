@@ -90,6 +90,34 @@ public final class SourceDocument: Sendable {
         return ByteOffset(value: i)
     }
 
+    /// UTF-16 offsets for ascending byte offsets in one forward walk, for
+    /// converting many token ranges at once (syntax colouring).
+    public func utf16Offsets(ofSorted offsets: [ByteOffset]) -> [UTF16Offset] {
+        guard let first = offsets.first else { return [] }
+        var out: [UTF16Offset] = []
+        out.reserveCapacity(offsets.count)
+        var i = 0, u16 = 0
+        (u16, _) = position(ofByte: first.value)
+        i = byteOffset(of: UTF16Offset(value: u16)).value
+        bytes.withUnsafeBufferPointer { buf in
+            for target in offsets {
+                let t = min(target.value, buf.count)
+                if t - i > Self.checkpointStride || t < i {
+                    let p = position(ofByte: t)
+                    u16 = p.utf16
+                    i = byteOffset(of: UTF16Offset(value: u16)).value
+                }
+                while i < t {
+                    let (n, u) = buf[i] < 0x80 ? (1, 1) : Self.scalarLength(buf, at: i)
+                    if i + n > t { break }
+                    i += n; u16 += u
+                }
+                out.append(UTF16Offset(value: u16))
+            }
+        }
+        return out
+    }
+
     public func nsRange(_ range: Range<ByteOffset>) -> NSRange {
         let lo = utf16Offset(of: range.lowerBound).value
         return NSRange(location: lo, length: utf16Offset(of: range.upperBound).value - lo)

@@ -10,6 +10,7 @@ enum SelectionOrigin { case source, structure, breadcrumb, history, reveal, laun
 final class DocumentModel {
     private(set) var source: SourceDocument?
     private(set) var tree: JSONTree?
+    private(set) var display: DisplayText?
     private(set) var selection: NodeID?
     private(set) var selectionOrigin: SelectionOrigin = .launch
     /// Increments on every selection, so panes react even when the same node is chosen again.
@@ -36,13 +37,14 @@ final class DocumentModel {
     func load() async {
         guard tree == nil else { return }
         let bytes = self.bytes
-        let (source, tree) = await Task.detached(priority: .userInitiated) {
+        let (source, tree, display) = await Task.detached(priority: .userInitiated) {
             let source = SourceDocument(bytes: bytes)
-            return (source, parseJSON(source))
+            return (source, parseJSON(source), DisplayText(source: source))
         }.value
         self.source = source
+        self.display = display
         self.tree = tree
-        if LaunchOptions.timing { print(String(format: "open→parsed %.0f ms", -openedAt.timeIntervalSinceNow * 1000)) }
+        timing("open→parsed")
         if let pointer = LaunchOptions.selectPointer, let id = tree.resolve(pointer: pointer) {
             select(id, origin: .launch)
         }
@@ -51,7 +53,13 @@ final class DocumentModel {
     func reportFirstLayout() {
         guard !firstLayoutReported else { return }
         firstLayoutReported = true
-        if LaunchOptions.timing { print(String(format: "open→first layout %.0f ms", -openedAt.timeIntervalSinceNow * 1000)) }
+        timing("open→first layout")
+    }
+
+    private func timing(_ label: String) {
+        guard LaunchOptions.timing else { return }
+        print(String(format: "%@ %.0f ms", label, -openedAt.timeIntervalSinceNow * 1000))
+        fflush(stdout)
     }
 
     func select(_ id: NodeID?, origin: SelectionOrigin) {

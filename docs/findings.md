@@ -18,3 +18,19 @@ Observations, not promised limits. Machine: Apple Silicon Mac, macOS 27.2.1, Xco
 - Peak memory is about 5–6× the file size: file bytes, the decoded `String`, the `Data` read buffer and the node arena (11 `Int32` columns plus the kind, about 45 bytes per node). Well inside the plan's 10× threshold, so the arena layout stays.
 - Lexing a 64 KiB window costs the same in the middle of a 50 MB single-line file as in a 1 MB one: highlighting is bounded by the visible range, not by the line.
 - Minified files have about 1.6× the nodes per byte, because there is no whitespace.
+
+## App: source pane (Release build, `BBOM_TIMING=1`, 2026-11-15)
+
+Time from document open to parsed and to the first laid-out source; peak RSS of the whole app process (`/usr/bin/time -l`), including a reveal of `/components/1200/licenses/0/license/id`.
+
+| File | Open → parsed | Open → first layout | Peak RSS |
+|---|---:|---:|---:|
+| synthetic 1 MB, pretty | 27 ms | 123 ms | 155 MB |
+| synthetic 10 MB, pretty | 110 ms | 165 ms | 224 MB |
+| synthetic 10 MB, minified | 153 ms | 304 ms | 251 MB |
+| synthetic 50 MB, pretty | 503 ms | 747 ms | 506 MB |
+| synthetic 50 MB, minified | 736 ms | 1 011 ms | 680 MB |
+
+- **Minified files and TextKit 2.** TextKit 2 lays out whole paragraphs. A 10 MB one-line file (one paragraph) did not display within 30 s and grew to 2.4 GB. `DisplayText` now gives very long lines invisible paragraph breaks after a comma outside a string, about every 4 KB. Wrapped on screen they look like soft wraps. All offsets pass through the mapping, and Copy takes the original bytes. Limitation: a find whose match spans such a break (e.g. searching `,"name"` exactly there) misses that one occurrence.
+- **Debug builds are about 7× slower in the engine** (50 MB parse 3.4 s vs 0.5 s). Measure with `make app CONFIG=Release`.
+- **Colour.** TextKit 2 rendering attributes over 64 KiB windows, coloured when they scroll into view; token offsets are converted in one forward walk (`utf16Offsets(ofSorted:)`).

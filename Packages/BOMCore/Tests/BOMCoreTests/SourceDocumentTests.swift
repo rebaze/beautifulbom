@@ -43,3 +43,10 @@ import Testing
     let d = SourceDocument(bytes: Array("[\"ä\"]".utf8))
     #expect(d.slice(ByteOffset(value: 1)..<ByteOffset(value: 5)) == "\"ä\"")
 }
+
+@Test func batchUTF16OffsetsMatchSingleConversions() {
+    let s = "[" + Array(repeating: "\"é😀\\\"\"", count: 3000).joined(separator: ",\n") + "]"
+    let d = SourceDocument(bytes: Array(s.utf8))
+    let probes = stride(from: 0, to: s.utf8.count, by: 7).map { ByteOffset(value: $0) }
+    #expect(d.utf16Offsets(ofSorted: probes) == probes.map { d.utf16Offset(of: $0) })
+}
