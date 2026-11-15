@@ -83,6 +83,14 @@ public struct CycloneDXDocument: Sendable {
         }
     }
 
+    /// What to call the SBOM's manufacturer: its name, else a contact email, else a URL.
+    public var manufacturerLabel: String? {
+        if let manufacturerName { return manufacturerName }
+        guard let m = metadata.flatMap({ tree.member($0, "manufacturer") }) else { return nil }
+        for c in tree.objectElements(tree.member(m, "contact")) { if let e = tree.memberString(c, "email") { return e } }
+        return tree.elements(tree.member(m, "url")).lazy.compactMap { self.tree.string($0) }.first
+    }
+
     /// The first component (or the subject) with this bom-ref.
     public func component(bomRef: String) -> Component? {
         if subject?.bomRef == bomRef { return subject }

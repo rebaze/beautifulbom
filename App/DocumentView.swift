@@ -24,6 +24,10 @@ struct DocumentView: View {
         .frame(minWidth: 720, minHeight: 480)
         .environment(model)
         .focusedSceneValue(\.documentModel, model)
+        .onChange(of: model.tab == .source || model.drawerOpen) { _, sourceVisible in
+            // The source view stays alive when hidden; it must not keep the keyboard (⌘C, ⌘F).
+            if !sourceVisible, let w = NSApp.keyWindow, w.firstResponder is NSTextView { w.makeFirstResponder(nil) }
+        }
         .task {
             await model.load()
             if let path = LaunchOptions.snapshotPath { Snapshot.take(to: path) }

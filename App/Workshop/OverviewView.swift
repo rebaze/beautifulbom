@@ -69,7 +69,7 @@ struct OverviewView: View {
             if let direct = a.composition.directCount, let indirect = a.composition.indirectCount {
                 stat(value: "\(direct) → \(indirect)", label: L("chosen directly → pulled in"), target: .composition)
             } else {
-                stat(value: "–", label: L("no dependency data"), target: .composition)
+                stat(value: "–", label: a.graph == nil ? L("no dependency data") : L("product has no bom-ref"), target: .composition)
             }
             let known = a.composition.ecosystems.filter { !$0.unknown }
             stat(value: "\(known.count)",
@@ -114,12 +114,9 @@ struct OverviewView: View {
     private var madeOf: some View {
         let (vendors, others) = a.composition.top(a.composition.vendors, keep: 5)
         let vendorSegments = vendors.map { StackedBar.Segment(label: $0.unknown ? L("no vendor named") : $0.label, count: $0.count,
-                                                            filter: $0.unknown ? nil : ComponentFilter(text: $0.label), isOthers: $0.unknown) }
+                                                            filter: $0.unknown ? nil : ComponentFilter(vendor: $0.label), isOthers: $0.unknown) }
             + (others.map { [StackedBar.Segment(label: L("others"), count: $0.count, filter: nil, isOthers: true)] } ?? [])
-        let licenceSegments = a.composition.licenses.map {
-            StackedBar.Segment(label: $0.unknown ? L("no licence stated") : $0.label, count: $0.count,
-                               filter: ComponentFilter(licence: $0.unknown ? .unknown : .is($0.label)), unknown: $0.unknown)
-        }
+        let licenceSegments = CompositionView.licenceSegments(a)
         return Grid(alignment: .leading, horizontalSpacing: t.pad(16), verticalSpacing: t.pad(10)) {
             GridRow {
                 Text(L("Vendors")).font(t.font(13)).foregroundStyle(.secondary)
@@ -166,7 +163,7 @@ struct OverviewView: View {
             field(L("Manufacturer")) {
                 let evidence = a.bom.metadata.map { tree.evidence($0, "manufacturer") } ?? tree.evidence(a.bom.root, "metadata")
                 EvidenceButton(evidence) {
-                    if let name = a.bom.manufacturerName { Text(name) } else { Pill(text: L("none named"), kind: .gap, t: t) }
+                    if let name = a.bom.manufacturerLabel { Text(name) } else { Pill(text: L("none named"), kind: .gap, t: t) }
                 }
             }
             if let supplier = a.bom.supplierName {

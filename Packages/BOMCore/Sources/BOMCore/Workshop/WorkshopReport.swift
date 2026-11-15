@@ -8,6 +8,8 @@ public struct WorkshopAnalysis: Sendable {
     public let report: CompletenessReport
     /// Offenders per component index, in rule order.
     private let byComponent: [Int: [Offender]]
+    /// The first component with each bom-ref.
+    private let indexByRef: [String: Int]
 
     /// Nil when the tree is not CycloneDX 1.2 or later.
     public static func analyse(_ tree: JSONTree) -> WorkshopAnalysis? {
@@ -16,14 +18,20 @@ public struct WorkshopAnalysis: Sendable {
         let profile = checkTR031832(bom)
         var byComponent: [Int: [Offender]] = [:]
         for o in profile.offenders { if let i = o.component { byComponent[i, default: []].append(o) } }
+        var indexByRef: [String: Int] = [:]
+        for (i, c) in bom.components.enumerated() { if let r = c.bomRef, indexByRef[r] == nil { indexByRef[r] = i } }
         return WorkshopAnalysis(bom: bom, graph: graph, composition: Composition(bom, graph: graph),
-                                profile: profile, report: CompletenessReport(bom, profile), byComponent: byComponent)
+                                profile: profile, report: CompletenessReport(bom, profile), byComponent: byComponent,
+                                indexByRef: indexByRef)
     }
 
     public var verdict: Verdict { Verdict(report) }
 
     /// Offenders for one component, in rule order.
     public func offenders(component index: Int) -> [Offender] { byComponent[index] ?? [] }
+
+    /// The index of the first component with this bom-ref (the subject is not a component).
+    public func componentIndex(bomRef: String) -> Int? { indexByRef[bomRef] }
 
     /// Number of failed TR-03183-2 rules for one component.
     public func gapCount(component index: Int) -> Int { byComponent[index]?.count ?? 0 }
@@ -100,15 +108,18 @@ public enum GapTopic: String, Sendable, Hashable, CaseIterable {
 
 /// The one sentence the Overview says about Completeness.
 public struct Verdict: Sendable, Equatable {
-    /// No rule fails and the version is 1.6 or later.
+    /// No rule fails, the version is 1.6 or later, and the file parsed without errors.
     public let ready: Bool
+    /// Errors the parser reported; a file with errors is never ready.
+    public let parseErrors: Int
     /// The file's version when it is older than the TR requires.
     public let versionGap: String?
     /// Failing topics in `GapTopic` order.
     public let gaps: [GapTopic]
 
-    public init(ready: Bool, versionGap: String?, gaps: [GapTopic]) {
+    public init(ready: Bool, versionGap: String?, gaps: [GapTopic], parseErrors: Int = 0) {
         self.ready = ready
+        self.parseErrors = parseErrors
         self.versionGap = versionGap
         self.gaps = gaps
     }
@@ -116,6 +127,7 @@ public struct Verdict: Sendable, Equatable {
     init(_ report: CompletenessReport) {
         let failing = Set(report.sections.flatMap(\.rows).filter { $0.outcome == .fail }.map { GapTopic($0.rule.requirement) })
         let gaps = GapTopic.allCases.filter(failing.contains)
-        self.init(ready: gaps.isEmpty && report.versionGap == nil, versionGap: report.versionGap?.found, gaps: gaps)
+        self.init(ready: gaps.isEmpty && report.versionGap == nil && report.parseErrors == 0,
+                  versionGap: report.versionGap?.found, gaps: gaps, parseErrors: report.parseErrors)
     }
 }

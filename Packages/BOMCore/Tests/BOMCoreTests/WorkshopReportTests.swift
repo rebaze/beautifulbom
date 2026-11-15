@@ -46,6 +46,47 @@ import Testing
         #expect(WorkshopAnalysis.analyse(fixtureTree("edge/workshop-broken.json")) == nil)
     }
 
+    @Test func brokenFileIsNeverReady() {
+        let a = WorkshopAnalysis.analyse(fixtureTree("edge/bsi-pass-broken.cdx.json"))!
+        #expect(a.report.parseErrors > 0)
+        #expect(a.report.sections.flatMap(\.rows).allSatisfy { $0.outcome != .fail })
+        #expect(!a.verdict.ready)
+        #expect(a.verdict.parseErrors == a.report.parseErrors)
+    }
+
+    @Test func vendorFilterMatchesTheSlice() {
+        for slice in laravel.composition.vendors where !slice.unknown {
+            #expect(ComponentFilter(vendor: slice.label).apply(laravel) == slice.components)
+        }
+        #expect(ComponentFilter(vendor: "psr").apply(laravel).count == 5)
+        #expect(ComponentFilter(vendor: "laravel").apply(laravel).count == 3)
+    }
+
+    @Test func componentIndexByBomRef() {
+        #expect(laravel.componentIndex(bomRef: "doctrine/lexer-1.2.3.0") == 3)
+        #expect(laravel.componentIndex(bomRef: "nope") == nil)
+    }
+
+    @Test func noProductRefMeansNoDepth() {
+        let a = WorkshopAnalysis.analyse(tree(#"""
+        {"bomFormat":"CycloneDX","specVersion":"1.6","metadata":{"component":{"name":"p","version":"1"}},
+         "components":[{"bom-ref":"a","name":"a","version":"1"}],"dependencies":[{"ref":"a"}]}
+        """#))!
+        #expect(a.graph != nil)
+        #expect(a.graph?.root == nil)
+        #expect(a.composition.directCount == nil)
+        #expect(a.composition.depthHistogram == nil)
+    }
+
+    @Test func manufacturerLabelFallsBackToContact() {
+        let doc = bom(#"{"bomFormat":"CycloneDX","specVersion":"1.6","metadata":{"manufacturer":{"contact":[{"email":"psirt@acme.example"}]}}}"#)!
+        #expect(doc.manufacturerName == nil)
+        #expect(doc.manufacturerLabel == "psirt@acme.example")
+        let url = bom(#"{"bomFormat":"CycloneDX","specVersion":"1.6","metadata":{"manufacturer":{"url":["https://acme.example"]}}}"#)!
+        #expect(url.manufacturerLabel == "https://acme.example")
+        #expect(laravel.bom.manufacturerLabel == nil)
+    }
+
     @Test func offendersPerComponent() {
         #expect(laravel.offenders(component: 0).count == 8)
         #expect(laravel.gapCount(component: 0) == 8)

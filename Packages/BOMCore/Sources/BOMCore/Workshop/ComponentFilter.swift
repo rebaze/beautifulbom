@@ -11,9 +11,12 @@ public struct ComponentFilter: Sendable, Equatable {
     public var licence: LicenceFilter?
     public var missing: RuleID?
     public var depth: Int?
+    /// The vendor as Composition groups it: the group, else the purl namespace.
+    public var vendor: String?
 
-    public init(text: String = "", licence: LicenceFilter? = nil, missing: RuleID? = nil, depth: Int? = nil) {
+    public init(text: String = "", licence: LicenceFilter? = nil, missing: RuleID? = nil, depth: Int? = nil, vendor: String? = nil) {
         self.text = text
+        self.vendor = vendor
         self.licence = licence
         self.missing = missing
         self.depth = depth
@@ -28,6 +31,7 @@ public struct ComponentFilter: Sendable, Equatable {
         return a.bom.components.indices.filter { i in
             let c = a.bom.components[i]
             if let offending, !offending.contains(i) { return false }
+            if let vendor, Composition.vendor(of: c) != vendor { return false }
             if let depth, c.bomRef.flatMap({ a.graph?.depth($0) }) != depth { return false }
             if let licence {
                 let labels = c.licenses.map(\.label)

@@ -86,7 +86,7 @@ final class DocumentModel {
             if let kind = LaunchOptions.copyKind { copy(kind) }
         }
         if let name = LaunchOptions.view, let t = WorkshopTab(rawValue: name), analysis != nil || t == .source { show(tab: t) }
-        if let ref = LaunchOptions.component, let i = analysis?.bom.components.firstIndex(where: { $0.bomRef == ref }) {
+        if let ref = LaunchOptions.component, let i = analysis?.componentIndex(bomRef: ref) {
             openComponent(i)
         }
         if let rule = LaunchOptions.evidence.flatMap(RuleID.init), let first = analysis?.profile.offenders(rule).first {

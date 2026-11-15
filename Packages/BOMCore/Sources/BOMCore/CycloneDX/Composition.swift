@@ -23,7 +23,7 @@ public struct Composition: Sendable {
     public init(_ bom: CycloneDXDocument, graph: DependencyGraph?) {
         var vendors: [String?: [Int]] = [:], licenses: [String?: [Int]] = [:], ecosystems: [String?: [Int]] = [:]
         for (i, c) in bom.components.enumerated() {
-            vendors[Self.nonEmpty(c.group) ?? Self.nonEmpty(c.packageURL?.namespace), default: []].append(i)
+            vendors[Self.vendor(of: c), default: []].append(i)
             ecosystems[Self.nonEmpty(c.packageURL?.type), default: []].append(i)
             let labels = Array(Set(c.licenses.map(\.label)))
             if labels.isEmpty { licenses[nil, default: []].append(i) }
@@ -32,7 +32,7 @@ public struct Composition: Sendable {
         self.vendors = Self.slices(vendors)
         self.licenses = Self.slices(licenses)
         self.ecosystems = Self.slices(ecosystems)
-        if let graph {
+        if let graph, graph.root != nil {
             let histogram = graph.depthHistogram
             depthHistogram = histogram
             directCount = graph.direct.count
@@ -49,6 +49,11 @@ public struct Composition: Sendable {
         guard slices.count > keep else { return (slices, nil) }
         let rest = Set(slices[keep...].flatMap(\.components)).sorted()
         return (Array(slices[..<keep]), Slice(label: "", unknown: false, components: rest))
+    }
+
+    /// The vendor a component is grouped under: its group, else its purl namespace.
+    public static func vendor(of c: Component) -> String? {
+        nonEmpty(c.group) ?? nonEmpty(c.packageURL?.namespace)
     }
 
     private static func nonEmpty(_ s: String?) -> String? {

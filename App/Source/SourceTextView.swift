@@ -241,27 +241,39 @@ struct SourceTextView: NSViewRepresentable {
                 markerView.isHidden = true
                 return
             }
-            let source = display.source
-            let line = source.line(containing: absent.insertion)
-            let lineEnd = line + 1 < source.lineCount ? source.lineStart(line + 1) - 1 : source.bytes.count
-            let endAt = display.displayOffset(source.utf16Offset(of: ByteOffset(value: max(lineEnd, absent.insertion.value))))
-            guard let range = tlm.textRange(NSRange(location: endAt, length: 0)) else { return }
+            // After the end of the display line when that is on the insertion's visual
+            // line (pretty JSON); otherwise, as in a wrapped minified line, right-aligned
+            // on the visual line that holds the insertion point.
+            let at = display.displayOffset(display.source.utf16Offset(of: absent.insertion))
+            let endAt = display.displayLineEnd(containing: absent.insertion)
+            guard let here = caretRect(tlm, at), let end = caretRect(tlm, endAt) else { markerView.isHidden = true; return }
+            let origin = textView.textContainerOrigin
+            let font = NSFont.monospacedSystemFont(ofSize: model.textSize, weight: .regular)
+            markerView.text = "  ⟵ " + L("\"%@\" would be here: absent", absent.key)
+            markerView.font = font
+            let height = max(here.height, font.boundingRectForFont.height)
+            if abs(end.minY - here.minY) < 1 {
+                markerView.rightAligned = false
+                markerView.frame = CGRect(x: end.minX + origin.x, y: end.minY + origin.y,
+                                          width: max(0, textView.bounds.width - (end.minX + origin.x)), height: height)
+            } else {
+                markerView.rightAligned = true
+                markerView.frame = CGRect(x: origin.x, y: here.minY + origin.y,
+                                          width: max(0, textView.bounds.width - origin.x * 2), height: height)
+            }
+            markerView.isHidden = false
+            markerView.needsDisplay = true
+        }
+
+        private func caretRect(_ tlm: NSTextLayoutManager, _ location: Int) -> CGRect? {
+            guard let range = tlm.textRange(NSRange(location: location, length: 0)) else { return nil }
             tlm.ensureLayout(for: range)
             var caret: CGRect?
             tlm.enumerateTextSegments(in: range, type: .standard, options: []) { _, frame, _, _ in
                 caret = frame
                 return false
             }
-            guard let caret else { markerView.isHidden = true; return }
-            let origin = textView.textContainerOrigin
-            let font = NSFont.monospacedSystemFont(ofSize: model.textSize, weight: .regular)
-            markerView.text = "  ⟵ " + L("\"%@\" would be here: absent", absent.key)
-            markerView.font = font
-            let width = max(0, textView.bounds.width - (caret.minX + origin.x))
-            markerView.frame = CGRect(x: caret.minX + origin.x, y: caret.minY + origin.y, width: width,
-                                      height: max(caret.height, font.boundingRectForFont.height))
-            markerView.isHidden = false
-            markerView.needsDisplay = true
+            return caret
         }
 
         // MARK: NSTextViewDelegate
@@ -280,14 +292,27 @@ struct SourceTextView: NSViewRepresentable {
 final class AbsentMarkerView: NSView {
     var text = ""
     var font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
+    /// On a wrapped line the note sits at the right edge, over the line's tail, on an opaque label.
+    var rightAligned = false
 
     override func hitTest(_ point: NSPoint) -> NSView? { nil }
     override var isFlipped: Bool { true }
 
     override func draw(_ dirtyRect: NSRect) {
-        NSColor.systemRed.withAlphaComponent(0.08).setFill()
-        bounds.fill()
-        (text as NSString).draw(at: NSPoint(x: 0, y: 0), withAttributes: [.font: font, .foregroundColor: NSColor.systemRed])
+        let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: NSColor.systemRed]
+        if rightAligned {
+            let size = (text as NSString).size(withAttributes: attributes)
+            let label = NSRect(x: max(0, bounds.width - size.width - 8), y: 0, width: min(bounds.width, size.width + 8), height: bounds.height)
+            NSColor.textBackgroundColor.setFill()
+            label.fill()
+            NSColor.systemRed.withAlphaComponent(0.12).setFill()
+            label.fill()
+            (text as NSString).draw(at: NSPoint(x: label.minX + 4, y: 0), withAttributes: attributes)
+        } else {
+            NSColor.systemRed.withAlphaComponent(0.08).setFill()
+            bounds.fill()
+            (text as NSString).draw(at: NSPoint(x: 0, y: 0), withAttributes: attributes)
+        }
     }
 }
 

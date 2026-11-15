@@ -84,6 +84,19 @@ public struct DisplayText: Sendable {
         return ByteOffset(value: min(safeLexStarts[k], offset.value))
     }
 
+    /// The display offset where the display line holding `offset` ends: at the
+    /// source line's end, or earlier at an inserted break (minified files are one
+    /// source line). The absent marker is drawn there.
+    public func displayLineEnd(containing offset: ByteOffset) -> Int {
+        let line = source.line(containing: offset)
+        let lineEnd = line + 1 < source.lineCount ? source.lineStart(line + 1) - 1 : source.bytes.count
+        var end = displayOffset(source.utf16Offset(of: ByteOffset(value: max(lineEnd, offset.value))))
+        let u = source.utf16Offset(of: offset).value
+        let j = Self.count(breaks.count) { breaks[$0].value <= u }
+        if j < breaks.count { end = min(end, breaks[j].value + j) }
+        return end
+    }
+
     /// Display UTF-16 offset of a source UTF-16 offset.
     public func displayOffset(_ s: UTF16Offset) -> Int {
         s.value + Self.count(breaks.count) { breaks[$0].value < s.value }

@@ -41,19 +41,28 @@ struct CompositionView: View {
     }
 
     private func vendorFilter(_ s: Composition.Slice) -> ComponentFilter? {
-        s.unknown ? nil : ComponentFilter(text: s.label)
+        s.unknown ? nil : ComponentFilter(vendor: s.label)
+    }
+
+    /// Licence segments: the six largest, the rest as one "others" segment, so
+    /// hundreds of free-text licence names cannot overflow the bar.
+    @MainActor
+    static func licenceSegments(_ a: WorkshopAnalysis) -> [StackedBar.Segment] {
+        let (named, others) = a.composition.top(a.composition.licenses, keep: 6)
+        return named.map {
+            StackedBar.Segment(label: $0.unknown ? L("no licence stated") : $0.label, count: $0.count,
+                               filter: ComponentFilter(licence: $0.unknown ? .unknown : .is($0.label)), unknown: $0.unknown)
+        } + (others.map { [StackedBar.Segment(label: L("%d others", a.composition.licenses.count - named.count), count: $0.count,
+                                              filter: nil, isOthers: true)] } ?? [])
     }
 
     // MARK: Licences
 
     private var licences: some View {
         let slices = a.composition.licenses
-        let segments = slices.map {
-            StackedBar.Segment(label: $0.unknown ? L("no licence stated") : $0.label, count: $0.count,
-                               filter: ComponentFilter(licence: $0.unknown ? .unknown : .is($0.label)), unknown: $0.unknown)
-        }
+        let segments = Self.licenceSegments(a)
         return section(title: L("Under which licences"), caption: licenceCaption(slices)) {
-            StackedBar(segments: segments, total: slices.reduce(0) { $0 + $1.count }, t: t) { model.showComponents($0) }
+            StackedBar(segments: segments, total: segments.reduce(0) { $0 + $1.count }, t: t) { model.showComponents($0) }
         }
     }
 
@@ -102,6 +111,17 @@ struct CompositionView: View {
                     }
                 }
                 .frame(height: t.pad(220))
+            }
+        } else if a.graph != nil, let subject = a.bom.subject {
+            section(title: L("How deep it goes"), caption: nil) {
+                EvidenceButton(a.bom.tree.evidence(subject.entry, "bom-ref")) {
+                    HStack(spacing: t.pad(10)) {
+                        Image(systemName: "point.3.connected.trianglepath.dotted").foregroundStyle(.secondary)
+                        Text(L("The product has no bom-ref, so the dependency data cannot say how deep anything is.")).font(t.font(17))
+                        Pill(text: L("no \"bom-ref\""), kind: .gap, t: t)
+                    }
+                    .padding(.vertical, t.pad(4))
+                }
             }
         } else {
             section(title: L("How deep it goes"), caption: nil) {

@@ -137,6 +137,23 @@
         }
       }
     },
+    "%d parse errors": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d parse errors"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d Lesefehler"
+          }
+        }
+      }
+    },
     "%d steps away": {
       "extractionState": "manual",
       "localizations": {
@@ -1582,6 +1599,23 @@
         }
       }
     },
+    "The file has %d errors; the checks cover what could be read.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file has %d errors; the checks cover what could be read."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Datei enthält %d Fehler; die Prüfung umfasst, was sich lesen ließ."
+          }
+        }
+      }
+    },
     "The product": {
       "extractionState": "manual",
       "localizations": {
@@ -1595,6 +1629,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Das Produkt"
+          }
+        }
+      }
+    },
+    "The product has no bom-ref, so the dependency data cannot say how deep anything is.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The product has no bom-ref, so the dependency data cannot say how deep anything is."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Produkt hat keine bom-ref, deshalb sagen die Dependency-Daten nicht, wie tief etwas liegt."
           }
         }
       }
@@ -2109,6 +2160,23 @@
         }
       }
     },
+    "no \"bom-ref\"": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no \"bom-ref\""
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "keine „bom-ref“"
+          }
+        }
+      }
+    },
     "no \"dependencies\"": {
       "extractionState": "manual",
       "localizations": {
@@ -2432,6 +2500,23 @@
         }
       }
     },
+    "product has no bom-ref": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "product has no bom-ref"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Produkt ohne bom-ref"
+          }
+        }
+      }
+    },
     "reference": {
       "extractionState": "manual",
       "localizations": {
@@ -2513,6 +2598,23 @@
           "stringUnit": {
             "state": "translated",
             "value": "Version %@"
+          }
+        }
+      }
+    },
+    "vulnerabilities listed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "vulnerabilities listed"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Schwachstellen aufgeführt"
           }
         }
       }

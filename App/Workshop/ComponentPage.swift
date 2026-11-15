@@ -103,7 +103,7 @@ struct ComponentPage: View {
     }
 
     private func pathNode(_ ref: String, isLast: Bool, graph: DependencyGraph, compact: Bool = false) -> some View {
-        let target = a.bom.components.firstIndex { $0.bomRef == ref }
+        let target = ref == c.bomRef ? index : a.componentIndex(bomRef: ref)
         let comp = target.map { a.bom.components[$0] } ?? (a.bom.subject?.bomRef == ref ? a.bom.subject : nil)
         let label = comp.map { [$0.displayName, $0.version].compactMap { $0 }.joined(separator: " ") } ?? ref
         return Button {

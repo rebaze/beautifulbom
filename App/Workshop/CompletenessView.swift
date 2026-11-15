@@ -158,7 +158,7 @@ struct CompletenessView: View {
                 }
                 Spacer(minLength: t.pad(12))
                 if single {
-                    Pill(text: row.offenders.isEmpty ? L("present") : L("missing or malformed"), kind: row.offenders.isEmpty ? .ok : .gap, t: t)
+                    Pill(text: Self.pill(row), kind: row.offenders.isEmpty ? .ok : .gap, t: t)
                 } else if row.outcome != .notEvaluated {
                     Text("\(row.covered) / \(row.total)")
                         .font(t.font(16, .semibold)).monospacedDigit()
@@ -185,6 +185,12 @@ struct CompletenessView: View {
         case .subject: return L("The product the SBOM describes: %@.", a.bom.subject?.displayName ?? L("not named"))
         case .components: return L("%d components, checked at their level.", a.bom.components.count)
         }
+    }
+
+    /// The pill of a one-item row; the vulnerabilities rule fails when something is there.
+    static func pill(_ row: CompletenessReport.Row) -> String {
+        if row.rule.requirement == .vulnerabilities { return row.offenders.isEmpty ? L("none") : L("vulnerabilities listed") }
+        return row.offenders.isEmpty ? L("present") : L("missing or malformed")
     }
 
     static func sectionTitle(_ scope: Scope) -> String {

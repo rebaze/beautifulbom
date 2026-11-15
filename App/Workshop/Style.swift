@@ -120,12 +120,17 @@ extension View {
 extension Verdict {
     /// The one sentence about Completeness, e.g. "Not ready for TR-03183-2. Gaps: format version 1.4, timestamp, manufacturer, +4 more."
     var headline: String {
-        ready ? L("All TR-03183-2 fields present in the required form.") : L("Not ready for TR-03183-2.")
+        if ready { return L("All TR-03183-2 fields present in the required form.") }
+        if parseErrors > 0, gaps.isEmpty, versionGap == nil {
+            return L("The file has %d errors; the checks cover what could be read.", parseErrors)
+        }
+        return L("Not ready for TR-03183-2.")
     }
 
     var gapList: String? {
         guard !ready else { return nil }
         var parts: [String] = []
+        if parseErrors > 0 { parts.append(L("%d parse errors", parseErrors)) }
         if let v = versionGap { parts.append(L("format version %@", v)) }
         parts += gaps.map(\.label)
         let shown = parts.prefix(4)
