@@ -15,6 +15,7 @@ struct OverviewView: View {
             VStack(alignment: .leading, spacing: t.pad(22)) {
                 header
                 stats
+                madeOf
                 HStack(alignment: .top, spacing: t.pad(28)) {
                     facts.frame(maxWidth: .infinity, alignment: .leading)
                     verdict.frame(maxWidth: .infinity, alignment: .leading)
@@ -106,6 +107,29 @@ struct OverviewView: View {
                      "apk": "Alpine", "oci": "OCI", "docker": "Docker", "generic": "generic", "github": "GitHub",
                      "swift": "Swift", "cocoapods": "CocoaPods", "hex": "Hex", "pub": "pub", "conan": "Conan"]
         return names[purlType] ?? purlType
+    }
+
+    // MARK: Made of
+
+    private var madeOf: some View {
+        let (vendors, others) = a.composition.top(a.composition.vendors, keep: 5)
+        let vendorSegments = vendors.map { StackedBar.Segment(label: $0.unknown ? L("no vendor named") : $0.label, count: $0.count,
+                                                            filter: $0.unknown ? nil : ComponentFilter(text: $0.label), isOthers: $0.unknown) }
+            + (others.map { [StackedBar.Segment(label: L("others"), count: $0.count, filter: nil, isOthers: true)] } ?? [])
+        let licenceSegments = a.composition.licenses.map {
+            StackedBar.Segment(label: $0.unknown ? L("no licence stated") : $0.label, count: $0.count,
+                               filter: ComponentFilter(licence: $0.unknown ? .unknown : .is($0.label)), unknown: $0.unknown)
+        }
+        return Grid(alignment: .leading, horizontalSpacing: t.pad(16), verticalSpacing: t.pad(10)) {
+            GridRow {
+                Text(L("Vendors")).font(t.font(13)).foregroundStyle(.secondary)
+                StackedBar(segments: vendorSegments, total: a.bom.components.count, t: t, height: 26, showLegend: false) { model.showComponents($0) }
+            }
+            GridRow {
+                Text(L("Licences")).font(t.font(13)).foregroundStyle(.secondary)
+                StackedBar(segments: licenceSegments, total: licenceSegments.reduce(0) { $0 + $1.count }, t: t, height: 26, showLegend: false) { model.showComponents($0) }
+            }
+        }
     }
 
     // MARK: Facts
