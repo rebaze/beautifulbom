@@ -3,7 +3,7 @@ import BOMCore
 import Foundation
 import Observation
 
-enum SelectionOrigin { case source, structure, breadcrumb, history, reveal, launch }
+enum SelectionOrigin { case source, structure, breadcrumb, history, reveal, evidence, launch }
 
 enum CopyKind { case pointer, value, source }
 
@@ -23,12 +23,26 @@ final class DocumentModel {
     /// A byte range to reveal instead of the selected node's range (a diagnostic).
     private(set) var focusRange: Range<ByteOffset>?
 
+    // MARK: Workshop state
+    /// The CycloneDX analysis; nil for any other JSON (Source only).
+    private(set) var analysis: WorkshopAnalysis?
+    private(set) var tab: WorkshopTab = .source
+    /// The component page open on the Components tab (index into `bom.components`).
+    private(set) var componentPage: Int?
+    /// What the drawer shows; nil when nothing was asked for yet.
+    private(set) var evidence: Evidence?
+    private(set) var drawerOpen = false
+    var drawerPinned = false
+    /// The absent key the source view marks after the parent's opening line.
+    private(set) var absentMarker: Absent?
+    /// The filter the Components list starts with when another view opens it.
+    var componentFilter = ComponentFilter()
+    private var history = History<Place>()
+
     static let defaultTextSize: CGFloat = 13
     static let presentationTextSize: CGFloat = 24
     static let textSizeRange: ClosedRange<CGFloat> = 9...48
 
-    private var back: [NodeID] = []
-    private var forward: [NodeID] = []
     private let bytes: [UInt8]
     let openedAt = Date()
     private var firstLayoutReported = false
@@ -43,20 +57,103 @@ final class DocumentModel {
     func load() async {
         guard tree == nil else { return }
         let bytes = self.bytes
-        let (source, tree, display) = await Task.detached(priority: .userInitiated) {
+        let (source, tree, display, analysis) = await Task.detached(priority: .userInitiated) {
             let source = SourceDocument(bytes: bytes)
-            return (source, parseJSON(source), DisplayText(source: source))
+            let tree = parseJSON(source)
+            return (source, tree, DisplayText(source: source), WorkshopAnalysis.analyse(tree))
         }.value
         self.source = source
         self.display = display
+        self.analysis = analysis
         self.tree = tree
         timing("open→parsed")
         showDiagnostics = tree.diagnostics.contains { $0.severity == .error }
+        tab = analysis == nil ? .source : .overview
+        history.visit(.tab(tab))
+        applyLaunchOptions(tree)
+    }
+
+    private func applyLaunchOptions(_ tree: JSONTree) {
         if let pointer = LaunchOptions.selectPointer, let id = tree.resolve(pointer: pointer) {
+            if LaunchOptions.view == nil { show(tab: .source) }
             select(id, origin: .launch)
             if let kind = LaunchOptions.copyKind { copy(kind) }
         }
+        if let name = LaunchOptions.view, let t = WorkshopTab(rawValue: name), analysis != nil || t == .source { show(tab: t) }
+        if let ref = LaunchOptions.component, let i = analysis?.bom.components.firstIndex(where: { $0.bomRef == ref }) {
+            openComponent(i)
+        }
+        if let rule = LaunchOptions.evidence.flatMap(RuleID.init), let first = analysis?.profile.offenders(rule).first {
+            show(first.evidence)
+        }
     }
+
+    // MARK: Places
+
+    func show(tab t: WorkshopTab) {
+        guard analysis != nil || t == .source else { return }
+        tab = t
+        componentPage = nil
+        history.visit(.tab(t))
+    }
+
+    func openComponent(_ index: Int) {
+        tab = .components
+        componentPage = index
+        history.visit(.component(index))
+    }
+
+    /// Opens Components with `filter` applied.
+    func showComponents(_ filter: ComponentFilter) {
+        componentFilter = filter
+        show(tab: .components)
+    }
+
+    private func apply(_ place: Place) {
+        switch place {
+        case .tab(let t):
+            tab = t
+            componentPage = nil
+        case .component(let i):
+            tab = .components
+            componentPage = i
+        case .node(let id):
+            tab = .source
+            select(id, origin: .history)
+        }
+    }
+
+    // MARK: Evidence
+
+    /// Shows the source behind a statement in the drawer (or in the Source tab).
+    func show(_ e: Evidence) {
+        guard let tree else { return }
+        evidence = e
+        if tab != .source { drawerOpen = true }
+        switch e {
+        case .located(let id):
+            absentMarker = nil
+            select(id, origin: .evidence)
+        case .absent(let a):
+            absentMarker = a
+            select(a.parent, origin: .evidence)
+            // Reveal the parent's opening line ("metadata": {), not the whole object.
+            let start = tree.fullRange(a.parent).lowerBound
+            focusRange = start..<a.insertion
+        }
+    }
+
+    func closeDrawer() {
+        guard !drawerPinned else { return }
+        drawerOpen = false
+    }
+
+    func toggleDrawerPinned() {
+        drawerPinned.toggle()
+        if drawerPinned { drawerOpen = true }
+    }
+
+    var scale: CGFloat { textSize / Self.defaultTextSize }
 
     func reportFirstLayout() {
         guard !firstLayoutReported else { return }
@@ -71,10 +168,10 @@ final class DocumentModel {
     }
 
     func select(_ id: NodeID?, origin: SelectionOrigin) {
-        if origin != .history, let current = selection, current != id {
-            back.append(current)
-            forward.removeAll()
+        if tab == .source, origin != .history, origin != .evidence, let id, id != selection {
+            history.visit(.node(id))
         }
+        if origin != .evidence { absentMarker = nil }
         selection = id
         selectionOrigin = origin
         focusRange = nil
@@ -90,19 +187,15 @@ final class DocumentModel {
             : diagnostic.range
     }
 
-    var canGoBack: Bool { !back.isEmpty }
-    var canGoForward: Bool { !forward.isEmpty }
+    var canGoBack: Bool { history.canGoBack }
+    var canGoForward: Bool { history.canGoForward }
 
     func goBack() {
-        guard let previous = back.popLast() else { return }
-        if let current = selection { forward.append(current) }
-        select(previous, origin: .history)
+        if let p = history.back() { apply(p) }
     }
 
     func goForward() {
-        guard let next = forward.popLast() else { return }
-        if let current = selection { back.append(current) }
-        select(next, origin: .history)
+        if let p = history.forward() { apply(p) }
     }
 
     // MARK: Copy

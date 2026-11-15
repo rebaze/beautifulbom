@@ -8,6 +8,9 @@ import SwiftUI
 ///   --appearance dark|light  force an appearance (checks without changing system settings)
 ///   --text-size <pt>     start with this text size (24 = presentation size)
 ///   --window-size <WxH>  resize the document window (points), e.g. for screenshots
+///   --view <tab>         open a tab: overview, composition, completeness, components, source
+///   --component <ref>    open the component page for a bom-ref
+///   --evidence <rule>    show the first offender of a rule (e.g. sbom.timestamp) in the drawer
 ///   --snapshot <png>     render the front window into a PNG, then quit
 ///   BBOM_TIMING=1        print open→parsed and open→first layout times
 enum LaunchOptions {
@@ -32,6 +35,9 @@ enum LaunchOptions {
         let parts = spec.split(separator: "x").compactMap { Double($0) }
         return parts.count == 2 ? NSSize(width: parts[0], height: parts[1]) : nil
     }
+    static let view = value("--view")
+    static let component = value("--component")
+    static let evidence = value("--evidence")
     static let timing = ProcessInfo.processInfo.environment["BBOM_TIMING"] == "1"
 }
 

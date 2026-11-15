@@ -80,7 +80,15 @@ final class Highlighter {
             }
             tlm.setRenderingAttributes(attributes, for: range)
         }
+        // setRenderingAttributes replaced the node background on these tokens; restore it.
+        if let node = nodeHighlight,
+           let windowRange = tlm.textRange(NSRange(location: u16[0], length: u16[u16.count - 1] - u16[0])),
+           let overlap = node.intersection(windowRange) {
+            tlm.addRenderingAttribute(.backgroundColor, value: Self.nodeBackground, for: overlap)
+        }
     }
+
+    static let nodeBackground = NSColor.controlAccentColor.withAlphaComponent(0.12)
 
     /// A quiet background behind the selected node's full range.
     func highlightNode(_ range: NSRange?) {
@@ -90,9 +98,7 @@ final class Highlighter {
             nodeHighlight = nil
         }
         guard let range, let textRange = tlm.textRange(range) else { return }
-        tlm.addRenderingAttribute(.backgroundColor,
-                                  value: NSColor.controlAccentColor.withAlphaComponent(0.12),
-                                  for: textRange)
+        tlm.addRenderingAttribute(.backgroundColor, value: Self.nodeBackground, for: textRange)
         nodeHighlight = textRange
     }
 }

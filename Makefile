@@ -35,10 +35,14 @@ project:
 app: project
 	set -o pipefail; xcodebuild -project BeautifulBOM.xcodeproj -scheme BeautifulBOM -configuration $(CONFIG) -derivedDataPath build build | xcbeautify --quiet
 
-# make snapshot FILE=<json> OUT=<png> [SELECT=<json-pointer>]
+# make snapshot FILE=<json> OUT=<png> [SELECT=<pointer>] [VIEW=<tab>] [COMPONENT=<bom-ref>]
+#   [EVIDENCE=<rule id>] [SIZE=1440x900] [TEXT=24] [APPEARANCE=dark|light] [UILANG=de|en]
 snapshot:
 	timeout 30 $(APP)/Contents/MacOS/BeautifulBOM -ApplePersistenceIgnoreState YES \
-	  --open "$(abspath $(FILE))" --snapshot "$(abspath $(OUT))" $(if $(SELECT),--select '$(SELECT)')
+	  --open "$(abspath $(FILE))" --snapshot "$(abspath $(OUT))" $(if $(SELECT),--select '$(SELECT)') \
+	  $(if $(VIEW),--view $(VIEW)) $(if $(COMPONENT),--component '$(COMPONENT)') $(if $(EVIDENCE),--evidence $(EVIDENCE)) \
+	  --window-size $(or $(SIZE),1440x900) $(if $(TEXT),--text-size $(TEXT)) $(if $(APPEARANCE),--appearance $(APPEARANCE)) \
+	  $(if $(UILANG),--language $(UILANG))
 
 clean:
 	rm -rf build Packages/BOMCore/.build

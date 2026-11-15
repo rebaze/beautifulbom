@@ -21,6 +21,9 @@ struct BBOMCommands: Commands {
             Button("Presentation Size") { model?.togglePresentationSize() }
                 .keyboardShortcut("p", modifiers: [.command, .option])
                 .disabled(model == nil)
+            Button(model?.drawerPinned == true ? "Let Evidence Close" : "Keep Evidence Open") { model?.toggleDrawerPinned() }
+                .keyboardShortcut("e", modifiers: [.command, .option])
+                .disabled(model?.analysis == nil)
             Divider()
         }
         CommandGroup(after: .pasteboard) {

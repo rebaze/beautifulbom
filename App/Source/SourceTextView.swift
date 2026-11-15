@@ -15,6 +15,7 @@ struct SourceTextView: NSViewRepresentable {
     func updateNSView(_ view: NSScrollView, context: Context) {
         // Read observed properties here so SwiftUI calls us when they change.
         context.coordinator.update(serial: model.selectionSerial, textSize: model.textSize)
+        context.coordinator.updateMarker(model.absentMarker)
     }
 
     @MainActor
@@ -27,6 +28,8 @@ struct SourceTextView: NSViewRepresentable {
         private var appliedSerial = -1
         private var appliedTextSize: CGFloat = 0
         private var applyingSelection = false
+        private var marker: Absent?
+        private let markerView = AbsentMarkerView()
 
         init(model: DocumentModel) { self.model = model }
 
@@ -78,6 +81,8 @@ struct SourceTextView: NSViewRepresentable {
                 self.highlighter = highlighter
             }
             ruler.font = Self.rulerFont(model.textSize)
+            markerView.isHidden = true
+            textView.addSubview(markerView)
 
             NotificationCenter.default.addObserver(self, selector: #selector(viewportChanged),
                                                    name: NSView.boundsDidChangeNotification, object: scrollView.contentView)
@@ -167,7 +172,8 @@ struct SourceTextView: NSViewRepresentable {
             return display.displayRange(tree.fullRange(id))
         }
 
-        private func applyNodeHighlight() { highlighter?.highlightNode(selectedNodeRange()) }
+        /// An absent key shows only its marker, not the whole parent object.
+        private func applyNodeHighlight() { highlighter?.highlightNode(model.absentMarker == nil ? selectedNodeRange() : nil) }
 
         /// The view may not be in a window or sized yet (first selection at launch).
         private func revealWhenReady(attempts: Int = 20) {
@@ -219,6 +225,43 @@ struct SourceTextView: NSViewRepresentable {
                   let viewport = tlm.textViewportLayoutController.viewportRange else { return }
             highlighter?.colour(visible: tlm.nsRange(viewport))
             ruler.needsDisplay = true
+            positionMarker()
+        }
+
+        func updateMarker(_ absent: Absent?) {
+            guard textView != nil, absent != marker else { return }
+            marker = absent
+            positionMarker()
+        }
+
+        /// Draws "⟵ "key" would be here: absent" after the end of the line that
+        /// holds the insertion point. A decoration: the text is never changed.
+        private func positionMarker() {
+            guard let absent = marker, let display = model.display, let tlm = textView.textLayoutManager else {
+                markerView.isHidden = true
+                return
+            }
+            let source = display.source
+            let line = source.line(containing: absent.insertion)
+            let lineEnd = line + 1 < source.lineCount ? source.lineStart(line + 1) - 1 : source.bytes.count
+            let endAt = display.displayOffset(source.utf16Offset(of: ByteOffset(value: max(lineEnd, absent.insertion.value))))
+            guard let range = tlm.textRange(NSRange(location: endAt, length: 0)) else { return }
+            tlm.ensureLayout(for: range)
+            var caret: CGRect?
+            tlm.enumerateTextSegments(in: range, type: .standard, options: []) { _, frame, _, _ in
+                caret = frame
+                return false
+            }
+            guard let caret else { markerView.isHidden = true; return }
+            let origin = textView.textContainerOrigin
+            let font = NSFont.monospacedSystemFont(ofSize: model.textSize, weight: .regular)
+            markerView.text = "  ⟵ \"\(absent.key)\" would be here: absent"
+            markerView.font = font
+            let width = max(0, textView.bounds.width - (caret.minX + origin.x))
+            markerView.frame = CGRect(x: caret.minX + origin.x, y: caret.minY + origin.y, width: width,
+                                      height: max(caret.height, font.boundingRectForFont.height))
+            markerView.isHidden = false
+            markerView.needsDisplay = true
         }
 
         // MARK: NSTextViewDelegate
@@ -230,6 +273,21 @@ struct SourceTextView: NSViewRepresentable {
             let id = tree.node(at: display.source.byteOffset(of: display.sourceOffset(location)))
             if id != model.selection { model.select(id, origin: .source) }
         }
+    }
+}
+
+/// The red note for an absent key; lets clicks through.
+final class AbsentMarkerView: NSView {
+    var text = ""
+    var font = NSFont.monospacedSystemFont(ofSize: 13, weight: .regular)
+
+    override func hitTest(_ point: NSPoint) -> NSView? { nil }
+    override var isFlipped: Bool { true }
+
+    override func draw(_ dirtyRect: NSRect) {
+        NSColor.systemRed.withAlphaComponent(0.08).setFill()
+        bounds.fill()
+        (text as NSString).draw(at: NSPoint(x: 0, y: 0), withAttributes: [.font: font, .foregroundColor: NSColor.systemRed])
     }
 }
 
