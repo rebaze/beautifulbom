@@ -17,6 +17,8 @@ public struct JSONTree: Sendable {
     var keyEnds: [Int32] = []
     var valueStarts: [Int32] = []
     var valueEnds: [Int32] = []
+    /// Members whose key occurs more than once in the same object (all occurrences).
+    var duplicateKeyNodes: Set<Int32> = []
 
     init(source: SourceDocument) { self.source = source }
 

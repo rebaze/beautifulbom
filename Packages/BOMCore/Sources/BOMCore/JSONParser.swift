@@ -7,7 +7,7 @@ public func parseJSON(_ source: SourceDocument) -> JSONTree {
     return parser.tree
 }
 
-private struct Token {
+private struct PToken {
     enum Kind { case beginObject, endObject, beginArray, endArray, colon, comma, string, word, eof }
     var kind: Kind
     var start: Int
@@ -20,7 +20,7 @@ private struct Frame {
     let openOffset: Int
     var lastChild: Int32 = -1
     var count: Int32 = 0
-    var keys: [String: Int] = [:]  // decoded key -> byte offset of first occurrence
+    var keys: [String: Int32] = [:]  // decoded key -> node of first occurrence
 }
 
 private enum Expect {
@@ -77,7 +77,7 @@ private struct Parser {
 
     /// Handles one token. Returns true if the same token must be handled again
     /// (after a state change), false if it was consumed.
-    mutating func handle(_ tok: Token) -> Bool {
+    mutating func handle(_ tok: PToken) -> Bool {
         switch expect {
         case .value, .valueOrEnd:
             if beginValue(tok) { return false }
@@ -146,7 +146,7 @@ private struct Parser {
     }
 
     /// Skips tokens to the next ',' or closing bracket at this depth.
-    mutating func recover(_ tok: Token, _ message: String?) -> Bool {
+    mutating func recover(_ tok: PToken, _ message: String?) -> Bool {
         if let message { error(tok.start, tok.end, message) }
         var t = tok
         var depth = 0
@@ -167,11 +167,11 @@ private struct Parser {
         return false
     }
 
-    func isValueStart(_ tok: Token) -> Bool {
+    func isValueStart(_ tok: PToken) -> Bool {
         tok.kind == .beginObject || tok.kind == .beginArray || tok.kind == .string || tok.kind == .word
     }
 
-    mutating func beginValue(_ tok: Token) -> Bool {
+    mutating func beginValue(_ tok: PToken) -> Bool {
         switch tok.kind {
         case .beginObject, .beginArray:
             let isObject = tok.kind == .beginObject
@@ -238,10 +238,12 @@ private struct Parser {
                 tree.keyEnds.append(Int32(key.end))
                 let decoded = decodeJSONString(bytes, key.start..<key.end)
                 if let first = frame.keys[decoded] {
-                    let (l, c) = source.lineColumn(of: ByteOffset(value: first))
+                    tree.duplicateKeyNodes.insert(first)
+                    tree.duplicateKeyNodes.insert(id)
+                    let (l, c) = source.lineColumn(of: ByteOffset(value: Int(tree.keyStarts[Int(first)])))
                     warn(key.start, key.end, "Duplicate key \"\(decoded)\" (first at line \(l), column \(c))")
                 } else {
-                    frame.keys[decoded] = key.start
+                    frame.keys[decoded] = id
                 }
             } else {
                 tree.keyStarts.append(-1)
@@ -253,7 +255,7 @@ private struct Parser {
         return id
     }
 
-    mutating func classify(_ tok: Token) -> NodeKind {
+    mutating func classify(_ tok: PToken) -> NodeKind {
         let w = bytes[tok.start..<tok.end]
         if w.elementsEqual("true".utf8) || w.elementsEqual("false".utf8) { return .bool }
         if w.elementsEqual("null".utf8) { return .null }
@@ -269,7 +271,7 @@ private struct Parser {
 
     // MARK: Tokenizer
 
-    mutating func nextToken() -> Token {
+    mutating func nextToken() -> PToken {
         while pos < bytes.count {
             let b = bytes[pos]
             switch b {
@@ -295,26 +297,26 @@ private struct Parser {
             default: return word()
             }
         }
-        return Token(kind: .eof, start: bytes.count, end: bytes.count)
+        return PToken(kind: .eof, start: bytes.count, end: bytes.count)
     }
 
-    mutating func single(_ kind: Token.Kind) -> Token {
+    mutating func single(_ kind: PToken.Kind) -> PToken {
         pos += 1
-        return Token(kind: kind, start: pos - 1, end: pos)
+        return PToken(kind: kind, start: pos - 1, end: pos)
     }
 
-    mutating func string() -> Token {
+    mutating func string() -> PToken {
         let s = pos
         pos += 1
         while pos < bytes.count {
             let b = bytes[pos]
             if b == UInt8(ascii: "\"") {
                 pos += 1
-                return Token(kind: .string, start: s, end: pos)
+                return PToken(kind: .string, start: s, end: pos)
             }
             if b == 0x0A || b == 0x0D {
                 error(s, pos, "Unterminated string (a string must close on the same line)")
-                return Token(kind: .string, start: s, end: pos)
+                return PToken(kind: .string, start: s, end: pos)
             }
             if b == UInt8(ascii: "\\") {
                 let e = pos
@@ -343,32 +345,32 @@ private struct Parser {
             pos += 1
         }
         error(s, bytes.count, "Unterminated string at the end of the file")
-        return Token(kind: .string, start: s, end: bytes.count)
+        return PToken(kind: .string, start: s, end: bytes.count)
     }
 
-    mutating func word() -> Token {
+    mutating func word() -> PToken {
         let s = pos
         while pos < bytes.count {
             switch bytes[pos] {
             case 0x20, 0x09, 0x0A, 0x0D, UInt8(ascii: "{"), UInt8(ascii: "}"), UInt8(ascii: "["),
                  UInt8(ascii: "]"), UInt8(ascii: ":"), UInt8(ascii: ","), UInt8(ascii: "\""):
-                return Token(kind: .word, start: s, end: pos)
+                return PToken(kind: .word, start: s, end: pos)
             default:
                 pos += 1
             }
         }
-        return Token(kind: .word, start: s, end: pos)
+        return PToken(kind: .word, start: s, end: pos)
     }
 
     // MARK: Diagnostics
 
-    func text(_ tok: Token) -> String {
+    func text(_ tok: PToken) -> String {
         if tok.kind == .eof { return "end of file" }
         let t = source.slice(ByteOffset(value: tok.start)..<ByteOffset(value: min(tok.end, tok.start + 40)))
         return tok.end - tok.start > 40 ? t + "…" : t
     }
 
-    func char(_ tok: Token) -> String { text(tok) }
+    func char(_ tok: PToken) -> String { text(tok) }
 
     mutating func error(_ s: Int, _ e: Int, _ message: String) {
         tree.diagnostics.append(Diagnostic(severity: .error, range: ByteOffset(value: s)..<ByteOffset(value: e), message: message))
