@@ -4,6 +4,7 @@ import SwiftUI
 /// Launch options for agents and measurements:
 ///   --open <path>        open a file at launch
 ///   --select <pointer>   select the node an RFC 6901 pointer names, once parsed
+///   --copy pointer|value|source  copy the selected node, after --select
 ///   --snapshot <png>     render the front window into a PNG, then quit
 ///   BBOM_TIMING=1        print open→parsed and open→first layout times
 enum LaunchOptions {
@@ -17,6 +18,12 @@ enum LaunchOptions {
     static let openPath = value("--open")
     static let selectPointer = value("--select")
     static let snapshotPath = value("--snapshot")
+    static let copyKind: CopyKind? = switch value("--copy") {
+    case "pointer": .pointer
+    case "value": .value
+    case "source": .source
+    default: nil
+    }
     static let timing = ProcessInfo.processInfo.environment["BBOM_TIMING"] == "1"
 }
 

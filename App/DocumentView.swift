@@ -16,6 +16,10 @@ struct DocumentView: View {
                 VStack(spacing: 0) {
                     BreadcrumbBar(model: model)
                     Divider()
+                    if let tree = model.tree, !tree.diagnostics.isEmpty {
+                        DiagnosticsBanner(model: model, diagnostics: tree.diagnostics)
+                        Divider()
+                    }
                     HSplitView {
                         StructureOutlineView(model: model)
                             .frame(minWidth: 240, idealWidth: 340, maxWidth: 640)

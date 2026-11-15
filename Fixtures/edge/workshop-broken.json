@@ -1,0 +1,9 @@
+{
+  "bomFormat": "CycloneDX",
+  // exported by hand
+  "components": [
+    {"name": "zlib", "version": tru},
+    {"name": "openssl", "version": "3.0.1",},
+    {"name": "curl" "version": "8.4.0"}
+  ],
+  "name": "dup", "name": "dup2"

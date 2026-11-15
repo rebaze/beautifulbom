@@ -142,7 +142,8 @@ struct SourceTextView: NSViewRepresentable {
         }
 
         private func revealSelection() {
-            guard let range = selectedNodeRange() else { return }
+            let focus = model.focusRange.flatMap { r in model.display.map { $0.displayRange(r) } }
+            guard let range = focus ?? selectedNodeRange() else { return }
             applyingSelection = true
             textView.setSelectedRange(range)
             applyingSelection = false

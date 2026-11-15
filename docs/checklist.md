@@ -33,3 +33,10 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ⏳ ⌘[ and ⌘] (Go › Back/Forward) return to earlier selections.
 - ⏳ ⌥-click on a disclosure triangle expands a small subtree fully but only one level of a large one (> 2 000 nodes).
 - ⏳ Keyboard only: open a file, move through the outline, copy a pointer, without the mouse.
+
+## Copy and diagnostics (Task 8)
+
+- ✅ Copy Value / Copy Source / Copy JSON Pointer put the decoded value, the original fragment and the RFC 6901 pointer on the pasteboard (`--copy` with `pbpaste`, `Fixtures/edge/escapes.json`: `x"y`, `"x\"y": "x\"y"`, `/path~1with~0tilde`).
+- ✅ A broken file shows a banner with errors and warnings by line:column, while the rest stays navigable (`Fixtures/edge/workshop-broken.json`).
+- ⏳ Edit menu: Copy JSON Pointer ⌥⌘C, Copy Value ⇧⌘C, Copy Source ⌥⇧⌘C; ⌘C in the outline copies the source; the outline's context menu offers all three.
+- ⏳ Clicking a diagnostic reveals its exact range in the source.

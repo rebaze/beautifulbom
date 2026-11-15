@@ -20,6 +20,8 @@ final class DocumentModel {
     private(set) var selectionSerial = 0
     var textSize: CGFloat = DocumentModel.defaultTextSize
     var showDiagnostics = false
+    /// A byte range to reveal instead of the selected node's range (a diagnostic).
+    private(set) var focusRange: Range<ByteOffset>?
 
     static let defaultTextSize: CGFloat = 13
     static let presentationTextSize: CGFloat = 24
@@ -48,8 +50,10 @@ final class DocumentModel {
         self.display = display
         self.tree = tree
         timing("open→parsed")
+        showDiagnostics = tree.diagnostics.contains { $0.severity == .error }
         if let pointer = LaunchOptions.selectPointer, let id = tree.resolve(pointer: pointer) {
             select(id, origin: .launch)
+            if let kind = LaunchOptions.copyKind { copy(kind) }
         }
     }
 
@@ -72,7 +76,17 @@ final class DocumentModel {
         }
         selection = id
         selectionOrigin = origin
+        focusRange = nil
         selectionSerial += 1
+    }
+
+    /// Selects the node where a diagnostic starts and reveals the diagnostic's own range.
+    func reveal(_ diagnostic: Diagnostic) {
+        guard let tree else { return }
+        select(tree.node(at: diagnostic.range.lowerBound) ?? tree.root, origin: .reveal)
+        focusRange = diagnostic.range.isEmpty
+            ? diagnostic.range.lowerBound..<ByteOffset(value: min(diagnostic.range.lowerBound.value + 1, tree.source.bytes.count))
+            : diagnostic.range
     }
 
     var canGoBack: Bool { !back.isEmpty }

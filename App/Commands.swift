@@ -23,6 +23,18 @@ struct BBOMCommands: Commands {
                 .disabled(model == nil)
             Divider()
         }
+        CommandGroup(after: .pasteboard) {
+            Divider()
+            Button("Copy JSON Pointer") { model?.copy(.pointer) }
+                .keyboardShortcut("c", modifiers: [.command, .option])
+                .disabled(model?.selection == nil)
+            Button("Copy Value") { model?.copy(.value) }
+                .keyboardShortcut("c", modifiers: [.command, .shift])
+                .disabled(model?.selection == nil)
+            Button("Copy Source") { model?.copy(.source) }
+                .keyboardShortcut("c", modifiers: [.command, .option, .shift])
+                .disabled(model?.selection == nil)
+        }
         CommandMenu("Go") {
             Button("Back") { model?.goBack() }
                 .keyboardShortcut("[", modifiers: .command)
