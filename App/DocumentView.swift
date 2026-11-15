@@ -8,7 +8,7 @@ struct DocumentView: View {
     @State private var drawerFraction: CGFloat = 0.38
 
     init(document: BOMDocument, fileURL: URL?) {
-        _model = State(initialValue: DocumentModel(bytes: document.bytes))
+        _model = State(initialValue: DocumentModel(bytes: document.bytes, fileName: fileURL?.lastPathComponent))
         self.fileURL = fileURL
     }
 

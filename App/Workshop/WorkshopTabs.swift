@@ -30,7 +30,9 @@ struct WorkshopContent: View {
 
     var body: some View {
         switch model.tab {
-        case .overview, .composition, .completeness, .components:
+        case .overview:
+            OverviewView(model: model, a: analysis)
+        case .composition, .completeness, .components:
             ScrollView {
                 Text(model.tab.title)
                     .font(.system(size: 30 * model.scale, weight: .semibold))

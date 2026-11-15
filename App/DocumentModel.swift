@@ -47,8 +47,11 @@ final class DocumentModel {
     let openedAt = Date()
     private var firstLayoutReported = false
 
-    init(bytes: [UInt8]) {
+    let fileName: String?
+
+    init(bytes: [UInt8], fileName: String? = nil) {
         self.bytes = bytes
+        self.fileName = fileName
         if let size = LaunchOptions.textSize { textSize = min(max(size, Self.textSizeRange.lowerBound), Self.textSizeRange.upperBound) }
     }
 
