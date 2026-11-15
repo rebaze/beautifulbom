@@ -9,7 +9,7 @@ let package = Package(
         .executable(name: "bbom-bench", targets: ["bbom-bench"]),
     ],
     targets: [
-        .target(name: "BOMCore"),
+        .target(name: "BOMCore", exclude: ["Resources/NOTICE.md"], resources: [.copy("Resources/spdx.schema.json")]),
         .executableTarget(name: "bbom-bench", dependencies: ["BOMCore"]),
         .testTarget(name: "BOMCoreTests", dependencies: ["BOMCore"]),
     ]
