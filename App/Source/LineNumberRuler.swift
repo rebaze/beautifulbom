@@ -25,8 +25,11 @@ final class LineNumberRuler: NSRulerView {
         let digits = max(3, String(source.lineCount).count)
         let sample = String(repeating: "8", count: digits) as NSString
         ruleThickness = ceil(sample.size(withAttributes: [.font: font]).width) + 20
+        scrollView?.tile()
         needsDisplay = true
     }
+
+    override var requiredThickness: CGFloat { ruleThickness }
 
     override var isOpaque: Bool { true }
 

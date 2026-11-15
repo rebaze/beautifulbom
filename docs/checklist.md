@@ -22,3 +22,14 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ⏳ ⌘+ / ⌘− / ⌘0 change the text size and keep the selection visible; ⌥⌘P toggles presentation size (24 pt).
 - ⏳ ⌘C in the source of a minified file copies the original text, without line breaks added for layout.
 - ⏳ VoiceOver reads the source text.
+
+## Structure, sync, breadcrumbs (Task 7)
+
+- ✅ A launch selection expands the outline to the node, selects and centres it, and reveals the same range in the source (10 MB, `/components/2000/hashes/0/content`).
+- ✅ Duplicate keys show a warning badge; the breadcrumb pointer reads `/name (duplicate 1 of 2)` (`Fixtures/edge/duplicates.json`).
+- ✅ Object rows show a readable hint (name, else id/bom-ref, plus version), e.g. `[2001] {9} guava-2001 7.15.44`.
+- ⏳ Clicking in the source selects the matching outline row; arrow keys in the outline move the source highlight.
+- ⏳ Breadcrumb segments select their node.
+- ⏳ ⌘[ and ⌘] (Go › Back/Forward) return to earlier selections.
+- ⏳ ⌥-click on a disclosure triangle expands a small subtree fully but only one level of a large one (> 2 000 nodes).
+- ⏳ Keyboard only: open a file, move through the outline, copy a pointer, without the mouse.

@@ -63,6 +63,7 @@ struct SourceTextView: NSViewRepresentable {
             scrollView.verticalRulerView = ruler
             scrollView.hasVerticalRuler = true
             scrollView.rulersVisible = true
+            scrollView.tile()
 
             self.textView = textView
             self.scrollView = scrollView
@@ -165,8 +166,10 @@ struct SourceTextView: NSViewRepresentable {
                 return
             }
             let clip = scrollView.contentView
-            let y = max(0, frame.midY + textView.textContainerInset.height - clip.bounds.height / 2)
-            clip.scroll(to: NSPoint(x: 0, y: y))
+            // Keep x: the ruler is a content inset, so x = 0 would slide text under it.
+            var visible = clip.bounds
+            visible.origin.y = frame.midY + textView.textContainerInset.height - clip.bounds.height / 2
+            clip.scroll(to: clip.constrainBoundsRect(visible).origin)
             scrollView.reflectScrolledClipView(clip)
             viewportChanged()
         }

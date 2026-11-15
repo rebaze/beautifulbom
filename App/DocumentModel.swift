@@ -1,8 +1,11 @@
+import AppKit
 import BOMCore
 import Foundation
 import Observation
 
 enum SelectionOrigin { case source, structure, breadcrumb, history, reveal, launch }
+
+enum CopyKind { case pointer, value, source }
 
 /// State of one open document window. Views read the selection and react to
 /// `selectionSerial`; every pane addresses the source through BOMCore ranges.
@@ -85,6 +88,24 @@ final class DocumentModel {
         guard let next = forward.popLast() else { return }
         if let current = selection { back.append(current) }
         select(next, origin: .history)
+    }
+
+    // MARK: Copy
+
+    /// The text a copy command puts on the pasteboard for `node` (default: the selection).
+    func copyText(_ kind: CopyKind, node: NodeID? = nil) -> String? {
+        guard let id = node ?? selection, let tree else { return nil }
+        switch kind {
+        case .pointer: return tree.pointer(id).description
+        case .value: return tree.decodedValue(id)
+        case .source: return tree.source.slice(tree.fullRange(id))
+        }
+    }
+
+    func copy(_ kind: CopyKind, node: NodeID? = nil) {
+        guard let text = copyText(kind, node: node) else { return }
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(text, forType: .string)
     }
 
     // MARK: Text size

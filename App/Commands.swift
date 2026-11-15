@@ -23,5 +23,13 @@ struct BBOMCommands: Commands {
                 .disabled(model == nil)
             Divider()
         }
+        CommandMenu("Go") {
+            Button("Back") { model?.goBack() }
+                .keyboardShortcut("[", modifiers: .command)
+                .disabled(!(model?.canGoBack ?? false))
+            Button("Forward") { model?.goForward() }
+                .keyboardShortcut("]", modifiers: .command)
+                .disabled(!(model?.canGoForward ?? false))
+        }
     }
 }

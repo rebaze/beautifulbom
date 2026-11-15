@@ -13,7 +13,16 @@ struct DocumentView: View {
     var body: some View {
         Group {
             if model.isLoaded {
-                SourceTextView(model: model)
+                VStack(spacing: 0) {
+                    BreadcrumbBar(model: model)
+                    Divider()
+                    HSplitView {
+                        StructureOutlineView(model: model)
+                            .frame(minWidth: 240, idealWidth: 340, maxWidth: 640)
+                        SourceTextView(model: model)
+                            .frame(minWidth: 360)
+                    }
+                }
             } else {
                 ProgressView("Reading…")
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
