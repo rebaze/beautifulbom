@@ -102,3 +102,10 @@ extension GapTopic {
         }
     }
 }
+
+/// A horizontal separator line, whatever the surrounding stack.
+struct Hairline: View {
+    var body: some View {
+        Rectangle().fill(Color(nsColor: .separatorColor)).frame(height: 1).frame(maxWidth: .infinity)
+    }
+}

@@ -190,7 +190,7 @@ struct OverviewView: View {
             Spacer(minLength: 0)
         }
         .padding(.vertical, t.pad(8))
-        .overlay(alignment: .bottom) { Divider().opacity(0.6) }
+        .overlay(alignment: .bottom) { Hairline() }
     }
 
     static func formatTimestamp(_ s: String) -> String {

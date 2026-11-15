@@ -34,7 +34,9 @@ struct WorkshopContent: View {
             OverviewView(model: model, a: analysis)
         case .composition:
             CompositionView(model: model, a: analysis)
-        case .completeness, .components:
+        case .completeness:
+            CompletenessView(model: model, a: analysis)
+        case .components:
             ScrollView {
                 Text(model.tab.title)
                     .font(.system(size: 30 * model.scale, weight: .semibold))
