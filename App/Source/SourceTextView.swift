@@ -255,7 +255,7 @@ struct SourceTextView: NSViewRepresentable {
             guard let caret else { markerView.isHidden = true; return }
             let origin = textView.textContainerOrigin
             let font = NSFont.monospacedSystemFont(ofSize: model.textSize, weight: .regular)
-            markerView.text = "  ⟵ \"\(absent.key)\" would be here: absent"
+            markerView.text = "  ⟵ " + L("\"%@\" would be here: absent", absent.key)
             markerView.font = font
             let width = max(0, textView.bounds.width - (caret.minX + origin.x))
             markerView.frame = CGRect(x: caret.minX + origin.x, y: caret.minY + origin.y, width: width,

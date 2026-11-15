@@ -26,6 +26,14 @@ struct BBOMCommands: Commands {
                 .disabled(model?.analysis == nil)
             Divider()
         }
+        CommandGroup(after: .sidebar) {
+            Picker("Language", selection: Binding(get: { LanguageSettings.shared.language },
+                                                  set: { LanguageSettings.shared.language = $0 })) {
+                Text("System").tag(AppLanguage.system)
+                Text("English").tag(AppLanguage.en)
+                Text("Deutsch").tag(AppLanguage.de)
+            }
+        }
         CommandGroup(after: .pasteboard) {
             Divider()
             Button("Copy JSON Pointer") { model?.copy(.pointer) }

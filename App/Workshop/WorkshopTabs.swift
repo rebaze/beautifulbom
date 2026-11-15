@@ -5,13 +5,13 @@ enum WorkshopTab: String, CaseIterable, Identifiable, Sendable {
     case overview, composition, completeness, components, source
     var id: String { rawValue }
 
-    var title: String {
+    @MainActor var title: String {
         switch self {
-        case .overview: "Overview"
-        case .composition: "Composition"
-        case .completeness: "Completeness"
-        case .components: "Components"
-        case .source: "Source"
+        case .overview: L("Overview")
+        case .composition: L("Composition")
+        case .completeness: L("Completeness")
+        case .components: L("Components")
+        case .source: L("Source")
         }
     }
 }

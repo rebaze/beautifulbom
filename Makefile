@@ -7,10 +7,14 @@ SIZES := 1 10 50
 
 CONFIG ?= Debug
 APP = build/Build/Products/$(CONFIG)/BeautifulBOM.app
-.PHONY: test bench-build fixtures bench project app snapshot clean parity-refresh
+.PHONY: test strings-check bench-build fixtures bench project app snapshot clean parity-refresh
 
-test:
+test: strings-check
 	cd $(PKG) && swift test
+
+# Every workshop string has English and German, and none claims conformity.
+strings-check:
+	python3 -I scripts/check-strings.py
 
 # Regenerate rio's results for the parity tests (needs rio on PATH).
 parity-refresh:

@@ -16,8 +16,8 @@ struct EvidenceHeader: View {
                 Image(systemName: model.drawerPinned ? "pin.fill" : "pin")
             }
             .buttonStyle(.plain)
-            .help(model.drawerPinned ? "Let Esc close the evidence" : "Keep the evidence open (⌥⌘E)")
-            Button("Esc to close") { model.closeDrawer() }
+            .help(model.drawerPinned ? L("Let Esc close the evidence") : L("Keep the evidence open (⌥⌘E)"))
+            Button(L("Esc to close")) { model.closeDrawer() }
                 .buttonStyle(.plain)
                 .keyboardShortcut(.cancelAction)
                 .opacity(model.drawerPinned ? 0.4 : 1)
@@ -30,16 +30,16 @@ struct EvidenceHeader: View {
     }
 
     private var caption: String {
-        guard let tree = model.tree, let source = model.source, let e = model.evidence else { return "Evidence" }
+        guard let tree = model.tree, let source = model.source, let e = model.evidence else { return L("Evidence") }
         switch e {
         case .located(let id):
             let line = source.lineColumn(of: tree.fullRange(id).lowerBound).line
             let pointer = tree.pointer(id).displayString
-            return "Evidence · line \(line) · \(pointer.isEmpty ? "/" : pointer)"
+            return L("Evidence · line %d · %@", line, pointer.isEmpty ? "/" : pointer)
         case .absent(let a):
             let line = source.lineColumn(of: a.insertion).line
             let pointer = tree.pointer(a.parent).description
-            return "Evidence · line \(line) · \(pointer.isEmpty ? "/" : pointer) has no \"\(a.key)\""
+            return L("Evidence · line %d · %@ has no \"%@\"", line, pointer.isEmpty ? "/" : pointer, a.key)
         }
     }
 }

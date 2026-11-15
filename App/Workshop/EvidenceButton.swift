@@ -26,7 +26,7 @@ struct EvidenceButton<Label: View>: View {
             }
             .buttonStyle(.plain)
             .onHover { hovering = $0 }
-            .help("Show in the source")
+            .help(L("Show in the source"))
         } else {
             label()
         }

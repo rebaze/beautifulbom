@@ -11,6 +11,7 @@ import SwiftUI
 ///   --view <tab>         open a tab: overview, composition, completeness, components, source
 ///   --component <ref>    open the component page for a bom-ref
 ///   --evidence <rule>    show the first offender of a rule (e.g. sbom.timestamp) in the drawer
+///   --language de|en     show the workshop views in this language (not saved)
 ///   --snapshot <png>     render the front window into a PNG, then quit
 ///   BBOM_TIMING=1        print open→parsed and open→first layout times
 enum LaunchOptions {

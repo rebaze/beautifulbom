@@ -1,16 +1,63 @@
 import BOMCore
 import SwiftUI
 
-/// Looks a workshop string up in the current language (English source text is the key).
-/// Placeholders follow String(format:): %@ for text, %d for numbers.
+/// Looks a workshop string up in the chosen language (English source text is the key).
+/// Placeholders follow String(format:): %@ for text, %d for numbers. Views that call it
+/// re-render when the language changes, because it reads an observed setting.
+@MainActor
 func L(_ key: String, _ args: CVarArg...) -> String {
     let format = L10n.lookup(key)
     return args.isEmpty ? format : String(format: format, locale: L10n.locale, arguments: args)
 }
 
+enum AppLanguage: String, CaseIterable, Identifiable {
+    case system, en, de
+    var id: String { rawValue }
+}
+
+/// The language of the workshop views, switchable at runtime (View › Language).
+@MainActor @Observable
+final class LanguageSettings {
+    static let shared = LanguageSettings()
+    static let defaultsKey = "bbom.language"
+
+    var language: AppLanguage {
+        didSet { UserDefaults.standard.set(language.rawValue, forKey: Self.defaultsKey) }
+    }
+
+    private init() {
+        let launch = LaunchOptions.value("--language").flatMap(AppLanguage.init(rawValue:))
+        language = launch ?? UserDefaults.standard.string(forKey: Self.defaultsKey).flatMap(AppLanguage.init(rawValue:)) ?? .system
+    }
+
+    /// The language actually shown: German when chosen, or when the system prefers German.
+    var resolved: AppLanguage {
+        switch language {
+        case .system: (Locale.preferredLanguages.first ?? "en").hasPrefix("de") ? .de : .en
+        case .en, .de: language
+        }
+    }
+}
+
+@MainActor
 enum L10n {
-    static func lookup(_ key: String) -> String { key }
-    static var locale: Locale { .current }
+    private static var bundles: [AppLanguage: Bundle] = [:]
+
+    static func bundle(_ lang: AppLanguage) -> Bundle {
+        if let b = bundles[lang] { return b }
+        let b = Bundle.main.path(forResource: lang.rawValue, ofType: "lproj").flatMap(Bundle.init(path:)) ?? .main
+        bundles[lang] = b
+        return b
+    }
+
+    static func lookup(_ key: String) -> String {
+        let lang = LanguageSettings.shared.resolved
+        return bundle(lang).localizedString(forKey: key, value: key, table: "Localizable")
+    }
+
+    static var locale: Locale {
+        Locale(identifier: LanguageSettings.shared.resolved == .de ? "de_DE" : "en_GB")
+    }
 }
 
 /// Type and spacing for the workshop views, scaled by presentation size.
@@ -69,6 +116,7 @@ extension View {
     }
 }
 
+@MainActor
 extension Verdict {
     /// The one sentence about Completeness, e.g. "Not ready for TR-03183-2. Gaps: format version 1.4, timestamp, manufacturer, +4 more."
     var headline: String {
@@ -88,6 +136,7 @@ extension Verdict {
     }
 }
 
+@MainActor
 extension GapTopic {
     var label: String {
         switch self {
