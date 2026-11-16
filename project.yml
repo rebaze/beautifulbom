@@ -21,6 +21,10 @@ targets:
         buildPhase: resources
       - path: Fixtures/rio/bsi-pass.cdx.json
         buildPhase: resources
+      - path: Fixtures/aibom/zephyr-7b-beta.reference.aibom.json
+        buildPhase: resources
+      - path: Fixtures/aibom/zephyr-7b-beta.generated.aibom.json
+        buildPhase: resources
     dependencies:
       - package: BOMCore
         product: BOMCore

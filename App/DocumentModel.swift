@@ -74,7 +74,7 @@ final class DocumentModel {
         self.tree = tree
         timing("open→parsed")
         showDiagnostics = tree.diagnostics.contains { $0.severity == .error }
-        tab = analysis == nil ? .source : .overview
+        tab = analysis == nil ? .source : analysis?.ai != nil ? .model : .overview
         history.visit(.tab(tab))
         applyLaunchOptions(tree)
     }
@@ -85,7 +85,7 @@ final class DocumentModel {
             select(id, origin: .launch)
             if let kind = LaunchOptions.copyKind { copy(kind) }
         }
-        if let name = LaunchOptions.view, let t = WorkshopTab(rawValue: name), analysis != nil || t == .source { show(tab: t) }
+        if let name = LaunchOptions.view, let t = WorkshopTab(rawValue: name), tabs.contains(t) { show(tab: t) }
         if let ref = LaunchOptions.component, let i = analysis?.componentIndex(bomRef: ref) {
             openComponent(i)
         }
@@ -126,8 +126,14 @@ final class DocumentModel {
 
     // MARK: Places
 
+    /// The tabs this document has: the workshop views for an SBOM, the model for an AIBOM, Source always.
+    var tabs: [WorkshopTab] {
+        guard let analysis else { return [.source] }
+        return analysis.ai != nil ? [.model, .source] : [.overview, .composition, .completeness, .components, .source]
+    }
+
     func show(tab t: WorkshopTab) {
-        guard analysis != nil || t == .source else { return }
+        guard tabs.contains(t) else { return }
         tab = t
         componentPage = nil
         history.visit(.tab(t))

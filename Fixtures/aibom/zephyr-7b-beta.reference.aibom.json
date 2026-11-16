@@ -1,0 +1,191 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:6f0d6c2e-3b1a-4c55-9a51-2a7c1f0e9b41",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-16T12:00:00Z",
+    "authors": [
+      {
+        "name": "rebaze"
+      }
+    ],
+    "properties": [
+      {
+        "name": "rebaze:reference",
+        "value": "Hand-made reference AIBOM for talks, written from the public Hugging Face model cards and API metadata of HuggingFaceH4/zephyr-7b-beta (commit 892b3d7a) and mistralai/Mistral-7B-v0.1 on 2026-11-16. Not produced by a tool; quotes are from the model card."
+      }
+    ],
+    "component": {
+      "bom-ref": "model:zephyr-7b-beta",
+      "type": "machine-learning-model",
+      "group": "HuggingFaceH4",
+      "name": "zephyr-7b-beta",
+      "version": "892b3d7a7b1cf10c7a701c60881cd93df615734c",
+      "description": "A 7B parameter GPT-like model fine-tuned on a mix of publicly available, synthetic datasets.",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "purl": "pkg:huggingface/HuggingFaceH4/zephyr-7b-beta@892b3d7a7b1cf10c7a701c60881cd93df615734c",
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://huggingface.co/HuggingFaceH4/zephyr-7b-beta"
+        },
+        {
+          "type": "vcs",
+          "url": "https://huggingface.co/HuggingFaceH4/zephyr-7b-beta/commit/892b3d7a7b1cf10c7a701c60881cd93df615734c"
+        }
+      ],
+      "pedigree": {
+        "ancestors": [
+          {
+            "bom-ref": "model:Mistral-7B-v0.1",
+            "type": "machine-learning-model",
+            "group": "mistralai",
+            "name": "Mistral-7B-v0.1",
+            "version": "27d67f1b5f57dc0953326b2601d68371d40ea8da",
+            "licenses": [
+              {
+                "license": {
+                  "id": "Apache-2.0"
+                }
+              }
+            ],
+            "purl": "pkg:huggingface/mistralai/Mistral-7B-v0.1@27d67f1b5f57dc0953326b2601d68371d40ea8da",
+            "externalReferences": [
+              {
+                "type": "website",
+                "url": "https://huggingface.co/mistralai/Mistral-7B-v0.1"
+              }
+            ],
+            "modelCard": {
+              "modelParameters": {
+                "task": "text-generation",
+                "architectureFamily": "mistral",
+                "modelArchitecture": "MistralForCausalLM"
+              }
+            }
+          }
+        ]
+      },
+      "modelCard": {
+        "modelParameters": {
+          "task": "text-generation",
+          "architectureFamily": "mistral",
+          "modelArchitecture": "MistralForCausalLM",
+          "datasets": [
+            {
+              "ref": "dataset:ultrachat_200k"
+            },
+            {
+              "ref": "dataset:ultrafeedback_binarized"
+            }
+          ],
+          "inputs": [
+            {
+              "format": "string"
+            }
+          ],
+          "outputs": [
+            {
+              "format": "string"
+            }
+          ]
+        },
+        "considerations": {
+          "useCases": [
+            "Chat"
+          ],
+          "technicalLimitations": [
+            "Zephyr-7B-β has not been aligned to human preferences for safety within the RLHF phase or deployed with in-the-loop filtering of responses like ChatGPT, so the model can produce problematic outputs (especially when prompted to do so).",
+            "It is also unknown what the size and composition of the corpus was used to train the base model (`mistralai/Mistral-7B-v0.1`), however it is likely to have included a mix of Web data and technical sources like books and code."
+          ]
+        },
+        "properties": [
+          {
+            "name": "genai:aibom:modelcard:contextLength",
+            "value": "32768"
+          },
+          {
+            "name": "genai:aibom:modelcard:safetensors_total_parameters",
+            "value": "7241732096"
+          },
+          {
+            "name": "owasp:aibom:distribution:modelFileSize",
+            "value": "28967059598"
+          }
+        ]
+      }
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "dataset:ultrachat_200k",
+      "type": "data",
+      "group": "HuggingFaceH4",
+      "name": "ultrachat_200k",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "data": [
+        {
+          "type": "dataset",
+          "name": "HuggingFaceH4/ultrachat_200k",
+          "contents": {
+            "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k"
+          },
+          "description": "100K to 1M rows"
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k"
+        }
+      ]
+    },
+    {
+      "bom-ref": "dataset:ultrafeedback_binarized",
+      "type": "data",
+      "group": "HuggingFaceH4",
+      "name": "ultrafeedback_binarized",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "data": [
+        {
+          "type": "dataset",
+          "name": "HuggingFaceH4/ultrafeedback_binarized",
+          "contents": {
+            "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized"
+          }
+        }
+      ],
+      "externalReferences": [
+        {
+          "type": "website",
+          "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "model:zephyr-7b-beta",
+      "dependsOn": []
+    }
+  ]
+}

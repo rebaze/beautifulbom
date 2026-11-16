@@ -2619,40 +2619,6 @@
         }
       }
     },
-    "A reader for software bills of materials, by rebaze.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A reader for software bills of materials, by rebaze."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ein Reader für Software Bills of Materials, von rebaze."
-          }
-        }
-      }
-    },
-    "Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0).": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0)."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Beispiele: Laravel und CERN aus CycloneDX bom-examples (CC0 1.0); cart-api aus rio (Apache License 2.0)."
-          }
-        }
-      }
-    },
     "Welcome to Beautiful BOM": {
       "extractionState": "manual",
       "localizations": {
@@ -2666,23 +2632,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Willkommen bei Beautiful BOM"
-          }
-        }
-      }
-    },
-    "A reader for software bills of materials.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "A reader for software bills of materials."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ein Reader für Software Bills of Materials."
           }
         }
       }
@@ -3380,6 +3329,652 @@
           "stringUnit": {
             "state": "translated",
             "value": "Familie"
+          }
+        }
+      }
+    },
+    "AI bill of materials · CycloneDX %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI bill of materials · CycloneDX %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AI Bill of Materials · CycloneDX %@"
+          }
+        }
+      }
+    },
+    "written by %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "written by %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "geschrieben von %@"
+          }
+        }
+      }
+    },
+    "%@ architecture": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ architecture"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Architektur %@"
+          }
+        }
+      }
+    },
+    "fine-tuned from %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "fine-tuned from %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "feinabgestimmt aus %@"
+          }
+        }
+      }
+    },
+    "by %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "by %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "von %@"
+          }
+        }
+      }
+    },
+    "parameters": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "parameters"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Parameter"
+          }
+        }
+      }
+    },
+    "tokens of context": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "tokens of context"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tokens Kontext"
+          }
+        }
+      }
+    },
+    "training datasets stated": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "training datasets stated"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trainingsdatensätze genannt"
+          }
+        }
+      }
+    },
+    "training datasets, each with a licence": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "training datasets, each with a licence"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trainingsdatensätze, jeder mit Lizenz"
+          }
+        }
+      }
+    },
+    "training datasets, %d with a licence": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "training datasets, %d with a licence"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trainingsdatensätze, %d mit Lizenz"
+          }
+        }
+      }
+    },
+    "model files": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "model files"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modelldateien"
+          }
+        }
+      }
+    },
+    "Left out": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Left out"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fehlt"
+          }
+        }
+      }
+    },
+    "Presence and form only, as in the SBOM views.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Presence and form only, as in the SBOM views."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nur Vorhandensein und Form, wie in den SBOM-Ansichten."
+          }
+        }
+      }
+    },
+    "The BOM describes \"%@\", not the model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The BOM describes \"%@\", not the model"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die BOM beschreibt „%@“, nicht das Modell"
+          }
+        }
+      }
+    },
+    "No licence for the model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No licence for the model"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Lizenz für das Modell"
+          }
+        }
+      }
+    },
+    "No base model (pedigree.ancestors)": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No base model (pedigree.ancestors)"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein Basismodell (pedigree.ancestors)"
+          }
+        }
+      }
+    },
+    "No training data stated": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No training data stated"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Keine Trainingsdaten genannt"
+          }
+        }
+      }
+    },
+    "%@: named only, no licence or version": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: named only, no licence or version"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@: nur genannt, ohne Lizenz und Version"
+          }
+        }
+      }
+    },
+    "No hash of the model files": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No hash of the model files"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kein Hash der Modelldateien"
+          }
+        }
+      }
+    },
+    "%@ states no training data": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ states no training data"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ nennt keine Trainingsdaten"
+          }
+        }
+      }
+    },
+    "What the model card says": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What the model card says"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Was die Model Card sagt"
+          }
+        }
+      }
+    },
+    "Intended use:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Intended use:"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorgesehene Nutzung:"
+          }
+        }
+      }
+    },
+    "This model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This model"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dieses Modell"
+          }
+        }
+      }
+    },
+    "Base model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Base model"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Basismodell"
+          }
+        }
+      }
+    },
+    "no training data stated": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no training data stated"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "keine Trainingsdaten genannt"
+          }
+        }
+      }
+    },
+    "%d datasets": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d datasets"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d Datensätze"
+          }
+        }
+      }
+    },
+    "Dataset, named only": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dataset, named only"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datensatz, nur genannt"
+          }
+        }
+      }
+    },
+    "Dataset": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dataset"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datensatz"
+          }
+        }
+      }
+    },
+    "no licence": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no licence"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "keine Lizenz"
+          }
+        }
+      }
+    },
+    "not a component": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not a component"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "keine Komponente"
+          }
+        }
+      }
+    },
+    "not in this AIBOM": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not in this AIBOM"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nicht in dieser AIBOM"
+          }
+        }
+      }
+    },
+    "%d more datasets": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d more datasets"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d weitere Datensätze"
+          }
+        }
+      }
+    },
+    "Model": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Model"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modell"
+          }
+        }
+      }
+    },
+    "AIBOM · hand-made reference, the standard used fully": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIBOM · hand-made reference, the standard used fully"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIBOM · handgemachte Referenz, der Standard voll genutzt"
+          }
+        }
+      }
+    },
+    "AIBOM · as the OWASP AIBOM Generator writes it": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIBOM · as the OWASP AIBOM Generator writes it"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "AIBOM · so, wie der OWASP AIBOM Generator sie schreibt"
+          }
+        }
+      }
+    },
+    "Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0); zephyr-7b-beta AIBOMs from public Hugging Face metadata, one written by the OWASP AIBOM Generator (Apache License 2.0), one by rebaze.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0); zephyr-7b-beta AIBOMs from public Hugging Face metadata, one written by the OWASP AIBOM Generator (Apache License 2.0), one by rebaze."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beispiele: Laravel und CERN aus CycloneDX bom-examples (CC0 1.0); cart-api aus rio (Apache License 2.0); zephyr-7b-beta-AIBOMs aus öffentlichen Hugging-Face-Metadaten, eine vom OWASP AIBOM Generator (Apache License 2.0), eine von rebaze geschrieben."
+          }
+        }
+      }
+    },
+    "A reader for bills of materials, software and AI, by rebaze.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A reader for bills of materials, software and AI, by rebaze."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Reader für Bills of Materials, Software und KI, von rebaze."
+          }
+        }
+      }
+    },
+    "A reader for bills of materials: software and AI.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A reader for bills of materials: software and AI."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Reader für Bills of Materials: Software und KI."
           }
         }
       }

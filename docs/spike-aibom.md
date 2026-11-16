@@ -1,7 +1,7 @@
 # Spike: AIBOMs (2026-11-16)
 
-Toni, 2026-11-16: an AIBOM view "mostly for talks"; run a spike first. Throwaway; nothing here is
-built into the app yet.
+Toni, 2026-11-16: an AIBOM view "mostly for talks"; run a spike first. Built after Toni's "yes go"
+(2026-11-16): see "Built" at the end.
 
 ## What we did
 
@@ -49,3 +49,18 @@ model card visible only in Source.
    is labelled as hand-made in its metadata.
 3. Optional, Toni's call: report the base-model and metadata.component findings upstream to the
    OWASP project.
+
+## Built (2026-11-16)
+
+- `AIBOMAnalysis` in BOMCore (`AIBOMTests`): the model is the subject when it is a
+  `machine-learning-model`, else the first model when every component is a model or data; a model
+  inside an ordinary SBOM keeps the SBOM views. Base models from `pedigree.ancestors` (any depth),
+  datasets inline or as `data` components, facts from model-card properties, and the gaps above.
+- The Model tab (`AIModelView`) replaces the SBOM tabs for an AIBOM: header, facts, family tree
+  with arrows, "Left out" beside or below it, and what the model card says. Every node and gap
+  opens its source.
+- Fixtures in `Fixtures/aibom/` (see its NOTICE): the generator's Zephyr AIBOM unchanged, and the
+  hand-made reference, both valid against the CycloneDX 1.6 schema. Both are samples on the welcome
+  window.
+- Not built: a Datasets tab (the datasets stand on the tree), "used by your product" (needs an SBOM
+  linking the AIBOM with BOM-Link), SPDX 3 AI profiles.

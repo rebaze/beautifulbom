@@ -94,3 +94,9 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ Overview, Completeness, Components and Composition match the approved mockups (`n-*.png`); dark and German; at 24 pt the small map moves under the number and chips drop what does not fit; 50 MB minified; bsi-pass reads "All TR-03183-2 fields present".
 - ⏳ By hand: bars grow in and the map opens from its centre when a view opens; nothing moves with System Settings › Accessibility › Display › Reduce motion.
 - ⏳ By hand: a family chip opens Components filtered to that family; the licence menu shows the family and Any licence clears it.
+
+## AIBOM view (spike-aibom.md, 2026-11-16)
+
+- ✅ `AIBOMTests`: the reference and the generated Zephyr AIBOM read as expected; an SBOM and an SBOM with one model inside keep the SBOM views; ancestors of ancestors.
+- ✅ Snapshots: reference and generated, light and English, dark and German, at 24 pt on 1920 × 1080 the list of gaps moves below the tree (`ai-*.png`).
+- ⏳ By hand: clicking a node or a gap opens its source in the drawer; both AIBOMs open from the welcome window.

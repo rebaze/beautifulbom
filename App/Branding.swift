@@ -39,11 +39,11 @@ enum About {
         let centered = NSMutableParagraphStyle()
         centered.alignment = .center
         let base: [NSAttributedString.Key: Any] = [.font: NSFont.systemFont(ofSize: 11), .foregroundColor: NSColor.secondaryLabelColor, .paragraphStyle: centered]
-        let text = NSMutableAttributedString(string: L("A reader for software bills of materials, by rebaze.") + "\n", attributes: base)
+        let text = NSMutableAttributedString(string: L("A reader for bills of materials, software and AI, by rebaze.") + "\n", attributes: base)
         var link = base
         link[.link] = URL(string: "https://rebaze.de")!
         text.append(NSAttributedString(string: "rebaze.de", attributes: link))
-        text.append(NSAttributedString(string: "\n\n" + L("Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0)."), attributes: base))
+        text.append(NSAttributedString(string: "\n\n" + L("Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0); zephyr-7b-beta AIBOMs from public Hugging Face metadata, one written by the OWASP AIBOM Generator (Apache License 2.0), one by rebaze."), attributes: base))
         return text
     }
 
@@ -97,7 +97,9 @@ enum Welcome {
     static var samples: [WelcomeItem] {
         [("laravel-7.12.0.cdx-1.4", "json", "Laravel 7.12", L("62 components · CycloneDX 1.4")),
          ("cern-lhc-vdm-editor.cdx", "json", "CERN LHC VdM Editor", "CycloneDX 1.2"),
-         ("bsi-pass.cdx", "json", "cart-api", L("CycloneDX 1.6 · every TR-03183-2 field present"))]
+         ("bsi-pass.cdx", "json", "cart-api", L("CycloneDX 1.6 · every TR-03183-2 field present")),
+         ("zephyr-7b-beta.reference.aibom", "json", "zephyr-7b-beta", L("AIBOM · hand-made reference, the standard used fully")),
+         ("zephyr-7b-beta.generated.aibom", "json", "zephyr-7b-beta", L("AIBOM · as the OWASP AIBOM Generator writes it"))]
             .compactMap { name, ext, title, detail in
                 Bundle.main.url(forResource: name, withExtension: ext).map { WelcomeItem(url: $0, title: title, detail: detail) }
             }
@@ -142,7 +144,7 @@ struct WelcomeView: View {
             Text(AppName.text)
                 .font(AppName.font(36))
                 .padding(.top, 6)
-            Text(L("A reader for software bills of materials."))
+            Text(L("A reader for bills of materials: software and AI."))
                 .font(.title3)
                 .foregroundStyle(.secondary)
                 .padding(.top, 4)

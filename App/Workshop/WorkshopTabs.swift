@@ -2,7 +2,7 @@ import BOMCore
 import SwiftUI
 
 enum WorkshopTab: String, CaseIterable, Identifiable, Sendable {
-    case overview, composition, completeness, components, source
+    case overview, composition, completeness, components, model, source
     var id: String { rawValue }
 
     @MainActor var title: String {
@@ -11,6 +11,7 @@ enum WorkshopTab: String, CaseIterable, Identifiable, Sendable {
         case .composition: L("Composition")
         case .completeness: L("Completeness")
         case .components: L("Components")
+        case .model: L("Model")
         case .source: L("Source")
         }
     }
@@ -38,6 +39,8 @@ struct WorkshopContent: View {
             CompletenessView(model: model, a: analysis)
         case .components:
             ComponentsView(model: model, a: analysis)
+        case .model:
+            if let ai = analysis.ai { AIModelView(model: model, a: analysis, ai: ai) }
         case .source:
             EmptyView()
         }
@@ -50,7 +53,7 @@ struct TabBar: View {
 
     var body: some View {
         HStack(spacing: 4 * model.scale) {
-            ForEach(WorkshopTab.allCases) { tab in
+            ForEach(model.tabs) { tab in
                 let selected = model.tab == tab
                 Button { model.show(tab: tab) } label: {
                     Text(tab.title)
@@ -63,8 +66,8 @@ struct TabBar: View {
                 }
                 .buttonStyle(.plain)
                 .accessibilityAddTraits(selected ? .isSelected : [])
-                .keyboardShortcut(KeyEquivalent(Character(String(WorkshopTab.allCases.firstIndex(of: tab)! + 1))), modifiers: .command)
-                if tab == .components { Divider().frame(height: 16 * model.scale).padding(.horizontal, 6) }
+                .keyboardShortcut(KeyEquivalent(Character(String(model.tabs.firstIndex(of: tab)! + 1))), modifiers: .command)
+                if tab == model.tabs.dropLast().last { Divider().frame(height: 16 * model.scale).padding(.horizontal, 6) }
             }
             Spacer()
             Wordmark(scale: model.scale)
