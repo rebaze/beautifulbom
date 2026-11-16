@@ -1,4 +1,4 @@
-# Beautiful Bill of Materials — build entry points. Run from apps/beautiful-bom/.
+# Beautiful Bill of Materials — build entry points. Run from the repository root.
 SHELL := /bin/bash
 PKG := Packages/BOMCore
 GEN := Fixtures/generated

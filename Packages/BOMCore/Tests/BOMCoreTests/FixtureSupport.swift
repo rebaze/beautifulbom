@@ -1,7 +1,7 @@
 import Foundation
 @testable import BOMCore
 
-/// `apps/beautiful-bom/Fixtures`, found from this file's path.
+/// `Fixtures` at the repository root, found from this file's path.
 let fixturesDirectory: URL = URL(fileURLWithPath: #filePath)
     .deletingLastPathComponent().deletingLastPathComponent().deletingLastPathComponent()
     .deletingLastPathComponent().deletingLastPathComponent().appendingPathComponent("Fixtures")

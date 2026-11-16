@@ -47,7 +47,7 @@ the later exploration list of the proposal (GitHub issue).
 - No third-party dependencies in the engine.
 - Fixtures are public (CycloneDX bom-examples, Apache-2.0) or synthetic.
   Never customer data, not even git-ignored inside this folder.
-- Self-contained in `apps/beautiful-bom/`: no paths outside it, so it can be
+- Self-contained (it lived in `apps/beautiful-bom/` of rebaze-sscs until 2026-11-16): no paths outside it, so it could be
   split into its own repository with history (see Extraction).
 
 ## Approaches considered
@@ -127,6 +127,10 @@ Recording permission; hence the self-snapshot option.
 - `make test`, `make app`, `make snapshot` documented in the README.
 
 ## Extraction
+
+Done on 2026-11-16: moved with its history into rebaze/beautifulbom (`git filter-repo
+--subdirectory-filter apps/beautiful-bom` on a fresh clone of the `beautiful-bom-poc` branch).
+The original plan:
 
 When the proof of concept is done: `git filter-repo --subdirectory-filter
 apps/beautiful-bom` (or `git subtree split`) into a new `rebaze/` repository,

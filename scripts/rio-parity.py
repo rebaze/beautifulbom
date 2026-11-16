@@ -1,6 +1,6 @@
 """Regenerate Fixtures/parity/*.rio.json: rio's TR-03183-2 results for each parity fixture.
 
-Run from apps/beautiful-bom with `make parity-refresh`. Needs `rio` on PATH (rio 0.10 or later);
+Run from the repository root with `make parity-refresh`. Needs `rio` on PATH (rio 0.10 or later);
 `make test` does not, it compares with the committed files.
 """
 import glob

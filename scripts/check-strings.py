@@ -1,7 +1,7 @@
 """Checks App/Localizable.xcstrings against the code: every L("…") key in the app has an
 English and a German value, placeholders match, and no value claims conformity.
 
-Run from apps/beautiful-bom (make strings-check, part of make test).
+Run from the repository root (make strings-check, part of make test).
 """
 import glob
 import json

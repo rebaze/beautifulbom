@@ -1,6 +1,6 @@
 # Beautiful Bill of Materials
 
-A native macOS reader for bills of materials: pleasant to read, and always one step from the exact bytes in the original file. Proof of concept (issue #151), working title. A CycloneDX SBOM opens as a workshop presentation (Overview, Composition, Completeness, Components); any other JSON opens in the source reader.
+A native macOS reader for bills of materials: pleasant to read, and always one step from the exact bytes in the original file. Proof of concept (started as rebaze/rebaze-sscs#151), working title. A CycloneDX SBOM opens as a workshop presentation (Overview, Composition, Completeness, Components); any other JSON opens in the source reader.
 
 - Design: [docs/design.md](docs/design.md) (JSON reader), [docs/design-workshop-views.md](docs/design-workshop-views.md) (workshop views)
 - Plans: [docs/plan.md](docs/plan.md), [docs/plan-workshop-views.md](docs/plan-workshop-views.md)
@@ -59,4 +59,4 @@ Read-only. JSON only; workshop views for CycloneDX, not yet SPDX or AIBOM. Compl
 
 ## Moving out
 
-Everything lives in this folder and references nothing outside it. To split it into its own repository with history: `git filter-repo --subdirectory-filter apps/beautiful-bom` on a fresh clone.
+Moved with its history from `apps/beautiful-bom/` in rebaze/rebaze-sscs on 2026-11-16.
