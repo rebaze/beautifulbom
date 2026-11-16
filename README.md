@@ -27,6 +27,8 @@ A native macOS reader for bills of materials: pleasant to read, and always one s
 
 ## Build and run
 
+`make dmg` writes `build/BeautifulBOM-<version>.dmg` (the app and a link to Applications). It is signed ad hoc: another Mac asks once, under System Settings › Privacy & Security › Open Anyway, until the app is signed with rebaze's Developer ID and notarized.
+
 `make install` builds the Release app and copies it to `~/Applications`, so Spotlight, Launchpad and the Dock find it. Open an SBOM with ⌘O, by dropping it on a window or on the Dock icon, or with Finder › Open With. Started without a file, it shows a welcome window with recent files and three bundled samples (Window › Welcome to Beautiful BOM, ⇧⌘1). The icon is the rebaze mark; `scripts/icon/make-icon.sh` renders it from `scripts/icon/icon.svg` (needs `rsvg-convert`). Design: `docs/design-branding.md`.
 
 Requirements: macOS 15 or later, Xcode 27.2 (Swift 6.4), [XcodeGen](https://github.com/yonaskolb/XcodeGen), [xcbeautify](https://github.com/cpisciotta/xcbeautify).

@@ -7,7 +7,7 @@ SIZES := 1 10 50
 
 CONFIG ?= Debug
 APP = build/Build/Products/$(CONFIG)/BeautifulBOM.app
-.PHONY: screenshots test strings-check bench-build fixtures bench project app install snapshot clean parity-refresh
+.PHONY: screenshots test strings-check bench-build fixtures bench project app install dmg snapshot clean parity-refresh
 
 test: strings-check
 	cd $(PKG) && swift test
@@ -46,6 +46,20 @@ install:
 	rm -rf "$(HOME)/Applications/BeautifulBOM.app"
 	ditto build/Build/Products/Release/BeautifulBOM.app "$(HOME)/Applications/BeautifulBOM.app"
 	@echo "Installed: $(HOME)/Applications/BeautifulBOM.app"
+
+# A disk image to hand out: the Release app and a link to Applications, to drag across.
+# Signed ad hoc only: on another Mac, Gatekeeper asks once (System Settings › Privacy & Security
+# › Open Anyway). A Developer ID signature and notarization need rebaze's credentials.
+VERSION := $(shell sed -n 's/.*CFBundleShortVersionString: "\(.*\)"/\1/p' project.yml)
+DMG := build/BeautifulBOM-$(VERSION).dmg
+dmg:
+	$(MAKE) app CONFIG=Release
+	rm -rf build/dmg "$(DMG)" && mkdir -p build/dmg
+	ditto build/Build/Products/Release/BeautifulBOM.app "build/dmg/Beautiful BOM.app"
+	ln -s /Applications build/dmg/Applications
+	hdiutil create -quiet -volname "Beautiful BOM $(VERSION)" -srcfolder build/dmg -fs HFS+ -format UDZO "$(DMG)"
+	hdiutil verify -quiet "$(DMG)"
+	@echo "Disk image: $(DMG)"
 
 # make snapshot FILE=<json> OUT=<png> [SELECT=<pointer>] [VIEW=<tab>] [COMPONENT=<bom-ref>]
 #   [EVIDENCE=<rule id>] [FIND=<text>] [POINT=<bom-ref>] [SIZE=1440x900] [TEXT=24] [APPEARANCE=dark|light] [UILANG=de|en]
