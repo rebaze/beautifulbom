@@ -71,6 +71,7 @@ struct SourceTextView: NSViewRepresentable {
             self.textView = textView
             self.scrollView = scrollView
             self.ruler = ruler
+            model.sourceTextView = textView
 
             textView.textStorage?.setAttributedString(NSAttributedString(string: display.string, attributes: baseAttributes()))
             appliedTextSize = model.textSize

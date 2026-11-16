@@ -92,6 +92,36 @@ final class DocumentModel {
         if let rule = LaunchOptions.evidence.flatMap(RuleID.init), let first = analysis?.profile.offenders(rule).first {
             show(first.evidence)
         }
+        if let query = LaunchOptions.find { typeIntoFindBar(query) }
+    }
+
+    /// `--find`: opens the find bar from the current tab and types `query` into it
+    /// key by key, as a person would; with BBOM_TIMING=1 it prints each key's cost.
+    private func typeIntoFindBar(_ query: String) {
+        Task { @MainActor in
+            try? await Task.sleep(for: .milliseconds(300))
+            NSApp.activate(ignoringOtherApps: true)
+            sourceTextView?.window?.makeKeyAndOrderFront(nil)
+            find(.showFindInterface)
+            try? await Task.sleep(for: .milliseconds(150))
+            for ch in query {
+                guard let window = sourceTextView?.window,
+                      let down = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: [], timestamp: ProcessInfo.processInfo.systemUptime,
+                                                  windowNumber: window.windowNumber, context: nil, characters: String(ch),
+                                                  charactersIgnoringModifiers: String(ch), isARepeat: false, keyCode: 0) else { return }
+                let start = Date()
+                window.sendEvent(down)
+                await Task.yield()
+                let key = -start.timeIntervalSinceNow * 1000
+                let pause = Date()
+                try? await Task.sleep(for: .milliseconds(90))
+                // Anything over 90 ms is time the main thread was busy with the search.
+                if LaunchOptions.timing {
+                    print(String(format: "find key %@ %.0f ms, blocked after %.0f ms", String(ch), key, -pause.timeIntervalSinceNow * 1000 - 90))
+                    fflush(stdout)
+                }
+            }
+        }
     }
 
     // MARK: Places
@@ -220,6 +250,30 @@ final class DocumentModel {
         guard let text = copyText(kind, node: node) else { return }
         NSPasteboard.general.clearContents()
         NSPasteboard.general.setString(text, forType: .string)
+    }
+
+    // MARK: Find
+
+    /// The source text view, set when it is made; the target of every find command.
+    @ObservationIgnored weak var sourceTextView: NSTextView?
+
+    /// Runs a find-bar action from any tab: switches to Source, gives the text the
+    /// keyboard and hands the action to its find bar, which searches while typing.
+    func find(_ action: NSTextFinder.Action) {
+        guard sourceTextView != nil else { return }
+        if tab != .source { show(tab: .source) }
+        // After SwiftUI has laid the source out at full size, so the bar opens above it.
+        DispatchQueue.main.async { [weak self] in
+            guard let textView = self?.sourceTextView, let window = textView.window else { return }
+            // Keep the keyboard where it is when it is already in the text or its find bar (⌘G while typing).
+            let focus = window.firstResponder as? NSView
+            if let pane = textView.enclosingScrollView, focus?.isDescendant(of: pane) != true {
+                window.makeFirstResponder(textView)
+            }
+            let item = NSMenuItem()
+            item.tag = action.rawValue
+            textView.performTextFinderAction(item)
+        }
     }
 
     // MARK: Text size

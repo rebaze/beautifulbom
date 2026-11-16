@@ -60,6 +60,12 @@ A fresh whole-branch review measured triggers the plan's tests missed. Fixed, ea
 | `{"a":,"b":1}` | `a` took `"b"` as its value | `a` is an empty invalid value, `b` is kept |
 | Latin-1 bytes in a string | silent `�` | warning with the byte range |
 
+## Find from every tab (2026-11-16)
+
+Edit › Find is the app's own menu (replacing the text-editing group), so ⌘F works on every tab: it switches to Source, gives the text view the keyboard and opens AppKit's find bar, which searches incrementally. Find Next and Previous leave the keyboard in the search field. No Replace: the file is read-only.
+
+Typing measured with `--find` (Release, real key events through the window, 90 ms between keys): no key cost more than 38 ms on the main thread, and the main thread was never busy for more than 10 ms between keys, on both 50 MB files; AppKit counts and highlights in the background (5 397 matches for "left-pad-2" in the minified file). After a find-bar jump the viewport range can still start below the top of the visible area; the line-number ruler now starts at the fragment at the top of the visible rect instead.
+
 ## Workshop views (2026-11-15)
 
 Analysis = CycloneDX model, dependency graph, TR-03183-2 checks, composition and completeness report, after the parse (`make bench`, `bbom-bench analyse`, Release, Apple Silicon). Generated files now carry a dependency tree (six children per node) and one composition.

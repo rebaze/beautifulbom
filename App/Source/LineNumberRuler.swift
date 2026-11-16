@@ -36,13 +36,17 @@ final class LineNumberRuler: NSRulerView {
     override func drawHashMarksAndLabels(in rect: NSRect) {
         NSColor.textBackgroundColor.setFill()
         bounds.fill()
-        guard let textView, let tlm = textView.textLayoutManager, let cm = tlm.textContentManager,
-              let viewport = tlm.textViewportLayoutController.viewportRange else { return }
+        guard let textView, let tlm = textView.textLayoutManager, let cm = tlm.textContentManager else { return }
+        // From the line at the top of the visible area, not the viewport range: after a
+        // find-bar jump the viewport can still start below the top (numbers went missing).
+        let top = CGPoint(x: 0, y: max(0, textView.visibleRect.minY - textView.textContainerInset.height))
+        guard let start = tlm.textLayoutFragment(for: top)?.rangeInElement.location
+                ?? tlm.textViewportLayoutController.viewportRange?.location else { return }
         let attributes: [NSAttributedString.Key: Any] = [.font: font, .foregroundColor: NSColor.tertiaryLabelColor]
         let inset = textView.textContainerInset.height
         let documentStart = cm.documentRange.location
         var lastLine = -1
-        tlm.enumerateTextLayoutFragments(from: viewport.location, options: [.ensuresLayout]) { fragment in
+        tlm.enumerateTextLayoutFragments(from: start, options: [.ensuresLayout]) { fragment in
             let frame = fragment.layoutFragmentFrame
             let origin = self.convert(NSPoint(x: 0, y: frame.minY + inset), from: textView)
             if origin.y > self.bounds.maxY { return false }

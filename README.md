@@ -18,7 +18,7 @@ A native macOS reader for bills of materials: pleasant to read, and always one s
 ## Source reader
 
 - Opens local JSON files (File › Open, recent documents, Dock drop). No network, no account, no upload.
-- Shows the original source with syntax colour, line numbers, the system find bar and adjustable text size (⌘+ ⌘− ⌘0, presentation size ⌥⌘P).
+- Shows the original source with syntax colour, line numbers, the system find bar and adjustable text size. Edit › Find (⌘F, ⌘G, ⇧⌘G, ⌘E) works from every tab: it switches to Source and searches the whole file while you type (⌘+ ⌘− ⌘0, presentation size ⌥⌘P).
 - A structure outline in sync with the source: select in either and the other follows to the exact range. Objects show a readable hint (name, version).
 - Breadcrumbs and the JSON Pointer of the selection; duplicate keys are marked (`/name (duplicate 2 of 2)`).
 - Copy JSON Pointer (⌥⌘C), Copy Value (⇧⌘C), Copy Source (⌥⇧⌘C, or ⌘C in the outline). Go › Back/Forward (⌘[ ⌘]).
@@ -37,7 +37,7 @@ make fixtures && make bench    # synthetic 1/10/50 MB fixtures and engine timing
 make snapshot CONFIG=Release FILE=Fixtures/public/laravel-7.12.0.cdx-1.4.json OUT=build/shot.png SELECT=/components/3
 ```
 
-Launch options for checks and agents: `--window-size <WxH>`, `--open <file>`, `--select <json-pointer>`, `--copy pointer|value|source`, `--view overview|composition|completeness|components|source`, `--component <bom-ref>`, `--evidence <rule id>` (e.g. `sbom.timestamp`), `--language de|en`, `--snapshot <png>` (renders the window and quits; needs no Screen Recording permission), `--text-size <pt>`, `--appearance dark|light`, and `BBOM_TIMING=1`. `make screenshots` renders every workshop view into `build/screenshots/`.
+Launch options for checks and agents: `--window-size <WxH>`, `--open <file>`, `--select <json-pointer>`, `--copy pointer|value|source`, `--view overview|composition|completeness|components|source`, `--component <bom-ref>`, `--evidence <rule id>` (e.g. `sbom.timestamp`), `--language de|en`, `--find <text>` (opens the find bar from the current tab and types the text key by key; with `BBOM_TIMING=1` it prints each key's cost), `--snapshot <png>` (renders the window and quits; needs no Screen Recording permission), `--text-size <pt>`, `--appearance dark|light`, and `BBOM_TIMING=1`. `make screenshots` renders every workshop view into `build/screenshots/`.
 
 The TR-03183-2 checks are a port of rio's profile. `make test` compares them with rio's results committed in `Fixtures/parity/`; `make parity-refresh` regenerates those with the `rio` on your PATH.
 

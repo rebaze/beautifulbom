@@ -12,6 +12,7 @@ import SwiftUI
 ///   --component <ref>    open the component page for a bom-ref
 ///   --evidence <rule>    show the first offender of a rule (e.g. sbom.timestamp) in the drawer
 ///   --language de|en     show the workshop views in this language (not saved)
+///   --find <text>        open the find bar from the current tab and type <text> into it
 ///   --snapshot <png>     render the front window into a PNG, then quit
 ///   BBOM_TIMING=1        print open→parsed and open→first layout times
 enum LaunchOptions {
@@ -39,6 +40,7 @@ enum LaunchOptions {
     static let view = value("--view")
     static let component = value("--component")
     static let evidence = value("--evidence")
+    static let find = value("--find")
     static let timing = ProcessInfo.processInfo.environment["BBOM_TIMING"] == "1"
 }
 
@@ -67,16 +69,21 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
 @MainActor
 enum Snapshot {
+    /// The front document window; not the find bar's overlay, which is a window of its own.
+    static var documentWindow: NSWindow? {
+        NSApp.orderedWindows.first { $0.isVisible && $0.contentView != nil && $0.styleMask.contains(.titled) && $0.parent == nil }
+    }
+
     /// Renders the front document window into `path` and quits. Needs no
     /// Screen Recording permission, so agents can check visuals.
     static func take(to path: String, after delay: Duration = .milliseconds(1200)) {
         Task { @MainActor in
             if let size = LaunchOptions.windowSize,
-               let window = NSApp.orderedWindows.first(where: { $0.isVisible && $0.contentView != nil }) {
+               let window = documentWindow {
                 window.setContentSize(size)
             }
             try? await Task.sleep(for: delay)
-            guard let window = NSApp.orderedWindows.first(where: { $0.isVisible && $0.contentView != nil }),
+            guard let window = documentWindow,
                   let view = window.contentView?.superview ?? window.contentView,
                   let rep = view.bitmapImageRepForCachingDisplay(in: view.bounds) else { exit(4) }
             view.cacheDisplay(in: view.bounds, to: rep)

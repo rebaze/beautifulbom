@@ -30,7 +30,7 @@ struct DocumentView: View {
         }
         .task {
             await model.load()
-            if let path = LaunchOptions.snapshotPath { Snapshot.take(to: path) }
+            if let path = LaunchOptions.snapshotPath { Snapshot.take(to: path, after: .milliseconds(LaunchOptions.find == nil ? 1200 : 3000)) }
         }
     }
 
