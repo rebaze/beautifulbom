@@ -9,6 +9,13 @@ struct BBOMCommands: Commands {
     @FocusedValue(\.documentModel) private var model
 
     var body: some Commands {
+        CommandGroup(replacing: .appInfo) {
+            Button("About Beautiful BOM") { About.show() }
+        }
+        CommandGroup(after: .windowArrangement) {
+            Button("Welcome to Beautiful BOM") { Welcome.show() }
+                .keyboardShortcut("1", modifiers: [.command, .shift])
+        }
         CommandGroup(after: .toolbar) {
             Button("Bigger") { model?.biggerText() }
                 .keyboardShortcut("+", modifiers: .command)

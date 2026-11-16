@@ -2652,6 +2652,227 @@
           }
         }
       }
+    },
+    "About Beautiful BOM": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "About Beautiful BOM"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Über Beautiful BOM"
+          }
+        }
+      }
+    },
+    "A reader for software bills of materials, by rebaze.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A reader for software bills of materials, by rebaze."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Reader für Software Bills of Materials, von rebaze."
+          }
+        }
+      }
+    },
+    "Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samples: Laravel and CERN from CycloneDX bom-examples (CC0 1.0); cart-api from rio (Apache License 2.0)."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beispiele: Laravel und CERN aus CycloneDX bom-examples (CC0 1.0); cart-api aus rio (Apache License 2.0)."
+          }
+        }
+      }
+    },
+    "Welcome to Beautiful BOM": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Welcome to Beautiful BOM"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Willkommen bei Beautiful BOM"
+          }
+        }
+      }
+    },
+    "A reader for software bills of materials.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A reader for software bills of materials."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Reader für Software Bills of Materials."
+          }
+        }
+      }
+    },
+    "Version %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Version %@"
+          }
+        }
+      }
+    },
+    "by rebaze": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "by rebaze"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "von rebaze"
+          }
+        }
+      }
+    },
+    "Open an SBOM…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Open an SBOM…"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "SBOM öffnen …"
+          }
+        }
+      }
+    },
+    "or drop a CycloneDX JSON file here": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "or drop a CycloneDX JSON file here"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "oder eine CycloneDX-JSON-Datei hierher ziehen"
+          }
+        }
+      }
+    },
+    "Recent": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recent"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zuletzt geöffnet"
+          }
+        }
+      }
+    },
+    "Samples": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Samples"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Beispiele"
+          }
+        }
+      }
+    },
+    "62 components · CycloneDX 1.4": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "62 components · CycloneDX 1.4"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "62 Komponenten · CycloneDX 1.4"
+          }
+        }
+      }
+    },
+    "CycloneDX 1.6 · every TR-03183-2 field present": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CycloneDX 1.6 · every TR-03183-2 field present"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "CycloneDX 1.6 · alle Felder nach TR-03183-2 vorhanden"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

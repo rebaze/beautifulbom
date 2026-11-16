@@ -71,3 +71,11 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ⏳ Typing in the Components search with the 50 MB file stays responsive.
 - ⏳ Full-screen 1920×1080 at presentation size (⌥⌘P): the room can read the Overview and Completeness from the back.
 - ⏳ VoiceOver: tab buttons, stat cards, rows and evidence buttons are named.
+
+## Branding and welcome (design-branding.md, 2026-11-16)
+
+- ✅ App icon: the system draws it from the asset catalog without the grey placeholder frame; light and dark icon style (`build/screenshots/icons/`).
+- ✅ Welcome window at a plain launch, not the Open panel; opening a file closes it; a launch with a file shows no welcome window (window lists after `open`).
+- ✅ Welcome window in English and light, German and dark (`b-welcome.png`, `b-welcome-de-dark.png`); About with licences (`b-about.png`); wordmark at the right of the tabs, also at 24 pt (`b-overview-laravel*.png`).
+- ⏳ By hand: clicking the Dock icon with no window open brings the welcome window back; a sample opens from it; a file dropped on it opens.
+- ⏳ By hand: clicking the wordmark opens About; the rebaze.de link opens the browser.

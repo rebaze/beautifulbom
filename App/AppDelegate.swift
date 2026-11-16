@@ -13,6 +13,7 @@ import SwiftUI
 ///   --evidence <rule>    show the first offender of a rule (e.g. sbom.timestamp) in the drawer
 ///   --language de|en     show the workshop views in this language (not saved)
 ///   --find <text>        open the find bar from the current tab and type <text> into it
+///   --show welcome|about show the welcome window (the default without --open) or About
 ///   --snapshot <png>     render the front window into a PNG, then quit
 ///   BBOM_TIMING=1        print open→parsed and open→first layout times
 enum LaunchOptions {
@@ -41,11 +42,16 @@ enum LaunchOptions {
     static let component = value("--component")
     static let evidence = value("--evidence")
     static let find = value("--find")
+    // A value, not a bare switch: AppKit reads options as pairs and would open a lone path as a file.
+    static let welcome = value("--show") == "welcome"
+    static let about = value("--show") == "about"
     static let timing = ProcessInfo.processInfo.environment["BBOM_TIMING"] == "1"
 }
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillFinishLaunching(_ notification: Notification) {
+        // The welcome window replaces the Open panel a document app shows at launch.
+        UserDefaults.standard.register(defaults: ["NSShowAppCentricOpenPanelInsteadOfUntitledFile": false])
         switch LaunchOptions.value("--appearance") {
         case "dark": NSApp.appearance = NSAppearance(named: .darkAqua)
         case "light": NSApp.appearance = NSAppearance(named: .aqua)
@@ -54,7 +60,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        guard let path = LaunchOptions.openPath else { return }
+        if LaunchOptions.about {
+            About.show()
+            if let path = LaunchOptions.snapshotPath { Snapshot.take(to: path) }
+            return
+        }
+        guard let path = LaunchOptions.openPath else {
+            // A plain launch, not one to open a file from Finder or the Dock.
+            let plain = notification.userInfo?[NSApplication.launchIsDefaultUserInfoKey] as? Bool ?? true
+            if plain || LaunchOptions.welcome {
+                Welcome.show()
+                if let path = LaunchOptions.snapshotPath { Snapshot.take(to: path) }
+            }
+            return
+        }
         let url = URL(fileURLWithPath: path)
         NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { _, _, error in
             if let error {
@@ -64,6 +83,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// The Dock icon clicked with no window open: the welcome window.
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        if !flag { Welcome.show() }
+        return false
+    }
+
     func applicationShouldOpenUntitledFile(_ sender: NSApplication) -> Bool { false }
 }
 
@@ -71,7 +96,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 enum Snapshot {
     /// The front document window; not the find bar's overlay, which is a window of its own.
     static var documentWindow: NSWindow? {
-        NSApp.orderedWindows.first { $0.isVisible && $0.contentView != nil && $0.styleMask.contains(.titled) && $0.parent == nil }
+        // orderedWindows leaves out panels such as About.
+        (NSApp.orderedWindows + NSApp.windows).first { $0.isVisible && $0.contentView != nil && $0.styleMask.contains(.titled) && $0.parent == nil }
     }
 
     /// Renders the front document window into `path` and quits. Needs no

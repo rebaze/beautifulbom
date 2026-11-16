@@ -33,6 +33,7 @@ struct DocumentView: View {
             // The source view stays alive when hidden; it must not keep the keyboard (⌘C, ⌘F).
             if !sourceVisible, let w = NSApp.keyWindow, w.firstResponder is NSTextView { w.makeFirstResponder(nil) }
         }
+        .onAppear { Welcome.close() }
         .task {
             await model.load()
             if let path = LaunchOptions.snapshotPath { Snapshot.take(to: path, after: .milliseconds(LaunchOptions.find == nil ? 1200 : 3000)) }

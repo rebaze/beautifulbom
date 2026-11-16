@@ -67,6 +67,7 @@ struct TabBar: View {
                 if tab == .components { Divider().frame(height: 16 * model.scale).padding(.horizontal, 6) }
             }
             Spacer()
+            Wordmark(scale: model.scale)
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 7 * model.scale)

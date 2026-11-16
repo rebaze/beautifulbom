@@ -27,7 +27,7 @@ A native macOS reader for bills of materials: pleasant to read, and always one s
 
 ## Build and run
 
-`make install` builds the Release app and copies it to `~/Applications`, so Spotlight, Launchpad and the Dock find it. Open an SBOM with ⌘O, by dropping it on a window or on the Dock icon, or with Finder › Open With.
+`make install` builds the Release app and copies it to `~/Applications`, so Spotlight, Launchpad and the Dock find it. Open an SBOM with ⌘O, by dropping it on a window or on the Dock icon, or with Finder › Open With. Started without a file, it shows a welcome window with recent files and three bundled samples (Window › Welcome to Beautiful BOM, ⇧⌘1). The icon is the rebaze mark; `scripts/icon/make-icon.sh` renders it from `scripts/icon/icon.svg` (needs `rsvg-convert`). Design: `docs/design-branding.md`.
 
 Requirements: macOS 15 or later, Xcode 27.2 (Swift 6.4), [XcodeGen](https://github.com/yonaskolb/XcodeGen), [xcbeautify](https://github.com/cpisciotta/xcbeautify).
 
@@ -39,7 +39,7 @@ make fixtures && make bench    # synthetic 1/10/50 MB fixtures and engine timing
 make snapshot CONFIG=Release FILE=Fixtures/public/laravel-7.12.0.cdx-1.4.json OUT=build/shot.png SELECT=/components/3
 ```
 
-Launch options for checks and agents: `--window-size <WxH>`, `--open <file>`, `--select <json-pointer>`, `--copy pointer|value|source`, `--view overview|composition|completeness|components|source`, `--component <bom-ref>`, `--evidence <rule id>` (e.g. `sbom.timestamp`), `--language de|en`, `--find <text>` (opens the find bar from the current tab and types the text key by key; with `BBOM_TIMING=1` it prints each key's cost), `--snapshot <png>` (renders the window and quits; needs no Screen Recording permission), `--text-size <pt>`, `--appearance dark|light`, and `BBOM_TIMING=1`. `make screenshots` renders every workshop view into `build/screenshots/`.
+Launch options for checks and agents: `--window-size <WxH>`, `--open <file>`, `--select <json-pointer>`, `--copy pointer|value|source`, `--view overview|composition|completeness|components|source`, `--component <bom-ref>`, `--evidence <rule id>` (e.g. `sbom.timestamp`), `--language de|en`, `--show welcome|about`, `--find <text>` (opens the find bar from the current tab and types the text key by key; with `BBOM_TIMING=1` it prints each key's cost), `--snapshot <png>` (renders the window and quits; needs no Screen Recording permission), `--text-size <pt>`, `--appearance dark|light`, and `BBOM_TIMING=1`. `make screenshots` renders every workshop view into `build/screenshots/`.
 
 The TR-03183-2 checks are a port of rio's profile. `make test` compares them with rio's results committed in `Fixtures/parity/`; `make parity-refresh` regenerates those with the `rio` on your PATH.
 

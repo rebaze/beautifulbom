@@ -12,7 +12,15 @@ targets:
   BeautifulBOM:
     type: application
     platform: macOS
-    sources: [App]
+    sources:
+      - App
+      # Samples on the welcome window: public fixtures only (licences in About).
+      - path: Fixtures/public/laravel-7.12.0.cdx-1.4.json
+        buildPhase: resources
+      - path: Fixtures/public/cern-lhc-vdm-editor.cdx.json
+        buildPhase: resources
+      - path: Fixtures/rio/bsi-pass.cdx.json
+        buildPhase: resources
     dependencies:
       - package: BOMCore
         product: BOMCore
@@ -20,6 +28,8 @@ targets:
       path: build/generated/Info.plist
       properties:
         CFBundleDisplayName: Beautiful BOM
+        CFBundleName: Beautiful BOM
+        NSHumanReadableCopyright: "© 2026 rebaze"
         CFBundleShortVersionString: "0.1.0"
         LSApplicationCategoryType: public.app-category.developer-tools
         CFBundleDocumentTypes:
@@ -31,7 +41,8 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: de.rebaze.beautiful-bom
         PRODUCT_NAME: BeautifulBOM
-        GENERATE_INFOPLIST_FILE: YES
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: NO
         SWIFT_VERSION: "6.0"
         CODE_SIGN_IDENTITY: "-"
         CODE_SIGN_STYLE: Manual
