@@ -18,6 +18,7 @@ struct AIModelView: View {
                 header
                 facts
                 // The list of gaps beside the tree when there is room, below it otherwise (presentation size).
+                // A tree too wide for the window (three or more generations) scrolls sideways.
                 ViewThatFits(in: .horizontal) {
                     HStack(alignment: .top, spacing: t.pad(32)) {
                         FamilyTree(model: model, ai: ai, t: t)
@@ -26,6 +27,11 @@ struct AIModelView: View {
                     }
                     VStack(alignment: .leading, spacing: t.pad(22)) {
                         FamilyTree(model: model, ai: ai, t: t)
+                        if !ai.gaps.isEmpty { gaps.frame(maxWidth: 900 * t.s, alignment: .leading) }
+                    }
+                    VStack(alignment: .leading, spacing: t.pad(22)) {
+                        ScrollView(.horizontal) { FamilyTree(model: model, ai: ai, t: t).padding(.trailing, t.pad(20)) }
+                            .defaultScrollAnchor(.trailing)  // the model first; older generations to the left
                         if !ai.gaps.isEmpty { gaps.frame(maxWidth: 900 * t.s, alignment: .leading) }
                     }
                 }
@@ -57,7 +63,7 @@ struct AIModelView: View {
         var parts: [String] = []
         if let task = m.task { parts.append(task) }
         if let arch = m.architecture { parts.append(L("%@ architecture", arch)) }
-        if let base = m.ancestors.first { parts.append(L("fine-tuned from %@", base.component.displayName)) }
+        if let base = m.ancestors.first { parts.append(L("based on %@", base.component.displayName)) }
         if let group = m.component.group { parts.append(L("by %@", group)) }
         return parts.joined(separator: " · ")
     }
@@ -70,6 +76,7 @@ struct AIModelView: View {
             if let c = m.contextLength { fact(c.formatted(.number.locale(L10n.locale)), L("tokens of context")) }
             let withLicence = m.datasets.filter { $0.component.map { !$0.licenses.isEmpty } ?? false }.count
             fact("\(m.datasets.count)", m.datasets.isEmpty ? L("training datasets stated")
+                 : m.datasets.count == 1 ? (withLicence == 1 ? L("training dataset, with a licence") : L("training dataset, without a licence"))
                  : withLicence == m.datasets.count ? L("training datasets, each with a licence")
                  : L("training datasets, %d with a licence", withLicence))
             if let f = m.fileSize { fact(Self.bytes(Double(f)), L("model files")) }
@@ -95,8 +102,9 @@ struct AIModelView: View {
 
     /// 7241732096 → "7.2 B" (billions and millions only; smaller numbers as they are).
     static func compact(_ n: Double) -> String {
-        if n >= 1e9 { return (n / 1e9).formatted(.number.precision(.fractionLength(1)).locale(L10n.locale)) + " B" }
-        if n >= 1e6 { return (n / 1e6).formatted(.number.precision(.fractionLength(0)).locale(L10n.locale)) + " M" }
+        // Rounded first, so 999.6 million reads "1.0 B", not "1000 M".
+        if n >= 999.95e6 { return L("%@ B", (n / 1e9).formatted(.number.precision(.fractionLength(1)).locale(L10n.locale))) }
+        if n >= 0.9995e6 { return L("%@ M", (n / 1e6).formatted(.number.precision(.fractionLength(0)).locale(L10n.locale))) }
         return Int(n).formatted(.number.locale(L10n.locale))
     }
 
@@ -127,7 +135,8 @@ struct AIModelView: View {
         case .noLicence: L("No licence for the model")
         case .noAncestors: L("No base model (pedigree.ancestors)")
         case .noDatasets: L("No training data stated")
-        case .datasetNamedOnly(let n): L("%@: named only, no licence or version", n)
+        case .datasetNamedOnly(let n): n.isEmpty ? L("An unnamed dataset: no licence or version") : L("%@: named only, no licence or version", n)
+        case .datasetRefMissing(let r): L("Dataset reference \"%@\" matches no component", r)
         case .noHash: L("No hash of the model files")
         case .ancestorWithoutDatasets(let n): L("%@ states no training data", n)
         }
@@ -253,7 +262,7 @@ private struct FamilyTree: View {
                     chips(mm.component.licenses.map(\.label), extra: {
                         if let task = mm.task, node.kind == .model { Chip(text: task, t: t) }
                         if node.kind == .base, mm.datasets.isEmpty { Pill(text: L("no training data stated"), kind: .gap, t: t) }
-                        if node.kind == .base, !mm.datasets.isEmpty { Chip(text: L("%d datasets", mm.datasets.count), t: t) }
+                        if node.kind == .base, !mm.datasets.isEmpty { Chip(text: Lp(mm.datasets.count, "1 dataset", "%d datasets"), t: t) }
                     })
                 }
             }
@@ -261,9 +270,9 @@ private struct FamilyTree: View {
             let d = node.dataset!
             EvidenceButton(.located(d.component?.entry ?? d.node)) {
                 box(main: false) {
-                    kind(d.component == nil ? L("Dataset, named only") : L("Dataset"), "tablecells.fill", .teal)
+                    kind(d.component != nil ? L("Dataset") : d.ref != nil ? L("Dataset, reference not found") : L("Dataset, named only"), "tablecells.fill", .teal)
                     let parts = d.name.split(separator: "/", maxSplits: 1).map(String.init)
-                    name(parts.count == 2 ? parts[0] : nil, parts.last ?? d.name, size: 19)
+                    name(parts.count == 2 ? parts[0] : nil, d.name.isEmpty ? L("unnamed") : (parts.last ?? d.name), size: 19)
                     if let c = d.component {
                         chips(c.licenses.map(\.label), extra: { if c.licenses.isEmpty { Pill(text: L("no licence"), kind: .gap, t: t) } })
                     } else {

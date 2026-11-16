@@ -17,7 +17,7 @@ struct CompositionView: View {
                 if let map = a.map {
                     section(title: L("How it hangs together"),
                             caption: L("The product in the middle. Each ring is one step further away: %d chosen directly, %d pulled in, up to %d steps deep.",
-                                       a.composition.directCount ?? 0, a.composition.indirectCount ?? 0, map.rings)) {
+                                       a.composition.directCount ?? 0, a.composition.indirectCount ?? 0, map.deepest)) {
                         ProductMap(model: model, a: a, map: map, t: t)
                     }
                 }
@@ -39,7 +39,7 @@ struct CompositionView: View {
         let top = VendorPalette.top(a)
         let segments = named.map { StackedBar.Segment(label: $0.unknown ? L("no vendor named") : $0.label, count: $0.count, filter: vendorFilter($0), isOthers: $0.unknown,
                                                       colour: top.firstIndex(of: $0.label).map { VendorPalette.colours[$0] }) }
-            + (others.map { [StackedBar.Segment(label: L("%d others", a.composition.vendors.count - named.count), count: $0.count, filter: nil, unknown: false, isOthers: true)] } ?? [])
+            + (others.map { [StackedBar.Segment(label: Lp(a.composition.vendors.count - named.count, "1 other", "%d others"), count: $0.count, filter: nil, unknown: false, isOthers: true)] } ?? [])
         let ecosystems = a.composition.ecosystems.map { $0.unknown ? L("no package URL") : OverviewView.ecosystemName($0.label) + " " + "\($0.count)" }
         let vendorCount = a.composition.vendors.filter { !$0.unknown }.count
         let who = vendorCount == 0
@@ -67,7 +67,7 @@ struct CompositionView: View {
             return StackedBar.Segment(label: $0.unknown ? L("no licence stated") : $0.label, count: $0.count,
                                       filter: ComponentFilter(licence: $0.unknown ? .unknown : .is($0.label)), unknown: $0.unknown,
                                       colour: FamilyStyle.colour(family).opacity(max(0.4, 1 - 0.22 * Double(k))))
-        } + (others.map { [StackedBar.Segment(label: L("%d others", a.composition.licenses.count - named.count), count: $0.count,
+        } + (others.map { [StackedBar.Segment(label: Lp(a.composition.licenses.count - named.count, "1 other", "%d others"), count: $0.count,
                                               filter: nil, isOthers: true)] } ?? [])
     }
 

@@ -42,10 +42,19 @@ struct ProductMap: View {
     let map: DependencyMap
     let t: Typo
 
+    /// The five largest vendors, once: the map asks for a colour per slice on every redraw.
+    private let vendors: [String]
+
     @State private var hovered: Int?
     @State private var width: CGFloat = 900
 
-    private var vendors: [String] { VendorPalette.top(a) }
+    init(model: DocumentModel, a: WorkshopAnalysis, map: DependencyMap, t: Typo) {
+        self.model = model
+        self.a = a
+        self.map = map
+        self.t = t
+        vendors = VendorPalette.top(a)
+    }
 
     var body: some View {
         let side = min(max(320, width * 0.56), 680 * t.s)
@@ -57,7 +66,7 @@ struct ProductMap: View {
             .modifier(Bloom())
             .accessibilityElement()
             .accessibilityLabel(L("Map of the product: %d chosen directly, %d pulled in, up to %d steps deep.",
-                                  a.composition.directCount ?? 0, a.composition.indirectCount ?? 0, map.rings))
+                                  a.composition.directCount ?? 0, a.composition.indirectCount ?? 0, map.deepest))
             sideColumn
         }
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -85,8 +94,9 @@ struct ProductMap: View {
                 Text(L("Lighter: further from the product."))
                 Text(L("A slice's width: the parts it stands for."))
                 Text(L("Click a slice to open it."))
-                if map.hiddenDeeper > 0 {
-                    Text(L("%d parts deeper than %d steps are not drawn.", map.hiddenDeeper, map.rings))
+                if map.notDrawn > 0 {
+                    Text(Lp(map.notDrawn, "1 part is not drawn on its own: too narrow or too deep.",
+                            "%d parts are not drawn one by one: too narrow or too deep."))
                 }
             }
             .font(t.font(13))
@@ -145,7 +155,7 @@ struct ProductMap: View {
                 .buttonStyle(.plain)
             }
             if otherCount > 0 || a.composition.vendors.contains(where: \.unknown) {
-                legendRow(VendorPalette.others, otherCount > 0 ? L("%d others", otherCount) : L("no vendor named"), nil)
+                legendRow(VendorPalette.others, otherCount > 0 ? Lp(otherCount, "1 other", "%d others") : L("no vendor named"), nil)
             }
             if groups { legendRow(VendorPalette.group, L("merged: too narrow to draw"), nil) }
         }

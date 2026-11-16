@@ -28,7 +28,9 @@ struct ComponentsView: View {
             Hairline()
             ScrollView {
                 LazyVStack(alignment: .leading, spacing: 0) {
-                    ForEach(rows, id: \.self) { i in row(i) }
+                    let vendors = VendorPalette.top(a)
+                    let deepest = a.composition.depthHistogram?.keys.max() ?? 0
+                    ForEach(rows, id: \.self) { i in row(i, vendors: vendors, deepest: deepest) }
                 }
                 .padding(.horizontal, t.pad(28))
                 .padding(.bottom, t.pad(20))
@@ -121,9 +123,9 @@ struct ComponentsView: View {
         let depths = a.composition.depthHistogram.map { $0.keys.sorted() } ?? []
         return Menu {
             Button(L("Any depth")) { model.componentFilter.depth = nil }
-            ForEach(depths, id: \.self) { d in Button(L("%d steps from the product", d)) { model.componentFilter.depth = d } }
+            ForEach(depths, id: \.self) { d in Button(d == 1 ? L("chosen directly") : L("%d steps from the product", d)) { model.componentFilter.depth = d } }
         } label: {
-            Text(model.componentFilter.depth.map { L("%d steps away", $0) } ?? L("Any depth"))
+            Text(model.componentFilter.depth.map { $0 == 1 ? L("chosen directly") : L("%d steps away", $0) } ?? L("Any depth"))
         }
         .menuStyle(.borderlessButton)
         .fixedSize()
@@ -147,11 +149,7 @@ struct ComponentsView: View {
         .padding(.bottom, t.pad(6))
     }
 
-    private var vendors: [String] { VendorPalette.top(a) }
-    private var deepest: Int { a.composition.depthHistogram?.keys.max() ?? 0 }
-    private var componentRules: Int { a.report.sections.first { $0.scope == .components }?.evaluated ?? 0 }
-
-    private func row(_ i: Int) -> some View {
+    private func row(_ i: Int, vendors: [String], deepest: Int) -> some View {
         let c = a.bom.components[i]
         let gaps = a.gapCount(component: i)
         let depth = c.bomRef.flatMap { a.graph?.depth($0) }
@@ -171,13 +169,15 @@ struct ComponentsView: View {
                 }
                 .frame(width: t.pad(120), alignment: .leading)
                 licenceChips(c).frame(width: t.pad(190), alignment: .leading)
-                depthDots(depth).frame(width: t.pad(110), alignment: .leading)
+                depthDots(depth, deepest: deepest).frame(width: t.pad(110), alignment: .leading)
                 HStack(spacing: t.pad(8)) {
-                    if componentRules > 0 {
-                        CoverageBar(covered: componentRules - gaps, total: componentRules, t: t).frame(width: t.pad(70), height: t.pad(7))
+                    // Only the rules that apply at this component's level.
+                    let rules = a.ruleCount(component: i)
+                    if rules > 0 {
+                        CoverageBar(covered: max(0, rules - gaps), total: rules, t: t, animated: false).frame(width: t.pad(70), height: t.pad(7))
                     }
                     if gaps == 0 { Image(systemName: "checkmark").foregroundStyle(.green) }
-                    else { Text(L("%d gaps", gaps)).font(t.font(12)).foregroundStyle(.secondary).monospacedDigit().lineLimit(1) }
+                    else { Text(Lp(gaps, "1 gap", "%d gaps")).font(t.font(12)).foregroundStyle(.secondary).monospacedDigit().lineLimit(1) }
                 }
                 .frame(width: t.pad(150), alignment: .leading)
             }
@@ -206,7 +206,7 @@ struct ComponentsView: View {
 
     /// Depth as dots: filled up to the component's step, up to the deepest step in this SBOM (at most 8 dots).
     @ViewBuilder
-    private func depthDots(_ depth: Int?) -> some View {
+    private func depthDots(_ depth: Int?, deepest: Int) -> some View {
         if let depth {
             HStack(spacing: t.pad(3)) {
                 ForEach(0..<min(max(deepest, depth), 8), id: \.self) { k in
@@ -215,7 +215,7 @@ struct ComponentsView: View {
                 Text("\(depth)").font(t.font(12)).foregroundStyle(.secondary).monospacedDigit().padding(.leading, t.pad(3))
             }
             .accessibilityElement()
-            .accessibilityLabel(L("%d steps from the product", depth))
+            .accessibilityLabel(depth == 1 ? L("chosen directly") : L("%d steps from the product", depth))
         } else {
             Text("–").foregroundStyle(.secondary)
         }

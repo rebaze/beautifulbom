@@ -87,7 +87,13 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     /// The Dock icon clicked with no window open: the welcome window.
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
-        if !flag { Welcome.show() }
+        guard !flag else { return false }
+        // A minimised document comes back first, as in every document app; the welcome window otherwise.
+        if let minimised = NSApp.windows.first(where: { $0.isMiniaturized }) {
+            minimised.deminiaturize(nil)
+        } else {
+            Welcome.show()
+        }
         return false
     }
 

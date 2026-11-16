@@ -93,8 +93,8 @@ struct OverviewView: View {
     @ViewBuilder
     private var componentsPicture: some View {
         let vendors = VendorPalette.top(a)
-        let colours = a.bom.components.map { VendorPalette.colour($0, vendors: vendors) }
-        if colours.count <= 120 {
+        if a.bom.components.count <= 120 {
+            let colours = a.bom.components.map { VendorPalette.colour($0, vendors: vendors) }
             let sorted = colours.enumerated().sorted { (rank(colours[$0.offset], vendors), $0.offset) < (rank(colours[$1.offset], vendors), $1.offset) }.map(\.element)
             LazyVGrid(columns: Array(repeating: GridItem(.fixed(t.pad(8)), spacing: t.pad(3)), count: 16), alignment: .leading, spacing: t.pad(3)) {
                 ForEach(sorted.indices, id: \.self) { RoundedRectangle(cornerRadius: 2 * t.s).fill(sorted[$0]).frame(width: t.pad(8), height: t.pad(8)) }

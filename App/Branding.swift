@@ -70,7 +70,10 @@ enum Welcome {
     private static var window: NSWindow?
 
     static func show() {
-        if window == nil {
+        if let w = window {
+            // Rebuilt on every show, so the recent files are current.
+            w.contentView = NSHostingView(rootView: WelcomeView())
+        } else {
             let w = NSWindow(contentRect: NSRect(x: 0, y: 0, width: 800, height: 480),
                              styleMask: [.titled, .closable, .fullSizeContentView], backing: .buffered, defer: false)
             w.titlebarAppearsTransparent = true

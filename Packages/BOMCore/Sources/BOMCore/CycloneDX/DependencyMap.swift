@@ -36,10 +36,14 @@ public struct DependencyMap: Sendable {
     public let rings: Int
     /// Reachable parts deeper than the last ring drawn.
     public let hiddenDeeper: Int
+    /// How many steps from the product the deepest reachable part is, drawn or not.
+    public let deepest: Int
+    /// Reachable parts without a slice of their own: merged, beneath a narrow slice, or too deep.
+    public let notDrawn: Int
 
     public init(_ graph: DependencyGraph, minFraction: Double = defaultMinFraction, maxDepth: Int = defaultMaxDepth) {
         guard let root = graph.root else {
-            slices = []; rings = 0; hiddenDeeper = 0
+            slices = []; rings = 0; hiddenDeeper = 0; deepest = 0; notDrawn = 0
             return
         }
         // Weights bottom-up over the breadth-first order: no recursion, so deep graphs are safe.
@@ -93,6 +97,8 @@ public struct DependencyMap: Sendable {
         slices = out
         rings = out.map(\.depth).max() ?? 0
         hiddenDeeper = graph.order.dropFirst().filter { (graph.depth($0) ?? 0) > maxDepth }.count
+        deepest = graph.order.compactMap { graph.depth($0) }.max() ?? 0
+        notDrawn = graph.order.count - 1 - out.filter { !$0.isGroup }.count
     }
 
     /// Slice indices from ring 1 down to `index`.

@@ -187,8 +187,11 @@ private struct ProfileRun {
         }
 
         var children: [Level: Int] = [:]
+        var componentLevels: [Level] = []
+        componentLevels.reserveCapacity(bom.components.count)
         for (i, c) in bom.components.enumerated() {
             let checked = check(c)
+            componentLevels.append(checked.level)
             levels[checked.level, default: 0] += 1
             children[checked.level, default: 0] += 1
             let id = identity(c)
@@ -222,7 +225,7 @@ private struct ProfileRun {
         for r in Requirement.profileFields {
             add(.components, r, children.reduce(0) { $0 + ($1.key.applies(r) ? $1.value : 0) })
         }
-        return ProfileResult(evaluations: evaluations, levels: levels, offenders: offenders)
+        return ProfileResult(evaluations: evaluations, levels: levels, componentLevels: componentLevels, offenders: offenders)
     }
 }
 

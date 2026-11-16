@@ -245,13 +245,15 @@ struct CoverageBar: View {
     let covered: Int
     let total: Int
     let t: Typo
+    /// Off in lazy lists, where rows are rebuilt while scrolling and would grow in again.
+    var animated = true
 
     var body: some View {
         GeometryReader { geo in
             let w = total == 0 ? 0 : geo.size.width * CGFloat(covered) / CGFloat(total)
             ZStack(alignment: .leading) {
                 Capsule().fill(Color.red.opacity(0.16))
-                Capsule().fill(Color.green).frame(width: w).growIn()
+                if animated { Capsule().fill(Color.green).frame(width: w).growIn() } else { Capsule().fill(Color.green).frame(width: w) }
             }
         }
         .accessibilityElement()

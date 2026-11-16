@@ -2772,23 +2772,6 @@
         }
       }
     },
-    "%d parts deeper than %d steps are not drawn.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%d parts deeper than %d steps are not drawn."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%d Teile, tiefer als %d Schritte, sind nicht gezeichnet."
-          }
-        }
-      }
-    },
     "Click a slice to open it.": {
       "extractionState": "manual",
       "localizations": {
@@ -3384,23 +3367,6 @@
         }
       }
     },
-    "fine-tuned from %@": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "fine-tuned from %@"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "feinabgestimmt aus %@"
-          }
-        }
-      }
-    },
     "by %@": {
       "extractionState": "manual",
       "localizations": {
@@ -3975,6 +3941,244 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ein Reader für Bills of Materials: Software und KI."
+          }
+        }
+      }
+    },
+    "based on %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "based on %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "basiert auf %@"
+          }
+        }
+      }
+    },
+    "training dataset, with a licence": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "training dataset, with a licence"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trainingsdatensatz, mit Lizenz"
+          }
+        }
+      }
+    },
+    "training dataset, without a licence": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "training dataset, without a licence"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trainingsdatensatz, ohne Lizenz"
+          }
+        }
+      }
+    },
+    "%@ B": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ B"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Mrd."
+          }
+        }
+      }
+    },
+    "%@ M": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ M"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ Mio."
+          }
+        }
+      }
+    },
+    "An unnamed dataset: no licence or version": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "An unnamed dataset: no licence or version"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein unbenannter Datensatz: ohne Lizenz und Version"
+          }
+        }
+      }
+    },
+    "Dataset reference \"%@\" matches no component": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dataset reference \"%@\" matches no component"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datensatz-Verweis „%@“ passt zu keiner Komponente"
+          }
+        }
+      }
+    },
+    "Dataset, reference not found": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dataset, reference not found"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Datensatz, Verweis nicht gefunden"
+          }
+        }
+      }
+    },
+    "unnamed": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "unnamed"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "unbenannt"
+          }
+        }
+      }
+    },
+    "1 other": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 other"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 weiterer"
+          }
+        }
+      }
+    },
+    "1 gap": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 gap"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 Lücke"
+          }
+        }
+      }
+    },
+    "1 dataset": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 dataset"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 Datensatz"
+          }
+        }
+      }
+    },
+    "1 part is not drawn on its own: too narrow or too deep.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 part is not drawn on its own: too narrow or too deep."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 Teil ist nicht einzeln gezeichnet: zu schmal oder zu tief."
+          }
+        }
+      }
+    },
+    "%d parts are not drawn one by one: too narrow or too deep.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d parts are not drawn one by one: too narrow or too deep."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d Teile sind nicht einzeln gezeichnet: zu schmal oder zu tief."
           }
         }
       }

@@ -4,6 +4,12 @@ import SwiftUI
 /// Looks a workshop string up in the chosen language (English source text is the key).
 /// Placeholders follow String(format:): %@ for text, %d for numbers. Views that call it
 /// re-render when the language changes, because it reads an observed setting.
+/// A count with its noun: `one` (no placeholder) for 1, `other` (with %d) for everything else.
+@MainActor
+func Lp(_ n: Int, _ one: String, _ other: String) -> String {
+    n == 1 ? L(one) : L(other, n)
+}
+
 @MainActor
 func L(_ key: String, _ args: CVarArg...) -> String {
     let format = L10n.lookup(key)

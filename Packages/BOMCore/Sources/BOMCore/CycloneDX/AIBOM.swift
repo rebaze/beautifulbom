@@ -9,6 +9,8 @@ public struct AIBOMAnalysis: Sendable {
         /// The element in `modelCard.modelParameters.datasets`.
         public let node: NodeID
         public let url: String?
+        /// The `ref` when the model card refers to a component by bom-ref.
+        public let ref: String?
     }
 
     public struct Model: Sendable, Hashable {
@@ -33,8 +35,10 @@ public struct AIBOMAnalysis: Sendable {
             case noLicence
             case noAncestors
             case noDatasets
-            /// A dataset named inline: no licence, no version of its own.
+            /// A dataset named inline: no licence, no version of its own ("" when unnamed).
             case datasetNamedOnly(String)
+            /// A dataset reference (`ref`) that matches no component.
+            case datasetRefMissing(String)
             case noHash
             /// A base model (named) states no training data.
             case ancestorWithoutDatasets(String)
@@ -77,7 +81,7 @@ public struct AIBOMAnalysis: Sendable {
             gaps.append(Gap(kind: .noDatasets, evidence: datasetsEvidence(model, tree)))
         }
         for d in model.datasets where d.component == nil {
-            gaps.append(Gap(kind: .datasetNamedOnly(d.name), evidence: .located(d.node)))
+            gaps.append(Gap(kind: d.ref.map { .datasetRefMissing($0) } ?? .datasetNamedOnly(d.name), evidence: .located(d.node)))
         }
         if entry.hashes.isEmpty { gaps.append(Gap(kind: .noHash, evidence: tree.evidence(entry.entry, "hashes"))) }
         func ancestorGaps(_ m: Model) {
@@ -107,11 +111,11 @@ public struct AIBOMAnalysis: Sendable {
             if let ref = tree.memberString(e, "ref") {
                 let comp = bom.component(bomRef: ref)
                 return Dataset(name: comp?.displayName ?? ref, component: comp, node: e,
-                               url: comp?.externalReferences.first?.url)
+                               url: comp?.externalReferences.first?.url, ref: ref)
             }
-            guard let name = tree.memberString(e, "name") else { return nil }
-            return Dataset(name: name, component: nil, node: e,
-                           url: tree.member(e, "contents").flatMap { tree.memberString($0, "url") })
+            // The name is optional in the schema: an unnamed dataset still counts, named "".
+            return Dataset(name: tree.memberString(e, "name") ?? "", component: nil, node: e,
+                           url: tree.member(e, "contents").flatMap { tree.memberString($0, "url") }, ref: nil)
         }
         // Base models; deep chains are cut at 16 generations.
         let ancestors: [Model] = depth >= 16 ? [] : tree.objectElements(tree.member(c.entry, "pedigree").flatMap { tree.member($0, "ancestors") })

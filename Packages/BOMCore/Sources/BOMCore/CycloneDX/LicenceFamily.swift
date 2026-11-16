@@ -19,11 +19,11 @@ public enum LicenceFamily: String, Sendable, Hashable, CaseIterable {
         "mit", "mit-0", "x11", "isc", "0bsd", "bsd-1-clause", "bsd-2-clause", "bsd-3-clause", "bsd-3-clause-clear",
         "bsd-2-clause-patent", "apache-1.1", "apache-2.0", "zlib", "unlicense", "cc0-1.0", "bsl-1.0", "psf-2.0",
         "python-2.0", "postgresql", "ncsa", "upl-1.0", "blueoak-1.0.0", "wtfpl", "curl", "openssl", "artistic-2.0",
-        "ruby", "php-3.01", "unicode-dfs-2016", "unicode-3.0", "cc-by-4.0", "ofl-1.1", "mpl-2.0-no-copyleft-exception",
+        "ruby", "php-3.01", "unicode-dfs-2016", "unicode-3.0", "cc-by-4.0", "ofl-1.1",
     ]
     static let weakIDs: Set<String> = [
         "lgpl-2.0", "lgpl-2.1", "lgpl-3.0", "mpl-1.1", "mpl-2.0", "epl-1.0", "epl-2.0", "cddl-1.0", "cddl-1.1",
-        "cpl-1.0", "ms-rl", "lgpllr",
+        "cpl-1.0", "ms-rl", "lgpllr", "mpl-2.0-no-copyleft-exception",
     ]
     static let strongIDs: Set<String> = [
         "gpl-1.0", "gpl-2.0", "gpl-3.0", "agpl-1.0", "agpl-3.0", "eupl-1.1", "eupl-1.2", "osl-3.0", "sspl-1.0",
@@ -72,6 +72,8 @@ public enum LicenceFamily: String, Sendable, Hashable, CaseIterable {
     private struct Parser {
         let tokens: [String]
         var pos = 0
+        /// Parentheses deep; capped as in SPDX's own parser, so a hostile file cannot exhaust the stack.
+        var depth = 0
         mutating func peek(_ word: String) -> Bool {
             pos < tokens.count && tokens[pos].uppercased() == word
         }
@@ -96,7 +98,9 @@ public enum LicenceFamily: String, Sendable, Hashable, CaseIterable {
         mutating func atom() -> LicenceFamily? {
             guard pos < tokens.count else { return nil }
             if tokens[pos] == "(" {
-                pos += 1
+                guard depth < SPDX.maxExpressionDepth else { return nil }
+                depth += 1; pos += 1
+                defer { depth -= 1 }
                 guard let f = or(), pos < tokens.count, tokens[pos] == ")" else { return nil }
                 pos += 1
                 return f

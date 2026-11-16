@@ -139,6 +139,8 @@ public struct ProfileResult: Sendable {
     public let evaluations: [Evaluation]
     /// Checked components per level, the subject included.
     public let levels: [Level: Int]
+    /// The level each component (index into `bom.components`) was checked at.
+    public let componentLevels: [Level]
     /// In rio's order: the document, the subject, then each component.
     public let offenders: [Offender]
 

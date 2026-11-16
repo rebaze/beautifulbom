@@ -14,8 +14,13 @@ PLACEHOLDER = re.compile(r"%(?:\d+\$)?[@d]")
 catalog = json.load(open("App/Localizable.xcstrings"))["strings"]
 keys = []
 for path in sorted(glob.glob("App/**/*.swift", recursive=True)):
-    for m in re.finditer(r'\bL\("((?:[^"\\]|\\.)*)"', open(path).read()):
-        key = m.group(1).encode().decode("unicode_escape").encode("latin-1").decode("utf-8")
+    text = open(path).read()
+    # L("key", …) and Lp(n, "one", "other"): both forms of a count are keys.
+    found = [m.group(1) for m in re.finditer(r'\bL\("((?:[^"\\]|\\.)*)"', text)]
+    for m in re.finditer(r'\bLp\([^,]+,\s*"((?:[^"\\]|\\.)*)"\s*,\s*"((?:[^"\\]|\\.)*)"', text):
+        found += [m.group(1), m.group(2)]
+    for raw in found:
+        key = raw.encode().decode("unicode_escape").encode("latin-1").decode("utf-8")
         if key not in keys:
             keys.append(key)
 

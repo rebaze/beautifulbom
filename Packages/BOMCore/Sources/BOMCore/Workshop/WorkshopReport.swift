@@ -38,6 +38,13 @@ public struct WorkshopAnalysis: Sendable {
     /// The index of the first component with this bom-ref (the subject is not a component).
     public func componentIndex(bomRef: String) -> Int? { indexByRef[bomRef] }
 
+    /// TR-03183-2 rules that apply to one component at its level: name, version, level and the
+    /// fields its level demands (11 at full level, 4 at referenced).
+    public func ruleCount(component index: Int) -> Int {
+        guard profile.componentLevels.indices.contains(index) else { return 0 }
+        return 3 + profile.componentLevels[index].fields.count
+    }
+
     /// Number of failed TR-03183-2 rules for one component.
     public func gapCount(component index: Int) -> Int { byComponent[index]?.count ?? 0 }
 }

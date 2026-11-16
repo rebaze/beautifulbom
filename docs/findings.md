@@ -101,3 +101,33 @@ Parity with rio: the port agrees with rio 0.10.2 on all five parity files (both 
 - **Drawer selection colour** is the inactive grey when the source view is not focused; the node highlight underneath is light.
 - **Plural forms** are not handled ("1 Komponenten" cannot occur with the fixtures, but would with a one-component SBOM).
 - **Deferred review minors** (2026-11-16): duplicate `dependsOn` entries can make "pulled in" negative; `pkg:npm/@scope/name` without a version does not parse; two exotic manufacturer URLs pass that Go rejects; the parse-error count includes dropped warnings; Composition counts are not evidence buttons; drag handles have no accessibility role; some dead code in `FieldChecks` and `CompletenessView`.
+
+## Review of 36c875a..facb2fc (2026-11-16)
+
+An independent review of the branch since the last review (Find, drop, branding, map, look, licence
+families, AIBOM). No critical findings. Fixed, with `BranchReviewTests` where the engine is involved:
+
+- Licence-family parser had no nesting cap: 3000 nested parentheses crashed the background parse.
+  Now capped at SPDX's 64; deeper is "not classified".
+- "Up to N steps deep" counted the rings drawn, not the depth (50 MB: said 4, is 7). Now
+  `DependencyMap.deepest`; the note counts every part without a slice of its own (`notDrawn`).
+- Map hover rebuilt the vendor list per slice (59 ms per redraw at 8000 vendors): computed once.
+  The same for Components rows and the Overview picture (colours only when shown).
+- A family tree of three or more generations was cut off: it now scrolls sideways, starting at the model.
+- "fine-tuned from" claimed more than `pedigree.ancestors` says: now "based on".
+- `MPL-2.0-no-copyleft-exception` was permissive: weak copyleft.
+- The TR fields bar counted all 11 rules for every component: now the rules of its level
+  (`WorkshopAnalysis.ruleCount`, 4 at referenced).
+- "1 gaps", "1 others", "1 datasets", "1 steps": singular forms (`Lp`), depth 1 reads "chosen directly".
+- Welcome recents were frozen at launch: rebuilt on every show. The Dock icon brings back a
+  minimised document before showing the welcome window.
+- AIBOM: a dataset `ref` matching no component is its own gap; an unnamed inline dataset counts.
+- Parameter counts in German ("7,2 Mrd."), and 999.6 M rounds up to "1.0 B".
+- Coverage bars in the Components list no longer grow in again while scrolling.
+
+Deferred: VoiceOver cannot reach the map's slices (it is one element with a summary label); the
+bars, legend and Components list carry the same facts.
+
+Left as designed: "n of N fields present" counts rules met by every component; ⌘F in the Components
+search goes to Source; a merged slice opens every part at that depth; OR with an unclassified
+licence takes the classified side. Not measured: `LineNumberRuler` on 50 MB files after Find.

@@ -100,3 +100,9 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ `AIBOMTests`: the reference and the generated Zephyr AIBOM read as expected; an SBOM and an SBOM with one model inside keep the SBOM views; ancestors of ancestors.
 - ✅ Snapshots: reference and generated, light and English, dark and German, at 24 pt on 1920 × 1080 the list of gaps moves below the tree (`ai-*.png`).
 - ⏳ By hand: clicking a node or a gap opens its source in the drawer; both AIBOMs open from the welcome window.
+
+## Review fixes (findings.md, 2026-11-16)
+
+- ✅ `BranchReviewTests`: deep licence nesting on a 512 KB stack, real map depth and parts not drawn, MPL no-copyleft exception, rules per level, AIBOM dataset edge cases.
+- ✅ Snapshots: 50 MB map caption "up to 7 steps deep" with the not-drawn note; a four-generation AIBOM scrolls and opens at the model; German "7,2 Mrd."; Components rows "8 gaps" per level.
+- ⏳ By hand: Dock icon with a minimised document restores it; Window › Welcome shows a file opened since launch under Recent.
