@@ -38,7 +38,7 @@ struct OverviewView: View {
             }
             EvidenceButton(subject.map { tree.evidence($0.entry, "name") } ?? a.bom.metadata.map { tree.evidence($0, "component") }) {
                 Text(subject?.name ?? model.fileName ?? L("Unnamed product"))
-                    .font(t.font(40, .semibold))
+                    .font(t.serif(42))
                     .tracking(-0.4 * t.s)
                     .lineLimit(2)
             }
@@ -64,41 +64,107 @@ struct OverviewView: View {
     // MARK: Stats
 
     private var stats: some View {
-        HStack(spacing: t.pad(12)) {
-            stat(value: "\(a.bom.components.count)", label: L("components"), target: .components)
+        HStack(alignment: .top, spacing: t.pad(12)) {
+            stat(value: "\(a.bom.components.count)", label: L("components"), target: .components) { componentsPicture }
             if let direct = a.composition.directCount, let indirect = a.composition.indirectCount {
-                stat(value: "\(direct) → \(indirect)", label: L("chosen directly → pulled in"), target: .composition)
+                stat(value: "\(direct) → \(indirect)", label: L("chosen directly → pulled in"), target: .composition,
+                     link: a.map == nil ? nil : L("See the map →")) {
+                    if let map = a.map { MiniMap(a: a, map: map).frame(width: 96 * min(t.s, 1.4), height: 96 * min(t.s, 1.4)) }
+                }
             } else {
-                stat(value: "–", label: a.graph == nil ? L("no dependency data") : L("product has no bom-ref"), target: .composition)
+                stat(value: "–", label: a.graph == nil ? L("no dependency data") : L("product has no bom-ref"), target: .composition) { EmptyView() }
             }
             let known = a.composition.ecosystems.filter { !$0.unknown }
-            stat(value: "\(known.count)",
-                 label: known.count == 1 ? L("ecosystem (%@)", Self.ecosystemName(known[0].label)) : L("ecosystems"),
-                 target: .composition)
+            stat(value: "\(known.count)", label: known.count == 1 ? L("ecosystem") : L("ecosystems"), target: .composition) {
+                chips(known.prefix(3).map { Chip(text: "\(Self.ecosystemName($0.label)) \($0.count)", t: t) })
+            }
             let licences = a.composition.licenses.filter { !$0.unknown }
-            stat(value: "\(licences.count)", label: licences.count == 1 ? L("licence") : L("licences"), target: .composition)
+            let families = a.composition.families
+            let label = licences.count == 1 ? L("licence") : L("licences")
+            stat(value: "\(licences.count)",
+                 label: families.count == 1 && families[0].label == LicenceFamily.permissive.rawValue ? L("%@, all permissive", label) : label,
+                 target: .composition) {
+                chips(licences.prefix(3).map { Chip(text: "\(Self.shortLicence($0.label)) \($0.count)", colour: FamilyStyle.colour(LicenceFamily.of($0.label)), t: t) })
+            }
         }
     }
 
-    private func stat(value: String, label: String, target: WorkshopTab) -> some View {
-        Button { model.show(tab: target) } label: {
-            VStack(alignment: .leading, spacing: t.pad(2)) {
-                Text(value)
-                    .font(t.font(38, .semibold))
-                    .monospacedDigit()
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.6)
-                Text(label)
-                    .font(t.font(13))
-                    .foregroundStyle(.secondary)
-                    .lineLimit(2, reservesSpace: true)
+    /// One square per component in its vendor's colour; a bar instead for large SBOMs.
+    @ViewBuilder
+    private var componentsPicture: some View {
+        let vendors = VendorPalette.top(a)
+        let colours = a.bom.components.map { VendorPalette.colour($0, vendors: vendors) }
+        if colours.count <= 120 {
+            let sorted = colours.enumerated().sorted { (rank(colours[$0.offset], vendors), $0.offset) < (rank(colours[$1.offset], vendors), $1.offset) }.map(\.element)
+            LazyVGrid(columns: Array(repeating: GridItem(.fixed(t.pad(8)), spacing: t.pad(3)), count: 16), alignment: .leading, spacing: t.pad(3)) {
+                ForEach(sorted.indices, id: \.self) { RoundedRectangle(cornerRadius: 2 * t.s).fill(sorted[$0]).frame(width: t.pad(8), height: t.pad(8)) }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .frame(width: t.pad(16 * 11), alignment: .leading)
+            .accessibilityHidden(true)
+        } else {
+            let (named, others) = a.composition.top(a.composition.vendors, keep: 5)
+            HStack(spacing: 1) {
+                ForEach(named.indices, id: \.self) { k in
+                    Rectangle().fill(named[k].unknown ? VendorPalette.others : VendorPalette.colour(of: named[k].label, vendors: vendors))
+                        .frame(width: t.pad(170) * CGFloat(named[k].count) / CGFloat(max(1, a.bom.components.count)))
+                }
+                if let others { Rectangle().fill(VendorPalette.others).frame(width: t.pad(170) * CGFloat(others.count) / CGFloat(max(1, a.bom.components.count))) }
+            }
+            .frame(height: t.pad(10))
+            .clipShape(Capsule())
+        }
+    }
+
+    private func rank(_ c: Color, _ vendors: [String]) -> Int { VendorPalette.colours.firstIndex(of: c) ?? VendorPalette.colours.count }
+
+    /// As many chips as fit on one line, largest first.
+    private func chips(_ items: [Chip]) -> some View {
+        ViewThatFits(in: .horizontal) {
+            ForEach((1...max(1, items.count)).reversed(), id: \.self) { n in
+                HStack(spacing: t.pad(6)) { ForEach(0..<min(n, items.count), id: \.self) { items[$0] } }
+                    .fixedSize()
+            }
+        }
+    }
+
+    private func stat<P: View>(value: String, label: String, target: WorkshopTab, link: String? = nil,
+                               @ViewBuilder picture: () -> P) -> some View {
+        Button { model.show(tab: target) } label: {
+            HStack(alignment: .top, spacing: t.pad(8)) {
+                VStack(alignment: .leading, spacing: t.pad(2)) {
+                    Text(value)
+                        .font(t.serif(38))
+                        .monospacedDigit()
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.6)
+                    Text(label)
+                        .font(t.font(13))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(2)
+                    Spacer(minLength: t.pad(10))
+                    if link != nil, !beside { picture().padding(.bottom, t.pad(8)) }
+                    if let link { Text(link).font(t.font(13)).foregroundStyle(Color.accentColor) }
+                    else { picture() }
+                }
+                if link != nil, beside {
+                    Spacer(minLength: 0)
+                    picture()
+                }
+            }
+            .frame(maxWidth: .infinity, minHeight: t.pad(118), alignment: .topLeading)
             .panel(t)
             .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
         .help(L("Open %@", target.title))
+    }
+
+    /// The picture of a card with a link stands beside the number at normal sizes, under it at presentation size.
+    private var beside: Bool { t.s <= 1.25 }
+
+    /// "BSD-3-Clause" fits a chip as "BSD-3"; other identifiers stay as they are.
+    static func shortLicence(_ s: String) -> String {
+        s.hasSuffix("-Clause") ? String(s.dropLast("-Clause".count)) : s
     }
 
     static func ecosystemName(_ purlType: String) -> String {
@@ -113,8 +179,10 @@ struct OverviewView: View {
 
     private var madeOf: some View {
         let (vendors, others) = a.composition.top(a.composition.vendors, keep: 5)
+        let top = VendorPalette.top(a)
         let vendorSegments = vendors.map { StackedBar.Segment(label: $0.unknown ? L("no vendor named") : $0.label, count: $0.count,
-                                                            filter: $0.unknown ? nil : ComponentFilter(vendor: $0.label), isOthers: $0.unknown) }
+                                                            filter: $0.unknown ? nil : ComponentFilter(vendor: $0.label), isOthers: $0.unknown,
+                                                            colour: top.contains($0.label) ? VendorPalette.colour(of: $0.label, vendors: top) : nil) }
             + (others.map { [StackedBar.Segment(label: L("others"), count: $0.count, filter: nil, isOthers: true)] } ?? [])
         let licenceSegments = CompositionView.licenceSegments(a)
         return Grid(alignment: .leading, horizontalSpacing: t.pad(16), verticalSpacing: t.pad(10)) {
@@ -125,6 +193,10 @@ struct OverviewView: View {
             GridRow {
                 Text(L("Licences")).font(t.font(13)).foregroundStyle(.secondary)
                 StackedBar(segments: licenceSegments, total: licenceSegments.reduce(0) { $0 + $1.count }, t: t, height: 26, showLegend: false) { model.showComponents($0) }
+            }
+            GridRow {
+                Color.clear.frame(width: 1, height: 1)
+                FamilyLegend(model: model, a: a, t: t)
             }
         }
     }
@@ -206,15 +278,27 @@ struct OverviewView: View {
             VStack(alignment: .leading, spacing: t.pad(8)) {
                 Eyebrow(text: L("BSI TR-03183-2 2.1.0"), t: t)
                 Text(v.headline)
-                    .font(t.font(20, .semibold))
+                    .font(t.serif(22))
                     .fixedSize(horizontal: false, vertical: true)
                 if let gaps = v.gapList {
                     Text(gaps)
-                        .font(t.font(15))
+                        .font(t.font(14))
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
+                Grid(alignment: .leading, horizontalSpacing: t.pad(12), verticalSpacing: t.pad(6)) {
+                    ForEach(a.report.sections.filter { $0.evaluated > 0 }) { section in
+                        GridRow {
+                            Text(CompletenessView.sectionTitle(section.scope)).font(t.font(14))
+                            CoverageBar(covered: section.present, total: section.evaluated, t: t).frame(height: t.pad(8))
+                            Text(L("%d of %d", section.present, section.evaluated)).font(t.font(13)).foregroundStyle(.secondary).monospacedDigit()
+                                .gridColumnAlignment(.trailing)
+                        }
+                    }
+                }
+                .padding(.top, t.pad(4))
                 HStack {
-                    Text(L("Presence and form of fields only."))
+                    Text(L("Fields present in the required form, per part. Presence and form only."))
                         .foregroundStyle(.secondary)
                     Spacer()
                     Text(L("Completeness →")).foregroundStyle(Color.accentColor)

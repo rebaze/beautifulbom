@@ -70,14 +70,19 @@ struct ComponentsView: View {
     private var licenceMenu: some View {
         let labels = a.composition.licenses.filter { !$0.unknown }.map(\.label)
         return Menu {
-            Button(L("Any licence")) { model.componentFilter.licence = nil }
+            Button(L("Any licence")) { model.componentFilter.licence = nil; model.componentFilter.family = nil }
+            Section(L("Family")) {
+                ForEach(a.composition.families.compactMap { LicenceFamily(rawValue: $0.label) }, id: \.self) { f in
+                    Button(FamilyStyle.name(f)) { model.componentFilter.licence = nil; model.componentFilter.family = f }
+                }
+            }
             Section(L("Licence is")) {
-                ForEach(labels, id: \.self) { l in Button(l) { model.componentFilter.licence = .is(l) } }
+                ForEach(labels, id: \.self) { l in Button(l) { model.componentFilter.family = nil; model.componentFilter.licence = .is(l) } }
             }
             Section(L("Licence is not")) {
-                ForEach(labels, id: \.self) { l in Button(L("not %@", l)) { model.componentFilter.licence = .isNot(l) } }
+                ForEach(labels, id: \.self) { l in Button(L("not %@", l)) { model.componentFilter.family = nil; model.componentFilter.licence = .isNot(l) } }
             }
-            Button(L("No licence stated")) { model.componentFilter.licence = .unknown }
+            Button(L("No licence stated")) { model.componentFilter.family = nil; model.componentFilter.licence = .unknown }
         } label: {
             Text(licenceLabel)
         }
@@ -86,7 +91,8 @@ struct ComponentsView: View {
     }
 
     private var licenceLabel: String {
-        switch model.componentFilter.licence {
+        if let f = model.componentFilter.family { return FamilyStyle.name(f) }
+        return switch model.componentFilter.licence {
         case nil: L("Any licence")
         case .is(let l)?: l
         case .isNot(let l)?: L("not %@", l)
@@ -129,10 +135,11 @@ struct ComponentsView: View {
     private var header: some View {
         HStack(spacing: t.pad(12)) {
             Text(L("Component")).frame(maxWidth: .infinity, alignment: .leading)
-            Text(L("Version")).frame(width: t.pad(130), alignment: .leading)
-            Text(L("Licence")).frame(width: t.pad(170), alignment: .leading)
-            Text(L("Depth")).frame(width: t.pad(60), alignment: .trailing)
-            Text(L("TR gaps")).frame(width: t.pad(80), alignment: .trailing)
+            Text(L("Version")).frame(width: t.pad(120), alignment: .leading)
+            Text(L("Ecosystem")).frame(width: t.pad(120), alignment: .leading)
+            Text(L("Licence")).frame(width: t.pad(190), alignment: .leading)
+            Text(L("Depth")).frame(width: t.pad(110), alignment: .leading)
+            Text(L("TR fields")).frame(width: t.pad(150), alignment: .leading)
         }
         .font(t.font(12, .medium))
         .foregroundStyle(.secondary)
@@ -140,34 +147,78 @@ struct ComponentsView: View {
         .padding(.bottom, t.pad(6))
     }
 
+    private var vendors: [String] { VendorPalette.top(a) }
+    private var deepest: Int { a.composition.depthHistogram?.keys.max() ?? 0 }
+    private var componentRules: Int { a.report.sections.first { $0.scope == .components }?.evaluated ?? 0 }
+
     private func row(_ i: Int) -> some View {
         let c = a.bom.components[i]
         let gaps = a.gapCount(component: i)
+        let depth = c.bomRef.flatMap { a.graph?.depth($0) }
         return Button { model.openComponent(i) } label: {
             HStack(spacing: t.pad(12)) {
-                (Text(c.group.flatMap { $0.isEmpty ? nil : $0 + "/" } ?? "").foregroundStyle(.secondary)
-                    + Text(c.name ?? c.path).fontWeight(.medium))
-                .lineLimit(1)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                Text(c.version ?? "–").font(t.mono(13)).lineLimit(1).frame(width: t.pad(130), alignment: .leading)
-                Text(c.licenses.map(\.label).joined(separator: ", ").nonEmpty ?? "–")
+                HStack(spacing: t.pad(8)) {
+                    RoundedRectangle(cornerRadius: 2.5 * t.s).fill(VendorPalette.colour(c, vendors: vendors))
+                        .frame(width: t.pad(9), height: t.pad(9))
+                    (Text(c.group.flatMap { $0.isEmpty ? nil : $0 + "/" } ?? "").foregroundStyle(.secondary)
+                        + Text(c.name ?? c.path).fontWeight(.medium))
                     .lineLimit(1)
-                    .foregroundStyle(c.licenses.isEmpty ? .red : .primary)
-                    .frame(width: t.pad(170), alignment: .leading)
-                Text(c.bomRef.flatMap { a.graph?.depth($0) }.map(String.init) ?? "–")
-                    .monospacedDigit().frame(width: t.pad(60), alignment: .trailing)
-                Group {
-                    if gaps == 0 { Image(systemName: "checkmark").foregroundStyle(.green) } else { Text("\(gaps)").foregroundStyle(.red).monospacedDigit() }
                 }
-                .frame(width: t.pad(80), alignment: .trailing)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                Text(c.version ?? "–").font(t.mono(13)).lineLimit(1).frame(width: t.pad(120), alignment: .leading)
+                Group {
+                    if let type = c.packageURL?.type { Chip(text: OverviewView.ecosystemName(type), t: t) } else { Text("–").foregroundStyle(.secondary) }
+                }
+                .frame(width: t.pad(120), alignment: .leading)
+                licenceChips(c).frame(width: t.pad(190), alignment: .leading)
+                depthDots(depth).frame(width: t.pad(110), alignment: .leading)
+                HStack(spacing: t.pad(8)) {
+                    if componentRules > 0 {
+                        CoverageBar(covered: componentRules - gaps, total: componentRules, t: t).frame(width: t.pad(70), height: t.pad(7))
+                    }
+                    if gaps == 0 { Image(systemName: "checkmark").foregroundStyle(.green) }
+                    else { Text(L("%d gaps", gaps)).font(t.font(12)).foregroundStyle(.secondary).monospacedDigit().lineLimit(1) }
+                }
+                .frame(width: t.pad(150), alignment: .leading)
             }
             .font(t.font(14))
-            .padding(.vertical, t.pad(8))
+            .padding(.vertical, t.pad(7))
             .padding(.horizontal, t.pad(8))
             .contentShape(Rectangle())
             .overlay(alignment: .bottom) { Hairline().opacity(0.5) }
         }
         .buttonStyle(RowButtonStyle())
+    }
+
+    @ViewBuilder
+    private func licenceChips(_ c: Component) -> some View {
+        if c.licenses.isEmpty {
+            Chip(text: L("none stated"), colour: FamilyStyle.colour(.none), t: t)
+        } else {
+            HStack(spacing: t.pad(4)) {
+                ForEach(Array(c.licenses.prefix(2).enumerated()), id: \.offset) { _, l in
+                    Chip(text: l.label, colour: FamilyStyle.colour(LicenceFamily.of(l.label)), t: t)
+                }
+                if c.licenses.count > 2 { Text("+\(c.licenses.count - 2)").font(t.font(12)).foregroundStyle(.secondary) }
+            }
+        }
+    }
+
+    /// Depth as dots: filled up to the component's step, up to the deepest step in this SBOM (at most 8 dots).
+    @ViewBuilder
+    private func depthDots(_ depth: Int?) -> some View {
+        if let depth {
+            HStack(spacing: t.pad(3)) {
+                ForEach(0..<min(max(deepest, depth), 8), id: \.self) { k in
+                    Circle().fill(k < depth ? Color.secondary : Color.secondary.opacity(0.25)).frame(width: t.pad(6), height: t.pad(6))
+                }
+                Text("\(depth)").font(t.font(12)).foregroundStyle(.secondary).monospacedDigit().padding(.leading, t.pad(3))
+            }
+            .accessibilityElement()
+            .accessibilityLabel(L("%d steps from the product", depth))
+        } else {
+            Text("–").foregroundStyle(.secondary)
+        }
     }
 }
 

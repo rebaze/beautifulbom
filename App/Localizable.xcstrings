@@ -1293,23 +1293,6 @@
         }
       }
     },
-    "Presence and form of fields only.": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Presence and form of fields only."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Nur Vorhandensein und Form der Felder."
-          }
-        }
-      }
-    },
     "Properties and other fields": {
       "extractionState": "manual",
       "localizations": {
@@ -1510,23 +1493,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Supplier"
-          }
-        }
-      }
-    },
-    "TR gaps": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TR gaps"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "TR-Lücken"
           }
         }
       }
@@ -1969,23 +1935,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Dependency-Abdeckung"
-          }
-        }
-      }
-    },
-    "ecosystem (%@)": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ecosystem (%@)"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ökosystem (%@)"
           }
         }
       }
@@ -3193,6 +3142,244 @@
           "stringUnit": {
             "state": "translated",
             "value": "nicht unter „components“ aufgeführt"
+          }
+        }
+      }
+    },
+    "of %d fields present": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "of %d fields present"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "von %d Feldern vorhanden"
+          }
+        }
+      }
+    },
+    "TR fields": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TR fields"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TR-Felder"
+          }
+        }
+      }
+    },
+    "%d gaps": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d gaps"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d Lücken"
+          }
+        }
+      }
+    },
+    "Families:": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Families:"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Familien:"
+          }
+        }
+      }
+    },
+    "Families are derived from the SPDX identifiers; the SBOM does not state them.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Families are derived from the SPDX identifiers; the SBOM does not state them."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Familien leitet die App aus den SPDX-Kennungen ab; das SBOM nennt sie nicht."
+          }
+        }
+      }
+    },
+    "See the map →": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "See the map →"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zur Karte →"
+          }
+        }
+      }
+    },
+    "ecosystem": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ecosystem"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ökosystem"
+          }
+        }
+      }
+    },
+    "%@, all permissive": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, all permissive"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, alle permissiv"
+          }
+        }
+      }
+    },
+    "Fields present in the required form, per part. Presence and form only.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fields present in the required form, per part. Presence and form only."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vorhandene Felder in der geforderten Form, je Teil. Nur Vorhandensein und Form."
+          }
+        }
+      }
+    },
+    "permissive": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "permissive"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "permissiv"
+          }
+        }
+      }
+    },
+    "weak copyleft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "weak copyleft"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "schwaches Copyleft"
+          }
+        }
+      }
+    },
+    "strong copyleft": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "strong copyleft"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "starkes Copyleft"
+          }
+        }
+      }
+    },
+    "not classified": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not classified"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nicht eingeordnet"
+          }
+        }
+      }
+    },
+    "Family": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Family"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Familie"
           }
         }
       }

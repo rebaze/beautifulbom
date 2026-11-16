@@ -62,6 +62,10 @@ public struct CompletenessReport: Sendable {
     public struct Section: Sendable, Hashable, Identifiable {
         public let scope: Scope
         public let rows: [Row]
+        /// Rules of this part met in full, and rules evaluated (the format version included
+        /// for the SBOM, though it has no row; judged on the file as it is).
+        public let present: Int
+        public let evaluated: Int
         public var id: Scope { scope }
     }
 
@@ -86,7 +90,8 @@ public struct CompletenessReport: Sendable {
                 return Row(rule: e.rule, covered: e.evaluated - e.failed, total: e.evaluated, outcome: e.outcome,
                            section: TR031832.section(e.rule), introducedIn: introduced, offenders: offenders[e.rule] ?? [])
             }
-            return Section(scope: scope, rows: rows)
+            let all = profile.evaluations.filter { $0.rule.scope == scope && $0.outcome != .notEvaluated }
+            return Section(scope: scope, rows: rows, present: all.filter { $0.outcome == .pass }.count, evaluated: all.count)
         }
     }
 }

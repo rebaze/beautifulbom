@@ -59,9 +59,14 @@ struct CompositionView: View {
     @MainActor
     static func licenceSegments(_ a: WorkshopAnalysis) -> [StackedBar.Segment] {
         let (named, others) = a.composition.top(a.composition.licenses, keep: 6)
+        // Coloured by family; within a family each further licence a little lighter.
+        var seen: [LicenceFamily: Int] = [:]
         return named.map {
-            StackedBar.Segment(label: $0.unknown ? L("no licence stated") : $0.label, count: $0.count,
-                               filter: ComponentFilter(licence: $0.unknown ? .unknown : .is($0.label)), unknown: $0.unknown)
+            let family = LicenceFamily.of($0.label)
+            let k = seen[family, default: 0]; seen[family] = k + 1
+            return StackedBar.Segment(label: $0.unknown ? L("no licence stated") : $0.label, count: $0.count,
+                                      filter: ComponentFilter(licence: $0.unknown ? .unknown : .is($0.label)), unknown: $0.unknown,
+                                      colour: FamilyStyle.colour(family).opacity(max(0.4, 1 - 0.22 * Double(k))))
         } + (others.map { [StackedBar.Segment(label: L("%d others", a.composition.licenses.count - named.count), count: $0.count,
                                               filter: nil, isOthers: true)] } ?? [])
     }
@@ -73,6 +78,7 @@ struct CompositionView: View {
         let segments = Self.licenceSegments(a)
         return section(title: L("Under which licences"), caption: licenceCaption(slices)) {
             StackedBar(segments: segments, total: segments.reduce(0) { $0 + $1.count }, t: t) { model.showComponents($0) }
+            FamilyLegend(model: model, a: a, t: t)
         }
     }
 
@@ -151,7 +157,7 @@ struct CompositionView: View {
 
     private func section<C: View>(title: String, caption: String?, @ViewBuilder content: () -> C) -> some View {
         VStack(alignment: .leading, spacing: t.pad(10)) {
-            Text(title).font(t.font(24, .semibold))
+            Text(title).font(t.serif(26))
             if let caption {
                 Text(caption).font(t.font(15)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
             }
@@ -217,6 +223,7 @@ struct StackedBar: View {
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 8 * t.s, style: .continuous))
+                .growIn()
             }
             .frame(height: height * t.s)
             if showLegend {
@@ -236,5 +243,27 @@ struct StackedBar: View {
                 }
             }
         }
+    }
+}
+
+/// The licence families with their counts; each opens the matching components.
+struct FamilyLegend: View {
+    let model: DocumentModel
+    let a: WorkshopAnalysis
+    let t: Typo
+
+    var body: some View {
+        HStack(spacing: t.pad(8)) {
+            Text(L("Families:")).font(t.font(13)).foregroundStyle(.secondary)
+            ForEach(FamilyStyle.legend(a.composition), id: \.family) { f, n in
+                Button { model.showComponents(ComponentFilter(family: f)) } label: {
+                    Chip(text: "\(FamilyStyle.name(f)) \(n)", colour: FamilyStyle.colour(f), t: t)
+                        .opacity(n == 0 ? 0.55 : 1)
+                }
+                .buttonStyle(.plain)
+                .disabled(n == 0)
+            }
+        }
+        .help(L("Families are derived from the SPDX identifiers; the SBOM does not state them."))
     }
 }

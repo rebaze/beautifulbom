@@ -15,6 +15,9 @@ public struct Composition: Sendable {
     public let vendors: [Slice]
     public let licenses: [Slice]
     public let ecosystems: [Slice]
+    /// Components by licence family (`LicenceFamily.rawValue` as label), in the enum's order;
+    /// empty families left out. "none" is the unknown slice.
+    public let families: [Slice]
     /// Depth → reachable components; nil without dependency data.
     public let depthHistogram: [Int: Int]?
     public let directCount: Int?
@@ -22,7 +25,9 @@ public struct Composition: Sendable {
 
     public init(_ bom: CycloneDXDocument, graph: DependencyGraph?) {
         var vendors: [String?: [Int]] = [:], licenses: [String?: [Int]] = [:], ecosystems: [String?: [Int]] = [:]
+        var families: [LicenceFamily: [Int]] = [:]
         for (i, c) in bom.components.enumerated() {
+            families[LicenceFamily.of(c), default: []].append(i)
             vendors[Self.vendor(of: c), default: []].append(i)
             ecosystems[Self.nonEmpty(c.packageURL?.type), default: []].append(i)
             let labels = Array(Set(c.licenses.map(\.label)))
@@ -32,6 +37,9 @@ public struct Composition: Sendable {
         self.vendors = Self.slices(vendors)
         self.licenses = Self.slices(licenses)
         self.ecosystems = Self.slices(ecosystems)
+        self.families = LicenceFamily.allCases.compactMap { f in
+            families[f].map { Slice(label: f.rawValue, unknown: f == .none, components: $0) }
+        }
         if let graph, graph.root != nil {
             let histogram = graph.depthHistogram
             depthHistogram = histogram

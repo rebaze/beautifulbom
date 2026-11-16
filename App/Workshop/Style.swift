@@ -163,3 +163,96 @@ struct Hairline: View {
         Rectangle().fill(Color(nsColor: .separatorColor)).frame(height: 1).frame(maxWidth: .infinity)
     }
 }
+
+extension Typo {
+    /// Headings and big numbers: the serif of the wordmark.
+    func serif(_ size: CGFloat, _ weight: Font.Weight = .semibold) -> Font { .system(size: size * s, weight: weight, design: .serif) }
+}
+
+/// One colour per licence family, everywhere a licence is shown.
+@MainActor
+enum FamilyStyle {
+    static func colour(_ f: LicenceFamily) -> Color {
+        switch f {
+        case .permissive: Color(red: 0.357, green: 0.553, blue: 0.722)
+        case .weakCopyleft: Color(red: 0.851, green: 0.635, blue: 0.239)
+        case .strongCopyleft: Color(red: 0.541, green: 0.388, blue: 0.780)
+        case .unclassified: Color(red: 0.604, green: 0.639, blue: 0.663)
+        case .none: Color(red: 0.878, green: 0.322, blue: 0.310)
+        }
+    }
+
+    static func name(_ f: LicenceFamily) -> String {
+        switch f {
+        case .permissive: L("permissive")
+        case .weakCopyleft: L("weak copyleft")
+        case .strongCopyleft: L("strong copyleft")
+        case .unclassified: L("not classified")
+        case .none: L("none stated")
+        }
+    }
+
+    /// The families a legend lists: the three classified ones always (a 0 says something),
+    /// "not classified" and "none stated" only when present.
+    static func legend(_ c: Composition) -> [(family: LicenceFamily, count: Int)] {
+        let counts = Dictionary(uniqueKeysWithValues: c.families.map { (LicenceFamily(rawValue: $0.label)!, $0.count) })
+        return LicenceFamily.allCases.compactMap { f in
+            let n = counts[f] ?? 0
+            return n > 0 || [.permissive, .weakCopyleft, .strongCopyleft].contains(f) ? (f, n) : nil
+        }
+    }
+}
+
+/// A small capsule with a coloured dot: an ecosystem, a licence.
+struct Chip: View {
+    let text: String
+    var colour: Color? = nil
+    let t: Typo
+
+    var body: some View {
+        HStack(spacing: t.pad(5)) {
+            if let colour { Circle().fill(colour).frame(width: t.pad(7), height: t.pad(7)) }
+            Text(text).lineLimit(1)
+        }
+        .font(t.font(12))
+        .padding(.horizontal, t.pad(8))
+        .padding(.vertical, t.pad(2.5))
+        .background(Capsule().fill(Color.primary.opacity(0.06)))
+    }
+}
+
+/// Bars grow in from the left when a view opens; still with Reduce Motion.
+struct GrowIn: ViewModifier {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var shown = false
+    var delay: Double = 0
+
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(x: shown || reduceMotion ? 1 : 0.001, y: 1, anchor: .leading)
+            .onAppear {
+                guard !reduceMotion, LaunchOptions.snapshotPath == nil else { shown = true; return }
+                withAnimation(.spring(duration: 0.7, bounce: 0.1).delay(delay)) { shown = true }
+            }
+    }
+}
+
+extension View {
+    func growIn(delay: Double = 0) -> some View { modifier(GrowIn(delay: delay)) }
+}
+
+/// The map opens from its centre: a short scale and fade; still with Reduce Motion.
+struct Bloom: ViewModifier {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var shown = false
+
+    func body(content: Content) -> some View {
+        content
+            .scaleEffect(shown || reduceMotion ? 1 : 0.86)
+            .opacity(shown || reduceMotion ? 1 : 0)
+            .onAppear {
+                guard !reduceMotion, LaunchOptions.snapshotPath == nil else { shown = true; return }
+                withAnimation(.spring(duration: 0.8, bounce: 0.15)) { shown = true }
+            }
+    }
+}

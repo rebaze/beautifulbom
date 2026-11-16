@@ -87,3 +87,10 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ Names stay inside their slices and never overlap; the product's name wraps in the middle.
 - ⏳ By hand: pointing moves the highlight smoothly; clicking a slice opens its component, a merged slice opens Components filtered to that ring; legend rows open the vendor's components.
 - ⏳ By hand: the 50 MB file stays responsive while pointing at the map.
+
+## One look across all views (design-beautiful-views.md, part 2, 2026-11-16)
+
+- ✅ Licence families and the per-part summary tested in BOMCore (`LicenceFamilyTests`).
+- ✅ Overview, Completeness, Components and Composition match the approved mockups (`n-*.png`); dark and German; at 24 pt the small map moves under the number and chips drop what does not fit; 50 MB minified; bsi-pass reads "All TR-03183-2 fields present".
+- ⏳ By hand: bars grow in and the map opens from its centre when a view opens; nothing moves with System Settings › Accessibility › Display › Reduce motion.
+- ⏳ By hand: a family chip opens Components filtered to that family; the licence menu shows the family and Any licence clears it.

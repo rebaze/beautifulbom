@@ -13,6 +13,22 @@ enum VendorPalette {
     static let others = Color(red: 0.604, green: 0.639, blue: 0.663)
     static let group = Color(red: 0.604, green: 0.639, blue: 0.663).opacity(0.45)
 
+    /// A slice's colour: its vendor's, grey for other vendors, pale grey for a merged slice.
+    static func colour(_ s: DependencyMap.Slice, _ a: WorkshopAnalysis, vendors: [String]) -> Color {
+        if s.isGroup { return group }
+        guard let c = s.ref.flatMap({ a.componentIndex(bomRef: $0) }).map({ a.bom.components[$0] }) else { return others }
+        return colour(c, vendors: vendors)
+    }
+
+    static func colour(of vendor: String, vendors: [String]) -> Color {
+        vendors.firstIndex(of: vendor).map { colours[$0] } ?? others
+    }
+
+    static func colour(_ c: Component, vendors: [String]) -> Color {
+        guard let v = Composition.vendor(of: c), let k = vendors.firstIndex(of: v) else { return others }
+        return colours[k]
+    }
+
     /// The five largest named vendors, in the order of "Who wrote it".
     static func top(_ a: WorkshopAnalysis) -> [String] {
         Array(a.composition.vendors.filter { !$0.unknown }.prefix(colours.count).map(\.label))
@@ -38,6 +54,7 @@ struct ProductMap: View {
                 open(i)
             }
             .frame(width: side, height: side)
+            .modifier(Bloom())
             .accessibilityElement()
             .accessibilityLabel(L("Map of the product: %d chosen directly, %d pulled in, up to %d steps deep.",
                                   a.composition.directCount ?? 0, a.composition.indirectCount ?? 0, map.rings))
@@ -84,7 +101,7 @@ struct ProductMap: View {
         return VStack(alignment: .leading, spacing: t.pad(8)) {
             if s.isGroup {
                 Eyebrow(text: steps(s.depth), t: t)
-                Text(L("%d more parts", s.groupCount)).font(t.font(24, .semibold))
+                Text(L("%d more parts", s.groupCount)).font(t.serif(24))
                 Text(L("Too narrow to draw one by one; together they stand for %d parts.", s.weight))
                     .font(t.font(14)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 Text(L("Click to list the parts on this ring →"))
@@ -94,7 +111,7 @@ struct ProductMap: View {
                 Eyebrow(text: ([c?.type, c?.packageURL.map { OverviewView.ecosystemName($0.type) }].compactMap { $0 } + [steps(s.depth)])
                     .joined(separator: " · "), t: t)
                 HStack(alignment: .firstTextBaseline, spacing: t.pad(8)) {
-                    Text(c?.displayName ?? ref).font(t.font(24, .semibold)).lineLimit(2)
+                    Text(c?.displayName ?? ref).font(t.serif(24)).lineLimit(2)
                     if let v = c?.version { Text(v).font(t.mono(15)).foregroundStyle(.secondary) }
                 }
                 Text(map.path(to: i).map { label(of: $0) }.joined(separator: " → "))
@@ -161,12 +178,7 @@ struct ProductMap: View {
         return component(i)?.displayName ?? s.ref ?? ""
     }
 
-    func colour(of i: Int) -> Color {
-        let s = map.slices[i]
-        if s.isGroup { return VendorPalette.group }
-        guard let c = component(i), let v = Composition.vendor(of: c), let k = vendors.firstIndex(of: v) else { return VendorPalette.others }
-        return VendorPalette.colours[k]
-    }
+    func colour(of i: Int) -> Color { VendorPalette.colour(map.slices[i], a, vendors: vendors) }
 
     private func open(_ i: Int) {
         let s = map.slices[i]
@@ -188,30 +200,9 @@ private struct MapCanvas: View {
     let t: Typo
     let open: (Int) -> Void
 
-    private struct Geometry {
-        let centre: CGPoint
-        let inner: CGFloat
-        let ring: CGFloat
-        init(_ size: CGSize, rings: Int) {
-            let radius = min(size.width, size.height) / 2 - 4
-            inner = radius * 0.19
-            ring = min((radius - inner) / CGFloat(max(1, rings)), radius * 0.2)
-            centre = CGPoint(x: size.width / 2, y: size.height / 2)
-        }
-        /// The ring (1…) and fraction of the circle under `p`; nil in the centre or outside.
-        func locate(_ p: CGPoint) -> (depth: Int, fraction: Double)? {
-            let dx = p.x - centre.x, dy = p.y - centre.y
-            let r = hypot(dx, dy)
-            guard r > inner else { return nil }
-            var f = atan2(Double(dx), Double(-dy)) / (2 * .pi)
-            if f < 0 { f += 1 }
-            return (Int((r - inner) / ring) + 1, f)
-        }
-    }
-
     var body: some View {
         GeometryReader { geo in
-            let g = Geometry(geo.size, rings: map.rings)
+            let g = MapGeometry(geo.size, rings: map.rings)
             let path = hovered.map { Set(map.path(to: $0)) }
             Canvas { ctx, _ in
                 draw(&ctx, g, path)
@@ -241,22 +232,10 @@ private struct MapCanvas: View {
         }
     }
 
-    private func wedge(_ g: Geometry, _ s: DependencyMap.Slice) -> Path {
-        let r0 = g.inner + CGFloat(s.depth - 1) * g.ring + 1.5
-        let r1 = g.inner + CGFloat(s.depth) * g.ring - 1.5
-        // 0 at the top, clockwise; SwiftUI angles start at 3 o'clock.
-        let a0 = Angle.radians(s.start * 2 * .pi - .pi / 2), a1 = Angle.radians(s.end * 2 * .pi - .pi / 2)
-        var p = Path()
-        p.addArc(center: g.centre, radius: r1, startAngle: a0, endAngle: a1, clockwise: false)
-        p.addArc(center: g.centre, radius: r0, startAngle: a1, endAngle: a0, clockwise: true)
-        p.closeSubpath()
-        return p
-    }
-
-    private func draw(_ ctx: inout GraphicsContext, _ g: Geometry, _ path: Set<Int>?) {
+    private func draw(_ ctx: inout GraphicsContext, _ g: MapGeometry, _ path: Set<Int>?) {
         let gap = Color(nsColor: .textBackgroundColor)
         for (i, s) in map.slices.enumerated() {
-            let shape = wedge(g, s)
+            let shape = g.wedge(s)
             let depthFade = max(0.45, 1 - 0.1 * Double(s.depth - 1))
             let dim = path.map { !$0.contains(i) } ?? false
             ctx.fill(shape, with: .color(colour(i).opacity(depthFade * (dim ? 0.22 : 1))))
@@ -266,7 +245,7 @@ private struct MapCanvas: View {
             }
         }
         if let h = hovered {
-            ctx.stroke(wedge(g, map.slices[h]), with: .color(.primary), lineWidth: 2.5 * t.s)
+            ctx.stroke(g.wedge(map.slices[h]), with: .color(.primary), lineWidth: 2.5 * t.s)
         }
         // Names inside slices wide enough to hold them, on the first three rings, never overlapping.
         var placed: [CGRect] = []
@@ -302,5 +281,58 @@ private struct MapCanvas: View {
     /// The name without its vendor, which the colour already says.
     private func shortName(_ s: String) -> String {
         s.split(separator: "/").last.map(String.init) ?? s
+    }
+}
+
+struct MapGeometry {
+    let centre: CGPoint
+    let inner: CGFloat
+    let ring: CGFloat
+    init(_ size: CGSize, rings: Int) {
+        let radius = min(size.width, size.height) / 2 - 4
+        inner = radius * 0.19
+        ring = min((radius - inner) / CGFloat(max(1, rings)), radius * 0.2)
+        centre = CGPoint(x: size.width / 2, y: size.height / 2)
+    }
+    /// The ring (1…) and fraction of the circle under `p`; nil in the centre or outside.
+    func locate(_ p: CGPoint) -> (depth: Int, fraction: Double)? {
+        let dx = p.x - centre.x, dy = p.y - centre.y
+        let r = hypot(dx, dy)
+        guard r > inner else { return nil }
+        var f = atan2(Double(dx), Double(-dy)) / (2 * .pi)
+        if f < 0 { f += 1 }
+        return (Int((r - inner) / ring) + 1, f)
+    }
+
+    func wedge(_ s: DependencyMap.Slice, gap: CGFloat = 1.5) -> Path {
+        let r0 = inner + CGFloat(s.depth - 1) * ring + gap
+        let r1 = inner + CGFloat(s.depth) * ring - gap
+        // 0 at the top, clockwise; SwiftUI angles start at 3 o'clock.
+        let a0 = Angle.radians(s.start * 2 * .pi - .pi / 2), a1 = Angle.radians(s.end * 2 * .pi - .pi / 2)
+        var p = Path()
+        p.addArc(center: centre, radius: r1, startAngle: a0, endAngle: a1, clockwise: false)
+        p.addArc(center: centre, radius: r0, startAngle: a1, endAngle: a0, clockwise: true)
+        p.closeSubpath()
+        return p
+    }
+}
+
+/// The map in small, for the Overview card: no names, no pointing.
+struct MiniMap: View {
+    let a: WorkshopAnalysis
+    let map: DependencyMap
+
+    var body: some View {
+        let vendors = VendorPalette.top(a)
+        Canvas { ctx, size in
+            let g = MapGeometry(size, rings: map.rings)
+            for (i, s) in map.slices.enumerated() {
+                let fade = max(0.45, 1 - 0.1 * Double(s.depth - 1))
+                ctx.fill(g.wedge(s, gap: 0.6), with: .color(VendorPalette.colour(map.slices[i], a, vendors: vendors).opacity(fade)))
+            }
+            ctx.fill(Path(ellipseIn: CGRect(x: g.centre.x - g.inner + 1, y: g.centre.y - g.inner + 1,
+                                            width: 2 * g.inner - 2, height: 2 * g.inner - 2)), with: .color(.primary))
+        }
+        .accessibilityHidden(true)
     }
 }

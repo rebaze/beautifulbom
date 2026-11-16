@@ -13,10 +13,13 @@ public struct ComponentFilter: Sendable, Equatable {
     public var depth: Int?
     /// The vendor as Composition groups it: the group, else the purl namespace.
     public var vendor: String?
+    public var family: LicenceFamily?
 
-    public init(text: String = "", licence: LicenceFilter? = nil, missing: RuleID? = nil, depth: Int? = nil, vendor: String? = nil) {
+    public init(text: String = "", licence: LicenceFilter? = nil, missing: RuleID? = nil, depth: Int? = nil, vendor: String? = nil,
+                family: LicenceFamily? = nil) {
         self.text = text
         self.vendor = vendor
+        self.family = family
         self.licence = licence
         self.missing = missing
         self.depth = depth
@@ -32,6 +35,7 @@ public struct ComponentFilter: Sendable, Equatable {
             let c = a.bom.components[i]
             if let offending, !offending.contains(i) { return false }
             if let vendor, Composition.vendor(of: c) != vendor { return false }
+            if let family, LicenceFamily.of(c) != family { return false }
             if let depth, c.bomRef.flatMap({ a.graph?.depth($0) }) != depth { return false }
             if let licence {
                 let labels = c.licenses.map(\.label)

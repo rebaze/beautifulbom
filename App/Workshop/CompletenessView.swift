@@ -68,9 +68,10 @@ struct CompletenessView: View {
         case .header:
             VStack(alignment: .leading, spacing: t.pad(6)) {
                 Eyebrow(text: L("BSI TR-03183-2 2.1.0 · presence and form of fields"), t: t)
-                Text(a.verdict.headline).font(t.font(30, .semibold))
+                Text(a.verdict.headline).font(t.serif(36))
                 Text(L("Each row counts the components that carry the field in the form the TR asks for. It does not check that the values are true."))
                     .font(t.font(14)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                summary.padding(.top, t.pad(14))
             }
             .padding(.bottom, t.pad(18))
         case .versionGap:
@@ -99,7 +100,7 @@ struct CompletenessView: View {
             .padding(.bottom, t.pad(10))
         case .section(let scope):
             VStack(alignment: .leading, spacing: t.pad(2)) {
-                Text(Self.sectionTitle(scope)).font(t.font(22, .semibold))
+                Text(Self.sectionTitle(scope)).font(t.serif(22))
                 Text(sectionCaption(scope)).font(t.font(13)).foregroundStyle(.secondary)
             }
             .padding(.top, t.pad(22))
@@ -157,17 +158,17 @@ struct CompletenessView: View {
                     .font(t.font(12))
                 }
                 Spacer(minLength: t.pad(12))
-                if single {
+                if row.rule.requirement == .vulnerabilities {
                     Pill(text: Self.pill(row), kind: row.offenders.isEmpty ? .ok : .gap, t: t)
                 } else if row.outcome != .notEvaluated {
-                    Text("\(row.covered) / \(row.total)")
-                        .font(t.font(16, .semibold)).monospacedDigit()
-                        .frame(minWidth: t.pad(90), alignment: .trailing)
                     CoverageBar(covered: row.covered, total: row.total, t: t)
-                        .frame(width: t.pad(220), height: t.pad(10))
+                        .frame(width: t.pad(300), height: t.pad(10))
+                    Text(L("%d of %d", row.covered, row.total))
+                        .font(t.font(14)).foregroundStyle(.secondary).monospacedDigit()
+                        .frame(minWidth: t.pad(90), alignment: .trailing)
                     Image(systemName: "chevron.right")
                         .rotationEffect(.degrees(open ? 90 : 0))
-                        .foregroundStyle(row.offenders.count > 1 ? Color.secondary : .clear)
+                        .foregroundStyle(row.offenders.count > 1 && !single ? Color.secondary : .clear)
                 }
             }
             .padding(.vertical, t.pad(10))
@@ -177,6 +178,24 @@ struct CompletenessView: View {
         }
         .buttonStyle(.plain)
         .opacity(row.outcome == .notEvaluated ? 0.55 : 1)
+    }
+
+    /// One card per part: "n of N fields present", with its bar.
+    private var summary: some View {
+        HStack(spacing: t.pad(12)) {
+            ForEach(report.sections.filter { $0.evaluated > 0 }) { section in
+                VStack(alignment: .leading, spacing: t.pad(6)) {
+                    Eyebrow(text: Self.sectionTitle(section.scope), t: t)
+                    HStack(alignment: .firstTextBaseline, spacing: t.pad(8)) {
+                        Text("\(section.present)").font(t.serif(30)).monospacedDigit()
+                        Text(L("of %d fields present", section.evaluated)).font(t.font(14)).foregroundStyle(.secondary)
+                    }
+                    CoverageBar(covered: section.present, total: section.evaluated, t: t).frame(height: t.pad(8))
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .panel(t)
+            }
+        }
     }
 
     private func sectionCaption(_ scope: Scope) -> String {
@@ -221,7 +240,7 @@ struct CompletenessView: View {
     }
 }
 
-/// Covered in green, the rest in red.
+/// Covered in green, the rest in pale red: a count, never a score.
 struct CoverageBar: View {
     let covered: Int
     let total: Int
@@ -231,9 +250,11 @@ struct CoverageBar: View {
         GeometryReader { geo in
             let w = total == 0 ? 0 : geo.size.width * CGFloat(covered) / CGFloat(total)
             ZStack(alignment: .leading) {
-                Capsule().fill(Color.red.opacity(0.22))
-                Capsule().fill(Color.green).frame(width: w)
+                Capsule().fill(Color.red.opacity(0.16))
+                Capsule().fill(Color.green).frame(width: w).growIn()
             }
         }
+        .accessibilityElement()
+        .accessibilityLabel(L("%d of %d", covered, total))
     }
 }

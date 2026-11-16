@@ -51,7 +51,7 @@ struct ComponentPage: View {
             Eyebrow(text: [c.type, c.packageURL.map { OverviewView.ecosystemName($0.type) }].compactMap { $0 }.joined(separator: " · "), t: t)
             HStack(alignment: .firstTextBaseline, spacing: t.pad(14)) {
                 EvidenceButton(.located(c.entry)) {
-                    Text(c.displayName).font(t.font(36, .semibold)).lineLimit(2)
+                    Text(c.displayName).font(t.serif(36)).lineLimit(2)
                 }
                 if let v = c.version {
                     EvidenceButton(ev("version")) { Text(v).font(t.mono(22)).foregroundStyle(.secondary) }
@@ -240,7 +240,7 @@ struct ComponentPage: View {
     // MARK: Building blocks
 
     private func sectionTitle(_ s: String) -> some View {
-        Text(s).font(t.font(20, .semibold))
+        Text(s).font(t.serif(20))
     }
 
     private func card<C: View>(_ title: String, @ViewBuilder _ content: () -> C) -> some View {

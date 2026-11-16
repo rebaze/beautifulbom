@@ -35,7 +35,7 @@ A sunburst at the top of Composition, titled "How it hangs together", above the 
 Layout code (rings, angles, merging) lives in BOMCore (`DependencyMap`) and is unit-tested; the
 app only draws it.
 
-## Part 2: one look across all views (to be mocked up, then approved)
+## Part 2: one look across all views (approved with licence families, built)
 
 - A calm categorical palette, one meaning per colour family: vendors, ecosystems, licence
   families; system blue stays for links and selection only.
@@ -46,4 +46,10 @@ app only draws it.
 - Completeness as coverage: each TR field gets "n of N components" as a bar (counts, never a
   score), with one summary row.
 
-Mockups first, in the gallery; this part is built after Toni approves them.
+Toni approved the mockups on 2026-11-16 ("yes with license families"). Licence families are
+derived from SPDX identifiers (`LicenceFamily`, unit-tested): permissive, weak copyleft, strong
+copyleft, not classified, none stated. OR takes the least demanding choice, AND the most
+demanding, a linking exception (Classpath, GCC) lowers strong to weak. The legend says that the
+app derives them and the SBOM does not state them. The summary counts per part judge the format
+version on the file as it is (1 of 4 for Laravel's SBOM part, where rio, which uplifts first,
+counts 2).
