@@ -112,5 +112,5 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ `scripts/release.sh` refuses a missing tag, a tag that differs from `project.yml` and missing credentials; the ad hoc rehearsal builds the dmg, zip and checksums with the run's build number, no entitlements, hardened runtime.
 - ✅ `scripts/verify-release.sh --rehearsal` passes on the rehearsal assets (checksums, versions, same code in both, the app from the disk image renders the Laravel overview); without `--rehearsal` it rejects them as not signed by rebaze's Developer ID.
 - ✅ actionlint and shellcheck clean; the scripts run under macOS's bash 3.2.
-- ⏳ On GitHub: CI green on the `xcode-27` runner; a tag `v0.1.0` produces the notarized assets and `verify` passes on macOS 15 and 27.
+- ✅ On GitHub: CI green on the `xcode-27` runner; the tag `v0.1.0` produced the notarized assets, `verify` passed on macOS 15 and 27, the release is published; the public download verifies on Toni's Mac too.
 - ⏳ By hand: the downloaded DMG opens on a Mac that never saw the app, without "Open Anyway" (hand-check.md, 7).
