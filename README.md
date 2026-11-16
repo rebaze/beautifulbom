@@ -57,6 +57,8 @@ Tested on macOS 27.2.1 (Apple Silicon) with Xcode 27.2.
 
 Read-only. JSON only; workshop views for CycloneDX, not yet SPDX or AIBOM. Completeness reports presence and form of fields, never conformity. No folding in the source pane. Find misses a match that spans a display break in a minified line. Ad-hoc signed: on another Mac, open it with right-click › Open.
 
-## Moving out
+## History and next steps
 
-Moved with its history from `apps/beautiful-bom/` in rebaze/rebaze-sscs on 2026-11-16.
+Moved with its history from `apps/beautiful-bom/` in rebaze/rebaze-sscs on 2026-11-16. Why the app
+exists, who it is for and how to work on it: `AGENTS.md`. Current state and the next step (a signed,
+notarized release pipeline): `docs/roadmap.md`.
