@@ -18,6 +18,8 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ Minified 10 MB and 50 MB files display and wrap; reveal lands on the exact range deep inside the single line (snapshot `SELECT=/components/1200/licenses/0/license/id`).
 - ✅ Reveal from launch selects the node's full range and centres it (10 MB pretty, line 32 435).
 - ✅ ⌘F from any tab switches to Source and opens the find bar with the keyboard in it; typing finds incrementally (`--find`: snapshots from Overview on Laravel, 11 matches for "lexer", and from Completeness on 50 MB minified, 5 397 for "left-pad-2"). Line numbers stay complete after the jump.
+- ✅ The drop highlight reads on any view (snapshot with the highlight forced on, German).
+- ⏳ By hand: dropping a JSON file on a window opens it in a window of its own; a file already open comes to the front; dropping on the Dock icon opens it too.
 - ⏳ By hand: ⌘G / ⇧⌘G step through matches, also while typing in the field; Return selects the match and the breadcrumb follows; Esc closes the bar.
 - ⏳ Scrolling through the 50 MB file stays smooth; colour appears as regions scroll in.
 - ⏳ ⌘+ / ⌘− / ⌘0 change the text size and keep the selection visible; ⌥⌘P toggles presentation size (24 pt).

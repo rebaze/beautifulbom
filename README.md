@@ -27,6 +27,8 @@ A native macOS reader for bills of materials: pleasant to read, and always one s
 
 ## Build and run
 
+`make install` builds the Release app and copies it to `~/Applications`, so Spotlight, Launchpad and the Dock find it. Open an SBOM with ⌘O, by dropping it on a window or on the Dock icon, or with Finder › Open With.
+
 Requirements: macOS 15 or later, Xcode 27.2 (Swift 6.4), [XcodeGen](https://github.com/yonaskolb/XcodeGen), [xcbeautify](https://github.com/cpisciotta/xcbeautify).
 
 ```sh

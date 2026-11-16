@@ -6,6 +6,7 @@ struct DocumentView: View {
     let fileURL: URL?
     @State private var outlineWidth: CGFloat = 340
     @State private var drawerFraction: CGFloat = 0.38
+    @State private var dropTargeted = false
 
     init(document: BOMDocument, fileURL: URL?) {
         _model = State(initialValue: DocumentModel(bytes: document.bytes, fileName: fileURL?.lastPathComponent))
@@ -22,6 +23,10 @@ struct DocumentView: View {
             }
         }
         .frame(minWidth: 720, minHeight: 480)
+        .dropDestination(for: URL.self) { urls, _ in
+            DropToOpen.open(urls)
+        } isTargeted: { dropTargeted = $0 }
+        .overlay { if dropTargeted { DropToOpen.Highlight() } }
         .environment(model)
         .focusedSceneValue(\.documentModel, model)
         .onChange(of: model.tab == .source || model.drawerOpen) { _, sourceVisible in
@@ -110,5 +115,39 @@ struct DragHandle: View {
                     last = now
                 }
                 .onEnded { _ in last = 0 })
+    }
+}
+
+/// Files dropped on a window open in windows of their own, as in Preview; a
+/// file that is already open comes to the front.
+enum DropToOpen {
+    @MainActor
+    static func open(_ urls: [URL]) -> Bool {
+        let files = urls.filter(\.isFileURL)
+        for url in files {
+            NSDocumentController.shared.openDocument(withContentsOf: url, display: true) { _, _, error in
+                if let error { NSApp.presentError(error) }
+            }
+        }
+        return !files.isEmpty
+    }
+
+    struct Highlight: View {
+        var body: some View {
+            // The window recedes, so the message reads on any view underneath.
+            ZStack {
+                Color(nsColor: .windowBackgroundColor).opacity(0.94)
+                Color.accentColor.opacity(0.06)
+                RoundedRectangle(cornerRadius: 12)
+                    .strokeBorder(Color.accentColor, style: StrokeStyle(lineWidth: 3, dash: [10, 6]))
+                    .padding(10)
+                VStack(spacing: 12) {
+                    Image(systemName: "doc.badge.plus").font(.system(size: 48, weight: .light))
+                    Text(L("Drop to open")).font(.title.weight(.semibold))
+                }
+                .foregroundStyle(Color.accentColor)
+            }
+            .allowsHitTesting(false)
+        }
     }
 }

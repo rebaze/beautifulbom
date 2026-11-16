@@ -191,6 +191,7 @@ struct StructureOutlineView: NSViewRepresentable {
             text.setContentCompressionResistancePriority(.defaultLow, for: .horizontal)
             let image = NSImageView()
             image.translatesAutoresizingMaskIntoConstraints = false
+            image.unregisterDraggedTypes()  // a file dropped on a row opens it (DropToOpen), not the icon
             cell.addSubview(text)
             cell.addSubview(image)
             cell.textField = text

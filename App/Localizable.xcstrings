@@ -2635,6 +2635,23 @@
           }
         }
       }
+    },
+    "Drop to open": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Drop to open"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zum Öffnen loslassen"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

@@ -7,7 +7,7 @@ SIZES := 1 10 50
 
 CONFIG ?= Debug
 APP = build/Build/Products/$(CONFIG)/BeautifulBOM.app
-.PHONY: screenshots test strings-check bench-build fixtures bench project app snapshot clean parity-refresh
+.PHONY: screenshots test strings-check bench-build fixtures bench project app install snapshot clean parity-refresh
 
 test: strings-check
 	cd $(PKG) && swift test
@@ -39,6 +39,13 @@ project:
 
 app: project
 	set -o pipefail; xcodebuild -project BeautifulBOM.xcodeproj -scheme BeautifulBOM -configuration $(CONFIG) -derivedDataPath build build | xcbeautify --quiet
+
+# The Release app in ~/Applications, so Spotlight, Launchpad and the Dock find it.
+install:
+	$(MAKE) app CONFIG=Release
+	rm -rf "$(HOME)/Applications/BeautifulBOM.app"
+	ditto build/Build/Products/Release/BeautifulBOM.app "$(HOME)/Applications/BeautifulBOM.app"
+	@echo "Installed: $(HOME)/Applications/BeautifulBOM.app"
 
 # make snapshot FILE=<json> OUT=<png> [SELECT=<pointer>] [VIEW=<tab>] [COMPONENT=<bom-ref>]
 #   [EVIDENCE=<rule id>] [FIND=<text>] [SIZE=1440x900] [TEXT=24] [APPEARANCE=dark|light] [UILANG=de|en]
