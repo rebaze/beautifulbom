@@ -15,37 +15,34 @@ Goal: a tag produces a Developer ID signed, notarized and stapled DMG and app on
 that opens on any Mac without a Gatekeeper prompt. Decided by Toni on 2026-11-16: signing comes with
 this repository, not before.
 
-1. **CI on every push and pull request** (no secrets): macOS runner, `brew install xcodegen
-   xcbeautify`, `make test`, `make app CONFIG=Release`. Check first that the hosted runner image
-   offers the Xcode the project needs (Xcode 27.2, macOS 27 SDK; deployment target macOS 15); pin
-   the Xcode version with `xcode-select`.
-2. **Release workflow on a tag `v*`**, in a protected environment (as in rio, `release-build`):
-   - the tag must equal `CFBundleShortVersionString` in `project.yml`; the build number is the run
-     number;
-   - import the Developer ID certificate ("Developer ID Application: rebaze GmbH (32Z95ATB2T)")
-     into a temporary keychain from `MACOS_SIGN_P12` and `MACOS_SIGN_PASSWORD`;
-   - sign the app with hardened runtime and a secure timestamp; notarize with `notarytool` using
-     the App Store Connect key (`MACOS_NOTARY_KEY`, `MACOS_NOTARY_KEY_ID`, `MACOS_NOTARY_ISSUER_ID`);
-     staple the app;
-   - build the DMG as `make dmg` does, sign it, notarize it, staple it;
-   - publish two assets, `BeautifulBOM-<version>.dmg` and `BeautifulBOM-<version>.zip` (`ditto -c -k
-     --keepParent` of the app), with SHA-256 checksums;
-   - a release without the credentials fails; it never falls back to unsigned assets.
-3. **Verification job** after publishing, as rio's `verify-release`: download the assets on a
-   fresh runner; `codesign --verify --strict`, `spctl --assess` reports
-   `source=Notarized Developer ID` and `origin=Developer ID Application: rebaze GmbH (32Z95ATB2T)`,
-   `stapler validate` on both.
+**Built on 2026-11-17, not yet run on GitHub** (how it works: `docs/release.md`):
 
-Reuse: rio's `.github/workflows/release.yaml` and `verify-release.yaml` and its
-`tools/verify-release.py` show the same credentials and checks for Go binaries.
+- `ci.yaml`: `make test` and `make dmg` on every push to `main` and every pull request, on
+  GitHub's preview runner `xcode-27` (macOS 27 with Xcode 27.2 pinned); no secrets.
+- `release.yaml` on a tag `v*`: CI, then `scripts/release.sh` in the environment `release-build`
+  (tag must equal `CFBundleShortVersionString`, build number = run number, Developer ID with
+  hardened runtime and secure timestamp, `notarytool`, stapled app and DMG, zip, checksums; fails
+  without the credentials), a **draft** release, `verify`, then publish.
+- `verify-release.yaml`: `scripts/verify-release.sh` on fresh macOS 15 and macOS 27 runners;
+  rio's checks (`codesign --verify --strict`, `spctl` reports `source=Notarized Developer ID` and
+  the rebaze origin, `stapler validate`) plus quarantine, versions and a launch that renders a
+  sample. Unlike rio, it runs on the draft, so a release that fails it never becomes public.
+- Rehearsed locally with ad hoc signing (`scripts/release.sh --ad-hoc`); actionlint and shellcheck
+  clean.
 
-Toni's part (outward-facing, credentials): create the `release-build` environment in this
-repository and add the five secrets and variables (the values rio uses, from 1Password), or tell the
-agent to set them with `gh secret set` from the 1Password service account. Pushing a tag is his
-call too.
+Open, Toni's part (outward-facing, credentials):
+
+1. Push the commit; CI is the first test of the `xcode-27` runner.
+2. Create the environment `release-build` in this repository (deployment rule: tags `v*`) with the
+   secrets `MACOS_SIGN_P12`, `MACOS_SIGN_PASSWORD`, `MACOS_NOTARY_KEY` and the variables
+   `MACOS_NOTARY_KEY_ID`, `MACOS_NOTARY_ISSUER_ID` (rio's values, from 1Password), or let the agent
+   set them with `gh` from the 1Password service account.
+3. The repository is private: release assets then download only for signed-in members. Public
+   repository, or another place for the download (rebaze.de)?
+4. Push `v0.1.0`.
 
 Done when: a tag `v0.1.0` produces both assets; a Mac that never saw the app opens the downloaded
-DMG and the app without "Open Anyway"; the verification job is green.
+DMG and the app without "Open Anyway" (`docs/hand-check.md`, 7); the verification job is green.
 
 ## After that, in Toni's order of 2026-11-16
 

@@ -75,3 +75,11 @@ not (step number and what you saw), and the agent turns each note into a fix or 
     source reads as text; outline rows read "key, value"; the diagnostics banner (open
     `Fixtures/edge/malformed.json`) announces its summary.
 30. [ ] Keyboard only: open a file, move through the outline, copy a pointer.
+
+## 7. After the first release (5 min, once)
+
+31. [ ] On a Mac (or a new user account) that never had Beautiful BOM: download
+    `BeautifulBOM-<version>.dmg` from the GitHub release with Safari, open it, drag the app to
+    Applications, start it. **Expect:** one "downloaded from the Internet" question naming rebaze
+    GmbH, no "Open Anyway", no warning about an unidentified developer; the welcome window.
+32. [ ] About: the version matches the release.

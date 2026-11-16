@@ -1,0 +1,55 @@
+name: Verify release
+
+# Downloads a release's assets on fresh runners and checks them as a Mac that never saw the app
+# would: checksums, quarantine, Developer ID, Gatekeeper (notarized), stapled tickets, and that the
+# app starts and renders a bundled sample (scripts/verify-release.sh). The release workflow runs
+# it on the draft before publishing; run it by hand for any release.
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Release tag, e.g. v0.1.0
+        required: true
+  workflow_call:
+    inputs:
+      tag:
+        type: string
+        required: true
+
+permissions:
+  contents: write # draft releases are visible only with write access
+
+jobs:
+  verify:
+    strategy:
+      fail-fast: false
+      matrix:
+        # The oldest macOS the app supports, and the newest.
+        os: [macos-15, xcode-27]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Download the release assets
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/assets"
+
+      - name: Verify
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          sw_vers
+          scripts/verify-release.sh --dir "$RUNNER_TEMP/assets" --version "${TAG#v}"
+
+      - name: Keep the evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: verification-${{ matrix.os }}
+          path: ${{ runner.temp }}/assets/verification/
+          if-no-files-found: warn

@@ -1,0 +1,34 @@
+name: CI
+
+# BOMCore's tests, the strings check, the Release app and the disk image (signed ad hoc), on
+# every push to main and every pull request. No secrets. The release workflow calls it first.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # The preview image with macOS 27 and Xcode 27.2 (actions/runner-images#14404).
+    runs-on: xcode-27
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Select Xcode 27.2 and install the build tools
+        run: scripts/ci-setup.sh
+
+      - name: Check the release scripts parse
+        run: for f in scripts/*.sh; do bash -n "$f"; done
+
+      - name: Tests and strings check
+        run: make test
+
+      - name: Release app and disk image
+        run: make dmg

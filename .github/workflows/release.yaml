@@ -1,0 +1,95 @@
+name: Release
+
+# A tag v<version> (the version in project.yml) becomes a GitHub release with the app signed by
+# rebaze's Developer ID, notarized and stapled, as a disk image and a zip, with checksums.
+# The release stays a draft until a fresh Mac has verified the uploaded bytes; then it is published.
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+# Only one writer for a tag; a failed run must never replace a release.
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate:
+    uses: ./.github/workflows/ci.yaml
+    permissions:
+      contents: read
+
+  # The signing and notary credentials are secrets and variables of release-build, which only
+  # v* tags may deploy to. Without them scripts/release.sh fails; it never builds unsigned assets.
+  build:
+    needs: validate
+    runs-on: xcode-27
+    timeout-minutes: 90
+    environment: release-build
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Refuse a tag that already has a release or draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            echo "a release or draft for $TAG exists already; delete it before running again" >&2
+            exit 1
+          fi
+
+      - name: Select Xcode 27.2 and install the build tools
+        run: scripts/ci-setup.sh
+
+      - name: Build, sign, notarize and staple
+        env:
+          TAG: ${{ github.ref_name }}
+          MACOS_SIGN_P12: ${{ secrets.MACOS_SIGN_P12 }}
+          MACOS_SIGN_PASSWORD: ${{ secrets.MACOS_SIGN_PASSWORD }}
+          MACOS_NOTARY_KEY: ${{ secrets.MACOS_NOTARY_KEY }}
+          MACOS_NOTARY_KEY_ID: ${{ vars.MACOS_NOTARY_KEY_ID }}
+          MACOS_NOTARY_ISSUER_ID: ${{ vars.MACOS_NOTARY_ISSUER_ID }}
+        run: scripts/release.sh --tag "$TAG" --build-number "$GITHUB_RUN_NUMBER"
+
+      - name: Upload the assets as a draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          notes=(--generate-notes)
+          if [[ -f "docs/releases/$TAG.md" ]]; then notes=(--notes-file "docs/releases/$TAG.md"); fi
+          gh release create "$TAG" --repo "$GITHUB_REPOSITORY" --draft --verify-tag \
+            --title "Beautiful BOM ${TAG#v}" "${notes[@]}" \
+            build/release/BeautifulBOM-*.dmg build/release/BeautifulBOM-*.zip build/release/checksums.txt
+
+  # Downloads the draft's assets on fresh runners and checks them as a new Mac would.
+  verify:
+    needs: build
+    uses: ./.github/workflows/verify-release.yaml
+    with:
+      tag: ${{ github.ref_name }}
+    permissions:
+      contents: write # draft releases are visible only with write access
+
+  # Pushing the tag is the decision to release; once verified, the draft becomes public.
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Publish the verified draft
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false

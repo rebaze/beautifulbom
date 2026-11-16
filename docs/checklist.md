@@ -106,3 +106,11 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ `BranchReviewTests`: deep licence nesting on a 512 KB stack, real map depth and parts not drawn, MPL no-copyleft exception, rules per level, AIBOM dataset edge cases.
 - ✅ Snapshots: 50 MB map caption "up to 7 steps deep" with the not-drawn note; a four-generation AIBOM scrolls and opens at the model; German "7,2 Mrd."; Components rows "8 gaps" per level.
 - ⏳ By hand: Dock icon with a minimised document restores it; Window › Welcome shows a file opened since launch under Recent.
+
+## Release pipeline (release.md, 2026-11-17)
+
+- ✅ `scripts/release.sh` refuses a missing tag, a tag that differs from `project.yml` and missing credentials; the ad hoc rehearsal builds the dmg, zip and checksums with the run's build number, no entitlements, hardened runtime.
+- ✅ `scripts/verify-release.sh --rehearsal` passes on the rehearsal assets (checksums, versions, same code in both, the app from the disk image renders the Laravel overview); without `--rehearsal` it rejects them as not signed by rebaze's Developer ID.
+- ✅ actionlint and shellcheck clean; the scripts run under macOS's bash 3.2.
+- ⏳ On GitHub: CI green on the `xcode-27` runner; a tag `v0.1.0` produces the notarized assets and `verify` passes on macOS 15 and 27.
+- ⏳ By hand: the downloaded DMG opens on a Mac that never saw the app, without "Open Anyway" (hand-check.md, 7).

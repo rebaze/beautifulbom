@@ -35,6 +35,8 @@ targets:
         CFBundleName: Beautiful BOM
         NSHumanReadableCopyright: "© 2026 rebaze"
         CFBundleShortVersionString: "0.1.0"
+        # The build number: 1 locally, the workflow run number in a release.
+        CFBundleVersion: "$(CURRENT_PROJECT_VERSION)"
         LSApplicationCategoryType: public.app-category.developer-tools
         CFBundleDocumentTypes:
           - CFBundleTypeName: JSON Document
@@ -52,3 +54,4 @@ targets:
         CODE_SIGN_STYLE: Manual
         ENABLE_HARDENED_RUNTIME: YES
         MACOSX_DEPLOYMENT_TARGET: "15.0"
+        CURRENT_PROJECT_VERSION: "1"

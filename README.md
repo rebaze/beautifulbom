@@ -27,7 +27,7 @@ A native macOS reader for bills of materials: pleasant to read, and always one s
 
 ## Build and run
 
-`make dmg` writes `build/BeautifulBOM-<version>.dmg` (the app and a link to Applications). It is signed ad hoc: another Mac asks once, under System Settings › Privacy & Security › Open Anyway, until the app is signed with rebaze's Developer ID and notarized.
+`make dmg` writes `build/BeautifulBOM-<version>.dmg` (the app and a link to Applications). It is signed ad hoc: another Mac asks once, under System Settings › Privacy & Security › Open Anyway. Releases are signed with rebaze's Developer ID and notarized by the release workflow on a tag `v<version>`: `docs/release.md`.
 
 `make install` builds the Release app and copies it to `~/Applications`, so Spotlight, Launchpad and the Dock find it. Open an SBOM with ⌘O, by dropping it on a window or on the Dock icon, or with Finder › Open With. Started without a file, it shows a welcome window with recent files and three bundled samples (Window › Welcome to Beautiful BOM, ⇧⌘1). The icon is the rebaze mark; `scripts/icon/make-icon.sh` renders it from `scripts/icon/icon.svg` (needs `rsvg-convert`). Design: `docs/design-branding.md`.
 
@@ -55,10 +55,9 @@ Tested on macOS 27.2.1 (Apple Silicon) with Xcode 27.2.
 
 ## Limitations
 
-Read-only. JSON only; workshop views for CycloneDX, not yet SPDX or AIBOM. Completeness reports presence and form of fields, never conformity. No folding in the source pane. Find misses a match that spans a display break in a minified line. Ad-hoc signed: on another Mac, open it with right-click › Open.
+Read-only. JSON only; workshop views for CycloneDX, not yet SPDX or AIBOM. Completeness reports presence and form of fields, never conformity. No folding in the source pane. Find misses a match that spans a display break in a minified line. Local builds are signed ad hoc: on another Mac, open them with right-click › Open; releases are notarized (`docs/release.md`). Apple silicon only.
 
 ## History and next steps
 
 Moved with its history from `apps/beautiful-bom/` in rebaze/rebaze-sscs on 2026-11-16. Why the app
-exists, who it is for and how to work on it: `AGENTS.md`. Current state and the next step (a signed,
-notarized release pipeline): `docs/roadmap.md`.
+exists, who it is for and how to work on it: `AGENTS.md`. Current state and the next step: `docs/roadmap.md`. Releasing: `docs/release.md`.

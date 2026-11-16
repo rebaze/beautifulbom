@@ -7,7 +7,9 @@ SIZES := 1 10 50
 
 CONFIG ?= Debug
 APP = build/Build/Products/$(CONFIG)/BeautifulBOM.app
-.PHONY: screenshots test strings-check bench-build fixtures bench project app install dmg snapshot clean parity-refresh
+# Extra xcodebuild settings, e.g. XCODEFLAGS=CURRENT_PROJECT_VERSION=42 (the release sets the build number).
+XCODEFLAGS ?=
+.PHONY: screenshots test strings-check bench-build fixtures bench project app install dmg dmg-image version snapshot clean parity-refresh
 
 test: strings-check
 	cd $(PKG) && swift test
@@ -38,7 +40,7 @@ project:
 	xcodegen generate --quiet
 
 app: project
-	set -o pipefail; xcodebuild -project BeautifulBOM.xcodeproj -scheme BeautifulBOM -configuration $(CONFIG) -derivedDataPath build build | xcbeautify --quiet
+	set -o pipefail; xcodebuild -project BeautifulBOM.xcodeproj -scheme BeautifulBOM -configuration $(CONFIG) -derivedDataPath build $(XCODEFLAGS) build | xcbeautify --quiet
 
 # The Release app in ~/Applications, so Spotlight, Launchpad and the Dock find it.
 install:
@@ -49,17 +51,30 @@ install:
 
 # A disk image to hand out: the Release app and a link to Applications, to drag across.
 # Signed ad hoc only: on another Mac, Gatekeeper asks once (System Settings › Privacy & Security
-# › Open Anyway). A Developer ID signature and notarization need rebaze's credentials.
+# › Open Anyway). The release workflow signs with rebaze's Developer ID and notarizes
+# (scripts/release.sh, docs/release.md).
 VERSION := $(shell sed -n 's/.*CFBundleShortVersionString: "\(.*\)"/\1/p' project.yml)
-DMG := build/BeautifulBOM-$(VERSION).dmg
+DMG ?= build/BeautifulBOM-$(VERSION).dmg
+# The app that dmg-image packages as it is (the release passes the signed and stapled one).
+DMG_APP ?= build/Build/Products/Release/BeautifulBOM.app
 dmg:
 	$(MAKE) app CONFIG=Release
+	$(MAKE) dmg-image
+
+# hdiutil on CI runners sometimes reports "Resource busy"; it gets three tries.
+dmg-image:
 	rm -rf build/dmg "$(DMG)" && mkdir -p build/dmg
-	ditto build/Build/Products/Release/BeautifulBOM.app "build/dmg/Beautiful BOM.app"
+	ditto "$(DMG_APP)" "build/dmg/Beautiful BOM.app"
 	ln -s /Applications build/dmg/Applications
-	hdiutil create -quiet -volname "Beautiful BOM $(VERSION)" -srcfolder build/dmg -fs HFS+ -format UDZO "$(DMG)"
+	for i in 1 2 3; do \
+	  hdiutil create -quiet -volname "Beautiful BOM $(VERSION)" -srcfolder build/dmg -fs HFS+ -format UDZO "$(DMG)" && break; \
+	  rm -f "$(DMG)"; [ $$i = 3 ] && exit 1; sleep 5; \
+	done
 	hdiutil verify -quiet "$(DMG)"
 	@echo "Disk image: $(DMG)"
+
+version:
+	@echo $(VERSION)
 
 # make snapshot FILE=<json> OUT=<png> [SELECT=<pointer>] [VIEW=<tab>] [COMPONENT=<bom-ref>]
 #   [EVIDENCE=<rule id>] [FIND=<text>] [POINT=<bom-ref>] [SIZE=1440x900] [TEXT=24] [APPEARANCE=dark|light] [UILANG=de|en]
