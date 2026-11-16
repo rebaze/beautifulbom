@@ -1,0 +1,118 @@
+<style>
+  .bb { font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; color: #1d1d1f; }
+  .bb .win { background:#fff; border:1px solid #d9d9de; border-radius:12px; overflow:hidden; box-shadow:0 8px 30px rgba(0,0,0,.08); }
+  .bb .bar { display:flex; gap:8px; align-items:center; padding:9px 14px; border-bottom:1px solid #ececf0; background:#fafafa; font-size:12.5px; color:#6e6e73; }
+  .bb .dot { width:10px; height:10px; border-radius:50%; background:#e3e3e8; }
+  .bb .tabs { display:flex; gap:4px; margin-left:14px; } .bb .tab { padding:2px 9px; border-radius:6px; } .bb .tab.on { background:#1d1d1f; color:#fff; }
+  .bb .mono { font: 12px/1.6 "SF Mono", ui-monospace, Menlo, monospace; }
+  .bb .muted { color:#6e6e73; }
+  .bb .k { color:#2463d1; } .bb .s { color:#1f8a3b; } .bb .p { color:#a1a1a6; }
+  .bb .eyebrow { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#6e6e73; }
+  .bb .title { font-size:30px; font-weight:650; letter-spacing:-.02em; margin:2px 0 0; }
+  .bb .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:16px 0; }
+  .bb .stat { background:#f6f6f8; border-radius:10px; padding:10px 12px; cursor:pointer; }
+  .bb .stat .v { font-size:28px; font-weight:650; letter-spacing:-.02em; } .bb .stat .muted { font-size:12px; }
+  .bb .field { display:grid; grid-template-columns:120px 1fr; align-items:baseline; padding:7px 0; border-bottom:1px solid #f2f2f5; }
+  .bb .field .l { color:#6e6e73; font-size:12.5px; }
+  .bb .pill { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px; }
+  .bb .pill.miss { background:#fdeceb; color:#c9302c; } .bb .pill.ok { background:#e8f6ec; color:#1f8a3b; }
+  .bb .sel { outline:2px solid #2463d1; outline-offset:2px; border-radius:6px; }
+  .bb .src .ln { display:grid; grid-template-columns:40px 1fr; white-space:pre; padding-right:10px; }
+  .bb .src .ln span:first-child { text-align:right; padding-right:10px; color:#b0b0b6; }
+  .bb .src .ln.hit { background:rgba(36,99,209,.08); }
+  .bb .src .ln.gap { background:rgba(201,48,44,.07); }
+  .bb .verdict { margin-top:14px; padding:12px 14px; border-radius:10px; background:#fff8ec; border:1px solid #f3dfb8; }
+  .bb .drawer { border-top:1px solid #e3e3e8; background:#fbfbfd; }
+  .bb .drawer .head { display:flex; justify-content:space-between; padding:7px 14px; font-size:12px; color:#6e6e73; border-bottom:1px solid #efeff2; }
+</style>
+
+<div class="bb">
+<h2>Where does the source sit during a workshop?</h2>
+<p class="subtitle">The Overview with real data from the Laravel SBOM. Both options show the same moment: someone asks "when was this made?", you click the gap, and the source shows where a timestamp would have to be.</p>
+
+<div class="options">
+
+<div class="option" data-choice="side" onclick="toggleSelect(this)">
+  <div class="letter">A</div>
+  <div class="content" style="width:100%">
+    <h3>Side by side, always</h3>
+    <p>The source stays visible to the right; lines connect statements to it. Best at a desk; on a projector each half is smaller.</p>
+    <div class="win" style="margin-top:10px">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><div class="tabs"><span class="tab on">Overview</span><span class="tab">Composition</span><span class="tab">Completeness</span><span class="tab">Components</span></div></div>
+      <div style="display:grid;grid-template-columns:1.15fr 1fr">
+        <div style="padding:18px 22px">
+          <div class="eyebrow">Software bill of materials · CycloneDX 1.4</div>
+          <div class="title">cyclonedx-php-composer-demo</div>
+          <div class="muted">application · dev-master · built on laravel/laravel 7.12.0</div>
+          <div class="stats">
+            <div class="stat"><div class="v">62</div><div class="muted">components</div></div>
+            <div class="stat"><div class="v">1→61</div><div class="muted">direct → indirect</div></div>
+            <div class="stat"><div class="v">1</div><div class="muted">ecosystem</div></div>
+            <div class="stat"><div class="v">3</div><div class="muted">licenses</div></div>
+          </div>
+          <div class="field"><span class="l">Made by</span><span>cyclonedx-php-composer <span class="muted">"in-dev"</span></span></div>
+          <div class="field"><span class="l">Made when</span><span class="sel"><span class="pill miss">no timestamp</span></span></div>
+          <div class="verdict"><b>Readable, not complete.</b> No hashes, no supplier, no timestamp.</div>
+        </div>
+        <div class="src mono" style="border-left:1px solid #ececf0;background:#fbfbfd;padding:12px 0">
+          <div class="ln"><span>3</span><span>  <span class="k">"bomFormat"</span><span class="p">:</span> <span class="s">"CycloneDX"</span><span class="p">,</span></span></div>
+          <div class="ln"><span>4</span><span>  <span class="k">"specVersion"</span><span class="p">:</span> <span class="s">"1.4"</span><span class="p">,</span></span></div>
+          <div class="ln"><span>5</span><span>  <span class="k">"version"</span><span class="p">:</span> 1<span class="p">,</span></span></div>
+          <div class="ln hit"><span>6</span><span>  <span class="k">"metadata"</span><span class="p">: {</span></span></div>
+          <div class="ln gap"><span></span><span style="color:#c9302c">    ⟵ "timestamp" would be here: absent</span></div>
+          <div class="ln"><span>7</span><span>    <span class="k">"tools"</span><span class="p">: [</span></span></div>
+          <div class="ln"><span>8</span><span class="p">      {</span></div>
+          <div class="ln"><span>9</span><span>        <span class="k">"vendor"</span><span class="p">:</span> <span class="s">"cyclonedx"</span><span class="p">,</span></span></div>
+          <div class="ln"><span>10</span><span>        <span class="k">"name"</span><span class="p">:</span> <span class="s">"cyclonedx-php-composer"</span><span class="p">,</span></span></div>
+          <div class="ln"><span>11</span><span>        <span class="k">"version"</span><span class="p">:</span> <span class="s">"in-dev"</span><span class="p">,</span></span></div>
+          <div class="ln"><span>⋮</span><span class="muted">        …</span></div>
+          <div class="ln"><span>35</span><span>    <span class="k">"component"</span><span class="p">: {</span></span></div>
+          <div class="ln"><span>38</span><span>      <span class="k">"name"</span><span class="p">:</span> <span class="s">"cyclonedx-php-composer-demo"</span><span class="p">,</span></span></div>
+          <div class="ln"><span>39</span><span>      <span class="k">"version"</span><span class="p">:</span> <span class="s">"dev-master"</span><span class="p">,</span></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="option" data-choice="drawer" onclick="toggleSelect(this)">
+  <div class="letter">B</div>
+  <div class="content" style="width:100%">
+    <h3>Full width, evidence opens underneath</h3>
+    <p>The view fills the screen for the room. Clicking a statement opens a source drawer below at that place; Esc closes it. ⌥⌘E keeps it open for a desk session.</p>
+    <div class="win" style="margin-top:10px">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><div class="tabs"><span class="tab on">Overview</span><span class="tab">Composition</span><span class="tab">Completeness</span><span class="tab">Components</span></div></div>
+      <div style="padding:20px 28px">
+        <div class="eyebrow">Software bill of materials · CycloneDX 1.4</div>
+        <div class="title" style="font-size:36px">cyclonedx-php-composer-demo</div>
+        <div class="muted" style="font-size:15px">application · dev-master · built on laravel/laravel 7.12.0</div>
+        <div class="stats">
+          <div class="stat"><div class="v" style="font-size:34px">62</div><div class="muted">components</div></div>
+          <div class="stat"><div class="v" style="font-size:34px">1 → 61</div><div class="muted">chosen directly → pulled in</div></div>
+          <div class="stat"><div class="v" style="font-size:34px">1</div><div class="muted">ecosystem (Composer)</div></div>
+          <div class="stat"><div class="v" style="font-size:34px">3</div><div class="muted">licenses</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+          <div>
+            <div class="field"><span class="l">Made by</span><span>cyclonedx-php-composer <span class="muted">version "in-dev"</span></span></div>
+            <div class="field"><span class="l">Made when</span><span class="sel"><span class="pill miss">no timestamp</span></span></div>
+          </div>
+          <div class="verdict" style="margin:0"><b>Readable, not complete.</b> No hashes, no supplier, no timestamp. <span class="muted">→ Completeness</span></div>
+        </div>
+      </div>
+      <div class="drawer">
+        <div class="head"><span>Evidence · lines 3–11 · metadata has no "timestamp"</span><span>Esc to close</span></div>
+        <div class="src mono" style="padding:6px 0">
+          <div class="ln"><span>4</span><span>  <span class="k">"specVersion"</span><span class="p">:</span> <span class="s">"1.4"</span><span class="p">,</span></span></div>
+          <div class="ln hit"><span>6</span><span>  <span class="k">"metadata"</span><span class="p">: {</span></span></div>
+          <div class="ln gap"><span></span><span style="color:#c9302c">    ⟵ "timestamp" would be here: absent</span></div>
+          <div class="ln"><span>7</span><span>    <span class="k">"tools"</span><span class="p">: [ { </span><span class="k">"vendor"</span><span class="p">:</span> <span class="s">"cyclonedx"</span><span class="p">,</span> <span class="k">"name"</span><span class="p">:</span> <span class="s">"cyclonedx-php-composer"</span><span class="p">,</span> <span class="k">"version"</span><span class="p">:</span> <span class="s">"in-dev"</span> … </span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<p class="muted">My pick: <b>B</b>. In a workshop the room reads the view, and the evidence appears exactly when someone asks "where does it say that?". At a desk, ⌥⌘E keeps it open, which gives you A.</p>
+</div>

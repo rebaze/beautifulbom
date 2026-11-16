@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+<defs>
+ <filter id="sh" x="-20%" y="-20%" width="140%" height="150%">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="14"/><feOffset dy="12"/>
+  <feComponentTransfer><feFuncA type="linear" slope="0.28"/></feComponentTransfer>
+  <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+ </filter>
+ <filter id="soft" x="-20%" y="-20%" width="140%" height="150%">
+  <feGaussianBlur in="SourceAlpha" stdDeviation="8"/><feOffset dy="6"/>
+  <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+  <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+ </filter>
+ <linearGradient id="pale" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E3EAE5"/></linearGradient>
+ <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+  <stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#F4F6F4"/></linearGradient>
+ <clipPath id="body"><rect x="100" y="100" width="824" height="824" rx="185"/></clipPath>
+</defs>
+<rect x="100" y="100" width="824" height="824" rx="185" fill="url(#pale)" filter="url(#sh)"/><rect x="100.5" y="100.5" width="823" height="823" rx="184.5" fill="none" stroke="#000" stroke-opacity="0.06"/><g transform="translate(512,506) scale(2.1459227467811157) translate(-182.9,-249.5)" fill="#202020" ><path d="M 188.207031 144.789062 L 188.207031 186.148438 C 188.207031 189.59375 190.042969 192.773438 193.023438 194.496094 L 227.464844 214.378906 C 230.445312 216.101562 232.28125 219.28125 232.28125 222.726562 L 232.28125 268.648438 C 232.28125 272.089844 230.445312 275.273438 227.464844 276.992188 L 187.695312 299.957031 C 184.710938 301.679688 181.039062 301.679688 178.058594 299.957031 L 141.316406 278.742188 C 138.28125 276.992188 134.535156 277.023438 131.53125 278.832031 L 96.445312 299.9375 C 90.152344 303.71875 90.234375 312.867188 96.59375 316.539062 L 178.058594 363.570312 C 181.039062 365.292969 184.710938 365.292969 187.691406 363.570312 L 282.558594 308.800781 C 285.539062 307.082031 287.375 303.898438 287.375 300.457031 L 287.375 190.917969 C 287.375 187.472656 285.539062 184.292969 282.558594 182.570312 L 202.660156 136.445312 C 196.238281 132.734375 188.207031 137.371094 188.207031 144.789062 "/><path d="M 138.285156 214.378906 L 172.726562 194.496094 C 175.707031 192.773438 177.542969 189.59375 177.542969 186.148438 L 177.542969 144.789062 C 177.542969 137.371094 169.515625 132.734375 163.089844 136.445312 L 83.195312 182.570312 C 80.210938 184.292969 78.375 187.472656 78.375 190.917969 L 78.375 281.320312 C 78.375 288.816406 86.554688 293.441406 92.980469 289.578125 L 128.796875 268.03125 C 131.695312 266.289062 133.46875 263.15625 133.46875 259.773438 L 133.46875 222.726562 C 133.46875 219.28125 135.304688 216.101562 138.285156 214.378906 "/></g></svg>

@@ -1,0 +1,211 @@
+{
+  "components": [
+    {
+      "authors": [
+        {
+          "name": "HuggingFaceH4"
+        }
+      ],
+      "bom-ref": "pkg:huggingface/HuggingFaceH4/zephyr-7b-beta@892b3d7a",
+      "description": "No description available",
+      "externalReferences": [
+        {
+          "comment": "Model files",
+          "type": "distribution",
+          "url": "https://huggingface.co/HuggingFaceH4/zephyr-7b-beta/tree/main"
+        },
+        {
+          "comment": "Training dataset: HuggingFaceH4/ultrachat_200k",
+          "type": "distribution",
+          "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k"
+        },
+        {
+          "comment": "Training dataset: HuggingFaceH4/ultrafeedback_binarized",
+          "type": "distribution",
+          "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized"
+        },
+        {
+          "comment": "ArXiv Paper",
+          "type": "documentation",
+          "url": "https://arxiv.org/abs/2305.14233"
+        },
+        {
+          "comment": "ArXiv Paper",
+          "type": "documentation",
+          "url": "https://arxiv.org/abs/2305.18290"
+        },
+        {
+          "comment": "ArXiv Paper",
+          "type": "documentation",
+          "url": "https://arxiv.org/abs/2310.01377"
+        },
+        {
+          "comment": "ArXiv Paper",
+          "type": "documentation",
+          "url": "https://arxiv.org/abs/2310.16944"
+        },
+        {
+          "comment": "Specific commit",
+          "type": "vcs",
+          "url": "https://huggingface.co/HuggingFaceH4/zephyr-7b-beta/commit/892b3d7a7b1cf10c7a701c60881cd93df615734c"
+        },
+        {
+          "comment": "Model repository",
+          "type": "website",
+          "url": "https://huggingface.co/HuggingFaceH4/zephyr-7b-beta"
+        }
+      ],
+      "group": "HuggingFaceH4",
+      "licenses": [
+        {
+          "license": {
+            "id": "MIT"
+          }
+        }
+      ],
+      "manufacturer": {
+        "name": "HuggingFaceH4",
+        "url": [
+          "https://huggingface.co/HuggingFaceH4"
+        ]
+      },
+      "name": "zephyr-7b-beta",
+      "properties": [
+        {
+          "name": "model_type",
+          "value": "mistral"
+        }
+      ],
+      "purl": "pkg:huggingface/HuggingFaceH4/zephyr-7b-beta@892b3d7a",
+      "supplier": {
+        "name": "HuggingFaceH4"
+      },
+      "type": "machine-learning-model",
+      "version": "892b3d7a",
+      "modelCard": {
+        "modelParameters": {
+          "task": "text-generation",
+          "modelArchitecture": "mistral",
+          "datasets": [
+            {
+              "type": "dataset",
+              "name": "HuggingFaceH4/ultrachat_200k",
+              "contents": {
+                "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrachat_200k"
+              }
+            },
+            {
+              "type": "dataset",
+              "name": "HuggingFaceH4/ultrafeedback_binarized",
+              "contents": {
+                "url": "https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized"
+              }
+            }
+          ],
+          "inputs": [
+            {
+              "format": "string"
+            }
+          ],
+          "outputs": [
+            {
+              "format": "string"
+            }
+          ]
+        },
+        "considerations": {
+          "technicalLimitations": [
+            "The model was initially fine-tuned on a filtered and preprocessed of the [`UltraChat`](https://huggingface"
+          ]
+        },
+        "properties": [
+          {
+            "name": "genai:aibom:modelcard:hyperparameter",
+            "value": "{\"context_length\": 32768, \"embedding_length\": 4096, \"block_count\": 32, \"attention_head_count\": 32, \"attention_head_count_kv\": 8, \"feed_forward_length\": 14336}"
+          },
+          {
+            "name": "genai:aibom:modelcard:vocabSize",
+            "value": "32000"
+          },
+          {
+            "name": "genai:aibom:modelcard:tokenizerClass",
+            "value": "LlamaTokenizer"
+          },
+          {
+            "name": "genai:aibom:modelcard:contextLength",
+            "value": "32768"
+          },
+          {
+            "name": "genai:aibom:trainingDataAvailable",
+            "value": "true"
+          },
+          {
+            "name": "genai:aibom:trainingDataStatus",
+            "value": "Training datasets verified: Dataset(s) exist and are accessible on Hugging Face Hub."
+          },
+          {
+            "name": "owasp:aibom:distribution:modelFileSize",
+            "value": "28967059598"
+          },
+          {
+            "name": "owasp:aibom:distribution:runtimeRequirement",
+            "value": "python"
+          },
+          {
+            "name": "serialNumber",
+            "value": "urn:uuid:HuggingFaceH4-zephyr-7b-beta"
+          },
+          {
+            "name": "safetyRiskAssessment",
+            "value": "within the RLHF phase or deployed with in-the-loop filtering of responses like ChatGPT, so the model can produce problematic outputs (especially when prompted to do so)"
+          }
+        ]
+      }
+    }
+  ],
+  "dependencies": [
+    {
+      "dependsOn": [
+        "pkg:huggingface/HuggingFaceH4/zephyr-7b-beta@892b3d7a"
+      ],
+      "ref": "pkg:generic/OWASP-AIBOM-Generator/job-2026-11-16-22:03:54@1794863034"
+    },
+    {
+      "ref": "pkg:huggingface/HuggingFaceH4/zephyr-7b-beta@892b3d7a"
+    }
+  ],
+  "metadata": {
+    "component": {
+      "bom-ref": "pkg:generic/OWASP-AIBOM-Generator/job-2026-11-16-22:03:54@1794863034",
+      "description": "Generating SBOM for HuggingFaceH4/zephyr-7b-beta",
+      "manufacturer": {
+        "name": "OWASP AIBOM Generator"
+      },
+      "name": "job-2026-11-16-22:03:54",
+      "purl": "pkg:generic/OWASP-AIBOM-Generator/job-2026-11-16-22:03:54@1794863034",
+      "supplier": {
+        "name": "OWASP AIBOM Generator"
+      },
+      "type": "application",
+      "version": "1794863034"
+    },
+    "timestamp": "2026-11-16T21:03:54.169248+00:00",
+    "tools": {
+      "components": [
+        {
+          "manufacturer": {
+            "name": "OWASP GenAI Security Project"
+          },
+          "name": "owasp-aibom-generator",
+          "type": "application",
+          "version": "1.0.2"
+        }
+      ]
+    }
+  },
+  "serialNumber": "urn:uuid:e56b213a-53da-47ab-a306-5c019f0caf8c",
+  "version": 1,
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6"
+}

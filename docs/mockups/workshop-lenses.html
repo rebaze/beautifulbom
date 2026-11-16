@@ -1,0 +1,193 @@
+<style>
+  .bb { font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif; color: #1d1d1f; }
+  .bb .win { background: #fff; border: 1px solid #d9d9de; border-radius: 12px; overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,.08); }
+  .bb .bar { display:flex; gap:8px; align-items:center; padding:10px 14px; border-bottom:1px solid #ececf0; background:#fafafa; font-size:13px; color:#6e6e73; }
+  .bb .dot { width:11px; height:11px; border-radius:50%; background:#e3e3e8; }
+  .bb .tabs { display:flex; gap:4px; margin-left:18px; }
+  .bb .tab { padding:3px 10px; border-radius:6px; }
+  .bb .tab.on { background:#1d1d1f; color:#fff; }
+  .bb .mono { font: 12.5px/1.6 "SF Mono", ui-monospace, Menlo, monospace; }
+  .bb .muted { color:#6e6e73; }
+  .bb .k { color:#2463d1; } .bb .s { color:#1f8a3b; } .bb .n { color:#c4610b; } .bb .p { color:#a1a1a6; }
+  .bb .hero { display:grid; grid-template-columns: 1fr 70px 1fr; min-height: 470px; position:relative; }
+  .bb .canvas { padding:22px 26px; }
+  .bb .src { background:#fbfbfd; border-left:1px solid #ececf0; padding:14px 0; }
+  .bb .src .ln { display:grid; grid-template-columns:44px 1fr; padding:0 12px 0 0; white-space:pre; }
+  .bb .src .ln span:first-child { text-align:right; padding-right:12px; color:#b0b0b6; }
+  .bb .src .ln.hit { background:rgba(36,99,209,.07); }
+  .bb .eyebrow { font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:#6e6e73; margin-bottom:4px; }
+  .bb h4 { font-size:26px; margin:0; font-weight:650; letter-spacing:-.01em; }
+  .bb .field { display:grid; grid-template-columns:110px 1fr; align-items:baseline; padding:7px 0; border-bottom:1px solid #f2f2f5; }
+  .bb .field .l { color:#6e6e73; font-size:12.5px; }
+  .bb .pill { display:inline-block; padding:1px 8px; border-radius:999px; font-size:12px; background:#eef2fb; color:#2463d1; margin-right:4px; }
+  .bb .pill.ok { background:#e8f6ec; color:#1f8a3b; } .bb .pill.miss { background:#fdeceb; color:#c9302c; } .bb .pill.part { background:#fff4e0; color:#a35d00; }
+  .bb .path { display:flex; flex-wrap:wrap; align-items:center; gap:6px; margin-top:4px; }
+  .bb .path .node { padding:3px 9px; border:1px solid #e1e1e6; border-radius:7px; background:#fff; font-size:12.5px; }
+  .bb .path .node.me { border-color:#2463d1; color:#2463d1; font-weight:600; }
+  .bb .path .arr { color:#b0b0b6; }
+  .bb svg.links { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+  .bb .lenses { display:grid; grid-template-columns: repeat(2, 1fr); gap:16px; margin-top:8px; }
+  .bb .lens { padding:18px 20px; min-height:250px; }
+  .bb .big { font-size:30px; font-weight:650; letter-spacing:-.02em; }
+  .bb .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin:14px 0; }
+  .bb .stat { background:#f6f6f8; border-radius:10px; padding:10px 12px; }
+  .bb .stat .muted { font-size:12px; }
+  .bb .hbar { display:flex; height:22px; border-radius:6px; overflow:hidden; margin:6px 0 4px; }
+  .bb .hbar div { display:flex; align-items:center; justify-content:center; color:#fff; font-size:11px; white-space:nowrap; overflow:hidden; }
+  .bb .row { display:grid; grid-template-columns: 170px 1fr 70px 70px; gap:10px; align-items:center; padding:5px 0; border-bottom:1px solid #f2f2f5; font-size:13px; }
+  .bb .meter { height:7px; background:#efeff2; border-radius:4px; overflow:hidden; }
+  .bb .meter i { display:block; height:100%; }
+  .bb .ev { color:#2463d1; font-size:12px; }
+  .bb .depth { display:flex; align-items:flex-end; gap:6px; height:70px; margin-top:6px; }
+  .bb .depth div { flex:1; background:#cfdcf5; border-radius:4px 4px 0 0; position:relative; }
+  .bb .depth div b { position:absolute; top:-17px; left:0; right:0; text-align:center; font-size:11px; font-weight:500; color:#6e6e73; }
+  .bb .depthlbl { display:flex; gap:6px; font-size:11px; color:#6e6e73; } .bb .depthlbl span { flex:1; text-align:center; }
+</style>
+
+<div class="bb">
+<h2>What a client workshop sees instead of text</h2>
+<p class="subtitle">Real data from a public SBOM (Laravel 7.12, CycloneDX 1.4, 62 components). The visual view says what the SBOM means; the source beside it stays the evidence, with lines drawn to the exact places.</p>
+
+<h3>The signature: every statement points at its evidence</h3>
+<div class="win">
+  <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    <span style="margin-left:10px;font-weight:600;color:#1d1d1f">laravel-7.12.0.cdx-1.4.json</span>
+    <div class="tabs"><span class="tab">Overview</span><span class="tab">Composition</span><span class="tab">Completeness</span><span class="tab on">Components</span><span class="tab">Source</span></div>
+  </div>
+  <div class="hero" id="hero">
+    <div class="canvas">
+      <div class="eyebrow">Component 4 of 62 · Composer package · library</div>
+      <h4><span class="muted" style="font-weight:500">doctrine /</span> lexer <span class="muted" style="font-weight:500">1.2.3</span></h4>
+      <p class="muted" style="margin:6px 0 14px">PHP Doctrine Lexer parser library that can be used in Top-Down, Recursive Descent Parsers.</p>
+      <div class="field" data-link="L218"><span class="l">Identity</span><span class="mono">pkg:composer/doctrine/lexer@1.2.3</span></div>
+      <div class="field" data-link="L222"><span class="l">Author</span><span>Guilherme Blanco, Roman Borschel, Johannes Schmitt</span></div>
+      <div class="field" data-link="L226"><span class="l">License</span><span><span class="pill ok">MIT</span> <span class="muted">permissive, like 57 of 62</span></span></div>
+      <div class="field"><span class="l">Integrity</span><span><span class="pill miss">no hash</span> <span class="muted">none of the 62 components has one</span></span></div>
+      <div class="field"><span class="l">Supplier</span><span><span class="pill miss">not stated</span></span></div>
+      <div class="field" style="border:0;padding-top:12px"><span class="l">Why is it here?</span>
+        <div>
+          <div class="path"><span class="node">your product</span><span class="arr">→</span><span class="node">laravel 7.12.0</span><span class="arr">→</span><span class="node">framework 7.30.6</span><span class="arr">→</span><span class="node">email-validator 2.1.25</span><span class="arr">→</span><span class="node me">lexer</span></div>
+          <div class="muted" style="font-size:12.5px;margin-top:6px">4 steps away. Nobody chose it directly; email validation pulls it in.</div>
+        </div>
+      </div>
+    </div>
+    <div></div>
+    <div class="src mono">
+      <div class="ln"><span>215</span><span class="p">{</span></div>
+      <div class="ln"><span>216</span><span>  <span class="k">"bom-ref"</span><span class="p">:</span> <span class="s">"doctrine/lexer-1.2.3.0"</span><span class="p">,</span></span></div>
+      <div class="ln"><span>217</span><span>  <span class="k">"type"</span><span class="p">:</span> <span class="s">"library"</span><span class="p">,</span></span></div>
+      <div class="ln hit" id="L218"><span>218</span><span>  <span class="k">"name"</span><span class="p">:</span> <span class="s">"lexer"</span><span class="p">,</span></span></div>
+      <div class="ln hit"><span>219</span><span>  <span class="k">"version"</span><span class="p">:</span> <span class="s">"1.2.3"</span><span class="p">,</span></span></div>
+      <div class="ln hit"><span>220</span><span>  <span class="k">"group"</span><span class="p">:</span> <span class="s">"doctrine"</span><span class="p">,</span></span></div>
+      <div class="ln"><span>221</span><span>  <span class="k">"description"</span><span class="p">:</span> <span class="s">"PHP Doctrine Lexer parser…"</span><span class="p">,</span></span></div>
+      <div class="ln hit" id="L222"><span>222</span><span>  <span class="k">"author"</span><span class="p">:</span> <span class="s">"Guilherme Blanco, Roman…"</span><span class="p">,</span></span></div>
+      <div class="ln"><span>223</span><span>  <span class="k">"licenses"</span><span class="p">: [</span></span></div>
+      <div class="ln"><span>224</span><span class="p">    {</span></div>
+      <div class="ln"><span>225</span><span>      <span class="k">"license"</span><span class="p">: {</span></span></div>
+      <div class="ln hit" id="L226"><span>226</span><span>        <span class="k">"id"</span><span class="p">:</span> <span class="s">"MIT"</span></span></div>
+      <div class="ln"><span>227</span><span class="p">      }</span></div>
+      <div class="ln"><span>228</span><span class="p">    }</span></div>
+      <div class="ln"><span>229</span><span class="p">  ],</span></div>
+      <div class="ln hit"><span>230</span><span>  <span class="k">"purl"</span><span class="p">:</span> <span class="s">"pkg:composer/doctrine/lexer@1.2.3"</span><span class="p">,</span></span></div>
+      <div class="ln"><span>231</span><span>  <span class="k">"externalReferences"</span><span class="p">: [ … 5 links ]</span></span></div>
+      <div class="ln"><span>&nbsp;</span><span class="muted">  — no "hashes", no "supplier" in this component —</span></div>
+    </div>
+    <svg class="links" id="links"></svg>
+  </div>
+</div>
+<p class="muted" style="margin:8px 0 26px">Click a statement on the left and its lines light up on the right, and the other way round. Gaps are stated, not hidden: "no hash" points to where a hash would have to be.</p>
+
+<h3>Four views for the workshop: click the ones that belong in it</h3>
+<div class="lenses" data-multiselect>
+
+  <div class="card" data-choice="overview" onclick="toggleSelect(this)">
+    <div class="card-image lens">
+      <div class="eyebrow">Overview · the title page</div>
+      <div class="big">cyclonedx-php-composer-demo</div>
+      <div class="muted">application · dev-master · built on laravel/laravel 7.12.0</div>
+      <div class="stats">
+        <div class="stat"><div class="big">62</div><div class="muted">components</div></div>
+        <div class="stat"><div class="big">1</div><div class="muted">ecosystem (Composer)</div></div>
+        <div class="stat"><div class="big">1 → 61</div><div class="muted">direct → transitive</div></div>
+        <div class="stat"><div class="big">3</div><div class="muted">licenses</div></div>
+      </div>
+      <div class="field"><span class="l">Made by</span><span>cyclonedx-php-composer <span class="muted">(version "in-dev")</span></span></div>
+      <div class="field"><span class="l">Made when</span><span><span class="pill miss">no timestamp</span></span></div>
+      <div class="field" style="border:0"><span class="l">Verdict</span><span><b>Readable, not complete:</b> no hashes, no supplier, no timestamp.</span></div>
+    </div>
+    <div class="card-body"><h3>Overview</h3><p>What product, made by what, how big, and one honest verdict.</p></div>
+  </div>
+
+  <div class="card" data-choice="composition" onclick="toggleSelect(this)">
+    <div class="card-image lens">
+      <div class="eyebrow">Composition · where it comes from</div>
+      <div style="font-size:13px;font-weight:600;margin-top:4px">By vendor</div>
+      <div class="hbar">
+        <div style="flex:27;background:#2463d1">symfony 27</div><div style="flex:5;background:#4a7fd8">psr 5</div>
+        <div style="flex:3;background:#6f99df">guzzle 3</div><div style="flex:3;background:#8fb0e6">laravel 3</div>
+        <div style="flex:3;background:#a9c2ec">league 3</div><div style="flex:21;background:#c9d7f1;color:#2b3a55">21 others</div>
+      </div>
+      <div style="font-size:13px;font-weight:600;margin-top:12px">By license</div>
+      <div class="hbar">
+        <div style="flex:57;background:#1f8a3b">MIT 57</div><div style="flex:4;background:#c4610b">BSD-3 4</div><div style="flex:1.5;background:#7b4fc9"></div>
+      </div>
+      <div class="muted" style="font-size:12.5px">The exceptions: commonmark, php-parser, css-to-inline-styles, phpdotenv (BSD-3-Clause), phpoption (Apache-2.0).</div>
+      <div style="font-size:13px;font-weight:600;margin-top:12px">How deep</div>
+      <div class="depth"><div style="height:6%"><b>1</b></div><div style="height:17%"><b>5</b></div><div style="height:100%"><b>30</b></div><div style="height:70%"><b>21</b></div><div style="height:13%"><b>4</b></div><div style="height:6%"><b>1</b></div></div>
+      <div class="depthlbl"><span>1 step</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6 steps</span></div>
+    </div>
+    <div class="card-body"><h3>Composition</h3><p>Vendors, licenses and depth at a glance; one chosen dependency brings 61.</p></div>
+  </div>
+
+  <div class="card" data-choice="completeness" onclick="toggleSelect(this)">
+    <div class="card-image lens">
+      <div class="eyebrow">Completeness · is it good enough?</div>
+      <div class="muted" style="font-size:12px;margin-bottom:6px">Minimum elements (illustrative; the exact BSI TR-03183-2 rule set is mapped in the build)</div>
+      <div class="row"><span>Name and version</span><span class="meter"><i style="width:100%;background:#1f8a3b"></i></span><span>62/62</span><span class="ev">→ source</span></div>
+      <div class="row"><span>Unique identifier (purl)</span><span class="meter"><i style="width:100%;background:#1f8a3b"></i></span><span>62/62</span><span class="ev">→ source</span></div>
+      <div class="row"><span>License</span><span class="meter"><i style="width:100%;background:#1f8a3b"></i></span><span>62/62</span><span class="ev">→ source</span></div>
+      <div class="row"><span>Dependencies</span><span class="meter"><i style="width:100%;background:#1f8a3b"></i></span><span>113 links</span><span class="ev">→ source</span></div>
+      <div class="row"><span>Author per component</span><span class="meter"><i style="width:95%;background:#e39b2d"></i></span><span>59/62</span><span class="ev">3 missing</span></div>
+      <div class="row"><span>Supplier</span><span class="meter"><i style="width:0"></i></span><span>0/62</span><span class="ev">where?</span></div>
+      <div class="row"><span>Hash of the component</span><span class="meter"><i style="width:0"></i></span><span>0/62</span><span class="ev">where?</span></div>
+      <div class="row" style="border:0"><span>SBOM timestamp</span><span class="meter"><i style="width:0"></i></span><span>missing</span><span class="ev">where?</span></div>
+    </div>
+    <div class="card-body"><h3>Completeness</h3><p>The gaps as a checklist; each row jumps to an example or to where the field is missing.</p></div>
+  </div>
+
+  <div class="card" data-choice="component" onclick="toggleSelect(this)">
+    <div class="card-image lens">
+      <div class="eyebrow">Components · one page each</div>
+      <div class="field"><span class="l">symfony/…</span><span>27 components <span class="muted">· all MIT</span></span></div>
+      <div class="field"><span class="l">doctrine/lexer</span><span>1.2.3 <span class="pill ok">MIT</span> <span class="pill miss">no hash</span></span></div>
+      <div class="field"><span class="l">phpoption</span><span>1.9.0 <span class="pill">Apache-2.0</span> <span class="pill miss">no hash</span></span></div>
+      <div class="field"><span class="l">brick/math</span><span>0.9.3 <span class="pill ok">MIT</span> <span class="pill part">no author</span></span></div>
+      <div class="field" style="border:0"><span class="l">…</span><span class="muted">search, filter by license, by gap, by depth</span></div>
+      <div class="muted" style="margin-top:10px;font-size:12.5px">Each opens the component page above: identity, license, gaps, and "why is it here?"</div>
+    </div>
+    <div class="card-body"><h3>Components</h3><p>A list that filters by what the room asks ("show me everything not MIT").</p></div>
+  </div>
+
+</div>
+</div>
+
+<script>
+(function () {
+  function draw() {
+    var hero = document.getElementById('hero'), svg = document.getElementById('links');
+    if (!hero || !svg) return;
+    var box = hero.getBoundingClientRect(), out = '';
+    hero.querySelectorAll('[data-link]').forEach(function (f) {
+      var t = document.getElementById(f.getAttribute('data-link')); if (!t) return;
+      var a = f.getBoundingClientRect(), b = t.getBoundingClientRect();
+      var x1 = a.right - box.left - 4, y1 = a.top + a.height / 2 - box.top;
+      var x2 = b.left - box.left + 2, y2 = b.top + b.height / 2 - box.top;
+      var mx = (x1 + x2) / 2;
+      out += '<path d="M' + x1 + ',' + y1 + ' C' + mx + ',' + y1 + ' ' + mx + ',' + y2 + ' ' + x2 + ',' + y2 + '" fill="none" stroke="#2463d1" stroke-opacity=".45" stroke-width="1.5"/>';
+      out += '<circle cx="' + x1 + '" cy="' + y1 + '" r="3" fill="#2463d1"/><circle cx="' + x2 + '" cy="' + y2 + '" r="3" fill="#2463d1"/>';
+    });
+    svg.innerHTML = out;
+  }
+  window.addEventListener('load', draw); window.addEventListener('resize', draw); setTimeout(draw, 300);
+})();
+</script>

@@ -1,0 +1,94 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:6f1d3c2a-4b5e-4f60-8a71-92b3c4d5e6f7",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-11-15T10:00:00+01:00",
+    "manufacturer": { "name": "Acme Devices", "url": ["https://"] },
+    "component": {
+      "type": "firmware",
+      "bom-ref": "product",
+      "name": "router-firmware",
+      "version": "4.2.0",
+      "manufacturer": { "name": "Acme Devices", "contact": [{ "email": "psirt@acme.example" }] },
+      "licenses": [{ "expression": "mit or apache-2.0", "acknowledgement": "concluded" }],
+      "properties": [{ "name": "rio:tr-03183-2:level", "value": "logical" }],
+      "components": [
+        {
+          "type": "file",
+          "bom-ref": "fw-bin",
+          "name": "router.bin",
+          "version": "4.2.0",
+          "manufacturer": { "name": "Acme Devices", "url": ["https://acme.example"] },
+          "licenses": [{ "license": { "name": "Acme proprietary", "acknowledgement": "concluded" } }],
+          "externalReferences": [{ "type": "distribution", "url": "https://acme.example/router.bin", "hashes": [{ "alg": "SHA-512", "content": "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab" }] }],
+          "properties": [
+            { "name": "bsi:component:filename", "value": "router.bin" },
+            { "name": "bsi:component:executable", "value": "executable" },
+            { "name": "bsi:component:archive", "value": "no archive" },
+            { "name": "bsi:component:structured", "value": "unstructured" }
+          ]
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "type": "library",
+      "bom-ref": "zlib",
+      "name": "zlib",
+      "version": "1.3.1",
+      "purl": "pkg:generic/zlib@1.3.1",
+      "manufacturer": { "name": "zlib authors", "contact": [{ "email": "a@b" }] },
+      "manufacturer": { "name": "zlib authors" },
+      "licenses": [{ "expression": "GPL-2.0-or-later WITH Classpath-exception-2.0", "acknowledgement": "concluded" }],
+      "properties": [{ "name": "rio:tr-03183-2:level", "value": "assembled" }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "openssl",
+      "name": "openssl",
+      "version": "3.0.13",
+      "purl": "pkg:generic/openssl@3.0.13",
+      "externalReferences": [{ "type": "distribution", "url": "https://openssl.example/openssl.tar.gz", "hashes": [{ "alg": "SHA-256", "content": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd" }] }],
+      "properties": [
+        { "name": "rio:tr-03183-2:level", "value": "logical" },
+        { "name": "rio:tr-03183-2:level", "value": "logical" }
+      ]
+    },
+    {
+      "type": "container",
+      "bom-ref": "base",
+      "name": "base-image",
+      "version": "1",
+      "externalReferences": [{ "type": "bom", "url": "urn:cdx:6f1d3c2a-4b5e-4f60-8a71-92b3c4d5e6f8/1" }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "libid",
+      "group": "acme",
+      "name": "libid",
+      "version": "2",
+      "manufacturer": { "name": "Acme Devices", "url": ["HTTPS://acme.example/"] },
+      "properties": [{ "name": "rio:tr-03183-2:level", "value": "identified" }]
+    },
+    {
+      "type": "library",
+      "bom-ref": "plain",
+      "name": "plain",
+      "version": "0.1",
+      "licenses": [{ "expression": "LicenseRef-acme-eula", "acknowledgement": "concluded" }]
+    }
+  ],
+  "dependencies": [
+    { "ref": "product", "dependsOn": ["zlib", "openssl", "fw-bin"] },
+    { "ref": "zlib" },
+    { "ref": "openssl" },
+    { "ref": "fw-bin" }
+  ],
+  "compositions": [
+    { "aggregate": "complete", "assemblies": ["product", "zlib", "fw-bin"] },
+    { "aggregate": "not_specified", "assemblies": ["openssl"] }
+  ]
+}

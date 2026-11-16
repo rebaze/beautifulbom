@@ -1,0 +1,171 @@
+{
+ "rio": "rio 0.10.2 (commit: 35c8da3efe782f4cfebd64aa400e513d03bb6db1, built: 2026-11-14T20:10:55Z)",
+ "input": "Fixtures/rio/bsi-pass.cdx.json",
+ "specVersionInput": "1.6",
+ "evaluations": [
+  {
+   "scope": "sbom",
+   "requirement": "specVersion",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "timestamp",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "vulnerabilities",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "name",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "version",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "level",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "filename",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "dependencies",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "distributionLicences",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "deployableHash",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "executable",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "archive",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "structured",
+   "evaluated": 0,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "name",
+   "evaluated": 4,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "version",
+   "evaluated": 4,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "level",
+   "evaluated": 4,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "creator",
+   "evaluated": 4,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "filename",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "dependencies",
+   "evaluated": 2,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "distributionLicences",
+   "evaluated": 2,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "deployableHash",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "executable",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "archive",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "structured",
+   "evaluated": 1,
+   "failed": 0
+  }
+ ],
+ "profileLevels": {
+  "assembled": 1,
+  "full": 1,
+  "identified": 1,
+  "logical": 1,
+  "referenced": 1
+ },
+ "findings": []
+}
