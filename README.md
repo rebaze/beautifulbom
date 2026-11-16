@@ -1,63 +1,133 @@
-# Beautiful Bill of Materials
+<p align="center">
+  <img src="docs/images/icon.png" width="128" height="128" alt="Beautiful BOM icon">
+</p>
 
-A native macOS reader for bills of materials: pleasant to read, and always one step from the exact bytes in the original file. Proof of concept (started as rebaze/rebaze-sscs#151), working title. A CycloneDX SBOM opens as a workshop presentation (Overview, Composition, Completeness, Components); any other JSON opens in the source reader.
+<h1 align="center">Beautiful BOM</h1>
 
-- Design: [docs/design.md](docs/design.md) (JSON reader), [docs/design-workshop-views.md](docs/design-workshop-views.md) (workshop views)
-- Plans: [docs/plan.md](docs/plan.md), [docs/plan-workshop-views.md](docs/plan-workshop-views.md)
-- Findings and measurements: [docs/findings.md](docs/findings.md) · Manual checklist: [docs/checklist.md](docs/checklist.md)
+<p align="center">
+  <strong>Read a software bill of materials like a document.</strong><br>
+  What a product is made of, how deep it goes, where the SBOM has gaps,<br>
+  and every statement one click from the exact bytes in the file.
+</p>
 
-## Workshop views (CycloneDX 1.2 and later)
+<p align="center">
+  <a href="https://github.com/rebaze/beautifulbom/releases/latest"><img src="https://img.shields.io/github/v/release/rebaze/beautifulbom?label=download&color=2ea44f" alt="Latest release"></a>
+  <img src="https://img.shields.io/badge/macOS-15%2B-000000?logo=apple&logoColor=white" alt="macOS 15 or later">
+  <img src="https://img.shields.io/badge/Apple%20silicon-native-000000" alt="Apple silicon">
+  <a href="docs/release.md"><img src="https://img.shields.io/badge/notarized-Developer%20ID-2ea44f" alt="Signed and notarized"></a>
+  <img src="https://img.shields.io/badge/network-never-2ea44f" alt="Never goes online">
+  <br>
+  <img src="https://img.shields.io/badge/CycloneDX-1.2%E2%80%931.6-1f6feb" alt="CycloneDX 1.2 to 1.6">
+  <img src="https://img.shields.io/badge/AIBOM-CycloneDX%201.6-1f6feb" alt="AIBOM">
+  <img src="https://img.shields.io/badge/BSI%20TR--03183--2-2.1.0-1f6feb" alt="BSI TR-03183-2 2.1.0">
+  <img src="https://img.shields.io/badge/languages-English%20%C2%B7%20Deutsch-1f6feb" alt="English and German">
+  <a href="https://github.com/rebaze/beautifulbom/actions/workflows/ci.yaml"><img src="https://github.com/rebaze/beautifulbom/actions/workflows/ci.yaml/badge.svg" alt="CI"></a>
+</p>
 
-- **Overview**: product, version, what it is built on; components, chosen directly → pulled in, ecosystems, licences; vendor and licence bars; who made the SBOM and when; one verdict sentence on BSI TR-03183-2.
-- **Composition**: components by vendor and by licence (click a segment for those components), and a histogram of how many steps each component is from the product.
-- **Completeness**: BSI TR-03183-2 2.1.0, presence and form of fields only, counted exactly as rio's `bsi-tr-03183-2@2.1.0` profile counts. An SBOM older than CycloneDX 1.6 gets the version gap stated once, and rules whose field is newer than the file say so.
-- **Components**: search and filter (licence is / is not, missing field, depth); each opens a component page with identity, licence, hashes, references, gaps, and "Why is it here?" (the path from the product, and who uses it).
-- **Evidence**: every statement is a button. It opens the source in a drawer underneath at the exact range; a missing field shows a red marker where it would be. Esc closes the drawer, ⌥⌘E keeps it open. Back/Forward (⌘[ ⌘]) walk through tabs and component pages; ⌘1–⌘5 switch tabs.
-- **Language**: View › Language switches the workshop views between English and German at once.
+<p align="center">
+  <a href="https://github.com/rebaze/beautifulbom/releases/latest"><strong>Download for Mac</strong></a>
+  · free · macOS 15 or later on Apple silicon · signed and notarized
+</p>
 
-## Source reader
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/images/overview-dark.png">
+  <img src="docs/images/overview.png" alt="The Overview of an SBOM: 62 components, 1 chosen directly and 61 pulled in, one ecosystem, three licences, vendor and licence bars, and the TR-03183-2 summary">
+</picture>
 
-- Opens local JSON files (File › Open, recent documents, Dock drop). No network, no account, no upload.
-- Shows the original source with syntax colour, line numbers, the system find bar and adjustable text size. Edit › Find (⌘F, ⌘G, ⇧⌘G, ⌘E) works from every tab: it switches to Source and searches the whole file while you type (⌘+ ⌘− ⌘0, presentation size ⌥⌘P).
-- A structure outline in sync with the source: select in either and the other follows to the exact range. Objects show a readable hint (name, version).
-- Breadcrumbs and the JSON Pointer of the selection; duplicate keys are marked (`/name (duplicate 2 of 2)`).
-- Copy JSON Pointer (⌥⌘C), Copy Value (⇧⌘C), Copy Source (⌥⇧⌘C, or ⌘C in the outline). Go › Back/Forward (⌘[ ⌘]).
-- Malformed files stay readable: a banner lists each problem with line and column, and everything that could be parsed stays navigable.
-- Large files: 50 MB shows in about a second; minified files are wrapped for display without changing what is copied.
+## What it's for
 
-## Build and run
+- **Show an SBOM to a room.** Management and developers look at the same picture: how many
+  components, how many you chose and how many came along, which vendors and licences, and one
+  plain sentence on BSI TR-03183-2. Presentation size (⌥⌘P) makes it readable from the back row.
+- **Check an SBOM before you pass it on.** See which fields are missing for the SBOM, the product
+  and every component, and jump to the place in the file where each one should be.
+- **Answer "why is this in here?"** Every component shows the path from your product to it, and
+  who uses it.
+- **Read any JSON bill of materials exactly as written.** SPDX, AIBOMs, files a tool got wrong:
+  an outline, the source with line numbers, and the JSON Pointer of whatever you select.
 
-`make dmg` writes `build/BeautifulBOM-<version>.dmg` (the app and a link to Applications). It is signed ad hoc: another Mac asks once, under System Settings › Privacy & Security › Open Anyway. Releases are signed with rebaze's Developer ID and notarized by the release workflow on a tag `v<version>`: `docs/release.md`.
+## Every statement leads to the bytes
 
-`make install` builds the Release app and copies it to `~/Applications`, so Spotlight, Launchpad and the Dock find it. Open an SBOM with ⌘O, by dropping it on a window or on the Dock icon, or with Finder › Open With. Started without a file, it shows a welcome window with recent files and three bundled samples (Window › Welcome to Beautiful BOM, ⇧⌘1). The icon is the rebaze mark; `scripts/icon/make-icon.sh` renders it from `scripts/icon/icon.svg` (needs `rsvg-convert`). Design: `docs/design-branding.md`.
+<img src="docs/images/evidence.png" alt="The Overview with the evidence drawer open: the source at line 6, where a red marker says the timestamp would be here but is absent">
 
-Requirements: macOS 15 or later, Xcode 27.2 (Swift 6.4), [XcodeGen](https://github.com/yonaskolb/XcodeGen), [xcbeautify](https://github.com/cpisciotta/xcbeautify).
+Click a number, a chip or a gap, and the original file opens underneath at the exact range. A
+missing field gets a red marker where it would be. Copy its JSON Pointer (⌥⌘C), its value (⇧⌘C)
+or the source text (⌥⇧⌘C); Back (⌘[) returns you to where you were. Nothing on screen is more
+than one step from the file that says it.
 
-```sh
-make test                      # string catalog check and BOMCore engine tests (Swift Testing)
-make app                       # Debug build: build/Build/Products/Debug/BeautifulBOM.app
-make app CONFIG=Release        # for measurements
-make fixtures && make bench    # synthetic 1/10/50 MB fixtures and engine timings
-make snapshot CONFIG=Release FILE=Fixtures/public/laravel-7.12.0.cdx-1.4.json OUT=build/shot.png SELECT=/components/3
-```
+## A closer look
 
-Launch options for checks and agents: `--window-size <WxH>`, `--open <file>`, `--select <json-pointer>`, `--copy pointer|value|source`, `--view overview|composition|completeness|components|source`, `--component <bom-ref>`, `--evidence <rule id>` (e.g. `sbom.timestamp`), `--language de|en`, `--show welcome|about`, `--point <bom-ref>` (on the map, show a part as if pointed at), `--find <text>` (opens the find bar from the current tab and types the text key by key; with `BBOM_TIMING=1` it prints each key's cost), `--snapshot <png>` (renders the window and quits; needs no Screen Recording permission), `--text-size <pt>`, `--appearance dark|light`, and `BBOM_TIMING=1`. `make screenshots` renders every workshop view into `build/screenshots/`.
+### How it hangs together
 
-The TR-03183-2 checks are a port of rio's profile. `make test` compares them with rio's results committed in `Fixtures/parity/`; `make parity-refresh` regenerates those with the `rio` on your PATH.
+<img src="docs/images/composition.png" alt="The dependency map: the product in the middle, each ring one step further away, slices coloured by vendor">
 
-Tested on macOS 27.2.1 (Apple Silicon) with Xcode 27.2.
+The product in the middle, each ring one step further away, slices as wide as the parts they stand
+for and coloured by vendor. Point at a slice to see why it is there; click it to open the
+component. Below the map: who wrote it (vendors and ecosystems), under which licences, with
+licence families (permissive, weak and strong copyleft) marked as derived from the SPDX
+identifiers, and how deep it goes, step by step. Click any bar for the components behind it.
 
-## Layout
+### Completeness against BSI TR-03183-2
 
-- `Packages/BOMCore`: the engine, no dependencies, macOS and iOS. Source bytes and offsets (`SourceDocument`), error-tolerant parser into a node arena (`parseJSON`, `JSONTree`), JSON Pointers, lexer, `DisplayText`. `CycloneDX/`: the SBOM model, dependency graph and composition, every value with the node it came from (`Evidence`). `Checks/`: TR-03183-2 2.1.0 (port of rio) and SPDX. `Workshop/`: the completeness report, verdict, filters and history the views show. Everything is addressed by byte ranges into the original file.
-- `App`: SwiftUI document app hosting AppKit views (TextKit 2 `NSTextView`, `NSOutlineView`); `App/Workshop/` holds the four views, the evidence drawer and the German/English string catalog (`App/Localizable.xcstrings`).
-- `Fixtures`: public CycloneDX examples (CC0), rio's two profile fixtures (Apache-2.0), hand-written edge cases and synthetic SBOMs, rio's results for the parity test, generated large files (git-ignored).
+<img src="docs/images/completeness.png" alt="Completeness: fields present for the SBOM, the product and the components, with each rule of TR-03183-2 2.1.0">
 
-## Limitations
+Every field the Technical Guideline TR-03183-2 2.1.0 asks for, counted for the SBOM, the product
+and the components, each with its section. It reports **presence and form only**: whether a field
+is there in the required form, never whether its value is true, and never a verdict of
+conformity. The rules count exactly as the `bsi-tr-03183-2@2.1.0` profile of
+[rio](https://github.com/rebaze/rio) does, so both tools give the same answer for the same file.
 
-Read-only. JSON only; workshop views for CycloneDX, not yet SPDX or AIBOM. Completeness reports presence and form of fields, never conformity. No folding in the source pane. Find misses a match that spans a display break in a minified line. Local builds are signed ad hoc: on another Mac, open them with right-click › Open; releases are notarized (`docs/release.md`). Apple silicon only.
+### Every component, and why it is there
 
-## History and next steps
+<img src="docs/images/component.png" alt="A component page: the path from the product to doctrine/lexer, identity, licence, integrity, TR-03183-2 gaps and external references">
 
-Moved with its history from `apps/beautiful-bom/` in rebaze/rebaze-sscs on 2026-11-16. Why the app
-exists, who it is for and how to work on it: `AGENTS.md`. Current state and the next step: `docs/roadmap.md`. Releasing: `docs/release.md`.
+Search the components and filter by licence, missing field or depth. Each one has a page with its
+identity, licence, hashes, references and gaps, and the path that brought it in.
+
+### The source, exactly as it is
+
+<img src="docs/images/source.png" alt="The source reader: the structure outline on the left, the selected component highlighted in the source on the right">
+
+Outline and source stay in sync: select in either and the other follows to the exact range.
+Syntax colour, line numbers, and Find (⌘F) from every tab. Minified files are wrapped for reading
+without changing what you copy. Broken files stay readable: a banner lists each problem by line
+and column, and everything that could be parsed stays navigable.
+
+### AI bill of materials
+
+<img src="docs/images/aibom.png" alt="An AIBOM for zephyr-7b-beta: parameters, context length, datasets, the base model and what the file leaves out">
+
+An AIBOM opens as a model card: parameters, context length, the base model and the datasets with
+their licences, what the model card says, and what the file leaves out. Two samples show what an
+AIBOM can say and what a generator writes today.
+
+## Made for real files
+
+| | |
+| --- | --- |
+| **Formats** | CycloneDX 1.2 to 1.6 (JSON): every view. AIBOMs (CycloneDX 1.6 with a model): the model view. Any other JSON, SPDX included: the source reader. |
+| **Size** | A 50 MB SBOM with 120,000 components opens in about a second. |
+| **Privacy** | Never goes online: no upload, no account, no telemetry. Your client's SBOM stays on your Mac. |
+| **Room** | Presentation size (⌥⌘P), light and dark, English and German (View › Language), ⌘1–⌘5 for the views. |
+| **Samples** | The welcome window opens five: Laravel and CERN (CycloneDX examples), an SBOM with every TR-03183-2 field, and two AIBOMs. |
+
+## Install
+
+1. Download `BeautifulBOM-<version>.dmg` from the [latest release](https://github.com/rebaze/beautifulbom/releases/latest).
+2. Open it and drag **Beautiful BOM** to Applications.
+3. Open an SBOM with ⌘O, by dropping it on a window or the Dock icon, or with Finder › Open With.
+
+Releases are signed by rebaze GmbH and notarized by Apple; each one lists SHA-256 checksums.
+
+**Limits today:** read-only; JSON only (no XML, no SPDX tag-value); the workshop views read
+CycloneDX, SPDX opens in the source reader.
+
+## Build from source
+
+Xcode 27.2, [XcodeGen](https://github.com/yonaskolb/XcodeGen) and
+[xcbeautify](https://github.com/cpisciotta/xcbeautify), then `make test` and `make install`.
+Everything else: [docs/development.md](docs/development.md).
+
+---
+
+<p align="center">Made by <a href="https://rebaze.de">rebaze</a>: software supply chain governance.</p>

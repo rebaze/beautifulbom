@@ -74,8 +74,9 @@ client SBOM differently in one workshop. rebaze does not require rio, and the ap
 
 ## Start here
 
-1. `README.md`: what it does, build and run, launch options.
-2. `docs/roadmap.md`: the current state and **the next step** (the signed release pipeline).
+1. `README.md`: what it does, for users; `docs/development.md`: build and run, launch options,
+   layout.
+2. `docs/roadmap.md`: the current state and **the next step**.
 3. The design for the area you touch: `docs/design.md` (source reader), `docs/design-workshop-views.md`,
    `docs/design-branding.md`, `docs/design-beautiful-views.md`, `docs/spike-aibom.md` (AIBOM view).
 4. `docs/findings.md` (measurements, review results) and `docs/checklist.md` (what is verified).
@@ -84,10 +85,10 @@ client SBOM differently in one workshop. rebaze does not require rio, and the ap
 
 - `make test`: BOMCore tests and the strings check.
 - `make app CONFIG=Release`, then `make snapshot FILE=… OUT=…` to see a view. Shell screen capture
-  does not work for agents here; the app renders its own window (launch options in the README).
+  does not work for agents here; the app renders its own window (launch options in `docs/development.md`).
 - Tools: Xcode 27.2, xcodegen, xcbeautify (Homebrew).
 
 ## Release
 
-`make install` (own Mac) and `make dmg` (signed ad hoc) work today. A signed and notarized release
-is the next step: see `docs/roadmap.md`.
+A tag `v<version>` releases a signed and notarized DMG and zip: `docs/release.md`. Pushing a tag is
+Toni's call. `make install` (own Mac) and `make dmg` (signed ad hoc) work locally.
