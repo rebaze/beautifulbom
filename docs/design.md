@@ -132,3 +132,9 @@ When the proof of concept is done: `git filter-repo --subdirectory-filter
 apps/beautiful-bom` (or `git subtree split`) into a new `rebaze/` repository,
 keeping history. Commits for this app touch only this folder plus one line
 in `AGENTS.md`, so the split is clean.
+
+Signing comes with the move (Toni, 2026-11-16): a release workflow in the new repository signs
+the app with rebaze's Developer ID ("Developer ID Application: rebaze GmbH (32Z95ATB2T)"),
+notarizes and staples the DMG from `make dmg`, and publishes it as a GitHub release, reusing rio's
+setup (`MACOS_SIGN_P12`, `MACOS_SIGN_PASSWORD`, `MACOS_NOTARY_KEY`, `MACOS_NOTARY_KEY_ID`,
+`MACOS_NOTARY_ISSUER_ID` in a protected environment). Until then the DMG is signed ad hoc.
