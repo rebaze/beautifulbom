@@ -79,3 +79,11 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ Welcome window in English and light, German and dark (`b-welcome.png`, `b-welcome-de-dark.png`); About with licences (`b-about.png`); wordmark at the right of the tabs, also at 24 pt (`b-overview-laravel*.png`).
 - ⏳ By hand: clicking the Dock icon with no window open brings the welcome window back; a sample opens from it; a file dropped on it opens.
 - ⏳ By hand: clicking the wordmark opens About; the rebaze.de link opens the browser.
+
+## Map of the product (design-beautiful-views.md, part 1, 2026-11-16)
+
+- ✅ Layout tested in BOMCore (`DependencyMapTests`): ring 1 closes the circle, children fill their parent by weight, the lexer path matches "Why is it here?", narrow slices merge, at most 12 rings, a 1 MB SBOM lays out in under 0.5 s.
+- ✅ Laravel at rest and with a part pointed at (`--point`), light and English, dark and German, at 24 pt; 50 MB minified; CERN without dependency data shows no map (`m-map-*.png`).
+- ✅ Names stay inside their slices and never overlap; the product's name wraps in the middle.
+- ⏳ By hand: pointing moves the highlight smoothly; clicking a slice opens its component, a merged slice opens Components filtered to that ring; legend rows open the vendor's components.
+- ⏳ By hand: the 50 MB file stays responsive while pointing at the map.

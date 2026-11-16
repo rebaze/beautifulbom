@@ -6,7 +6,7 @@ enum AppName {
     static let text = "Beautiful BOM"
     static func font(_ size: CGFloat) -> Font { .system(size: size, weight: .semibold, design: .serif) }
     /// The icon from the bundle's own file: the system's copy arrives asynchronously, a placeholder first.
-    static var icon: NSImage { Bundle.main.image(forResource: "AppIcon") ?? NSApp.applicationIconImage }
+    @MainActor static var icon: NSImage { Bundle.main.image(forResource: "AppIcon") ?? NSApp.applicationIconImage }
     static var version: String { Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "" }
 }
 

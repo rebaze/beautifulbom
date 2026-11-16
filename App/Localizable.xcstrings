@@ -2873,6 +2873,329 @@
           }
         }
       }
+    },
+    "%d parts deeper than %d steps are not drawn.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d parts deeper than %d steps are not drawn."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d Teile, tiefer als %d Schritte, sind nicht gezeichnet."
+          }
+        }
+      }
+    },
+    "Click a slice to open it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click a slice to open it."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Klick auf ein Segment öffnet es."
+          }
+        }
+      }
+    },
+    "Click to list the parts on this ring →": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to list the parts on this ring →"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klicken: die Teile dieses Rings auflisten →"
+          }
+        }
+      }
+    },
+    "Lighter: further from the product.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lighter: further from the product."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Heller: weiter vom Produkt entfernt."
+          }
+        }
+      }
+    },
+    "hash": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "hash"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hash"
+          }
+        }
+      }
+    },
+    "Too narrow to draw one by one; together they stand for %d parts.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Too narrow to draw one by one; together they stand for %d parts."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zu schmal, um sie einzeln zu zeichnen; zusammen stehen sie für %d Teile."
+          }
+        }
+      }
+    },
+    "Colour: vendor": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Colour: vendor"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farbe: Anbieter"
+          }
+        }
+      }
+    },
+    "%d more": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d more"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d weitere"
+          }
+        }
+      }
+    },
+    "How it hangs together": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "How it hangs together"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wie es zusammenhängt"
+          }
+        }
+      }
+    },
+    "Click to open the component →": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Click to open the component →"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Klicken: die Komponente öffnen →"
+          }
+        }
+      }
+    },
+    "Map of the product: %d chosen directly, %d pulled in, up to %d steps deep.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Map of the product: %d chosen directly, %d pulled in, up to %d steps deep."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Karte des Produkts: %d direkt gewählt, %d mitgezogen, bis zu %d Schritte tief."
+          }
+        }
+      }
+    },
+    "product": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "product"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Produkt"
+          }
+        }
+      }
+    },
+    "chosen directly": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "chosen directly"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "direkt gewählt"
+          }
+        }
+      }
+    },
+    "merged: too narrow to draw": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "merged: too narrow to draw"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "zusammengefasst: zu schmal zum Zeichnen"
+          }
+        }
+      }
+    },
+    "Point at a slice to see why it is there.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Point at a slice to see why it is there."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zeigen Sie auf ein Segment, um zu sehen, warum es drin ist."
+          }
+        }
+      }
+    },
+    "The product in the middle. Each ring is one step further away: %d chosen directly, %d pulled in, up to %d steps deep.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The product in the middle. Each ring is one step further away: %d chosen directly, %d pulled in, up to %d steps deep."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Das Produkt in der Mitte. Jeder Ring liegt einen Schritt weiter entfernt: %d direkt gewählt, %d mitgezogen, bis zu %d Schritte tief."
+          }
+        }
+      }
+    },
+    "A slice's width: the parts it stands for.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A slice's width: the parts it stands for."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Breite eines Segments: die Teile, für die es steht."
+          }
+        }
+      }
+    },
+    "%d more parts": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d more parts"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d weitere Teile"
+          }
+        }
+      }
+    },
+    "not listed in components": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "not listed in components"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "nicht unter „components“ aufgeführt"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

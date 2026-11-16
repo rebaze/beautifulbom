@@ -12,6 +12,7 @@ import SwiftUI
 ///   --component <ref>    open the component page for a bom-ref
 ///   --evidence <rule>    show the first offender of a rule (e.g. sbom.timestamp) in the drawer
 ///   --language de|en     show the workshop views in this language (not saved)
+///   --point <bom-ref>    on the map, show a part as if the pointer were on it
 ///   --find <text>        open the find bar from the current tab and type <text> into it
 ///   --show welcome|about show the welcome window (the default without --open) or About
 ///   --snapshot <png>     render the front window into a PNG, then quit
@@ -42,6 +43,7 @@ enum LaunchOptions {
     static let component = value("--component")
     static let evidence = value("--evidence")
     static let find = value("--find")
+    static let point = value("--point")
     // A value, not a bare switch: AppKit reads options as pairs and would open a lone path as a file.
     static let welcome = value("--show") == "welcome"
     static let about = value("--show") == "about"

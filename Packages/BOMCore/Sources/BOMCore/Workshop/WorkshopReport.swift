@@ -3,6 +3,8 @@
 public struct WorkshopAnalysis: Sendable {
     public let bom: CycloneDXDocument
     public let graph: DependencyGraph?
+    /// The map of the product; nil without dependency data from the product.
+    public let map: DependencyMap?
     public let composition: Composition
     public let profile: ProfileResult
     public let report: CompletenessReport
@@ -20,7 +22,8 @@ public struct WorkshopAnalysis: Sendable {
         for o in profile.offenders { if let i = o.component { byComponent[i, default: []].append(o) } }
         var indexByRef: [String: Int] = [:]
         for (i, c) in bom.components.enumerated() { if let r = c.bomRef, indexByRef[r] == nil { indexByRef[r] = i } }
-        return WorkshopAnalysis(bom: bom, graph: graph, composition: Composition(bom, graph: graph),
+        let map = graph.map { DependencyMap($0) }.flatMap { $0.slices.isEmpty ? nil : $0 }
+        return WorkshopAnalysis(bom: bom, graph: graph, map: map, composition: Composition(bom, graph: graph),
                                 profile: profile, report: CompletenessReport(bom, profile), byComponent: byComponent,
                                 indexByRef: indexByRef)
     }

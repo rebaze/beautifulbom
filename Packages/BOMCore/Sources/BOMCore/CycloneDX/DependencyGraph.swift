@@ -9,6 +9,9 @@ public struct DependencyGraph: Sendable {
     private let entries: [String: NodeID]
     private let depths: [String: Int]
     private let parents: [String: String]
+    private let children: [String: [String]]
+    /// Reachable refs in breadth-first order from the subject, the subject first.
+    public let order: [String]
     /// Component bom-refs (subject excluded) not reached from the subject, document order.
     public let unreachable: [String]
 
@@ -28,21 +31,26 @@ public struct DependencyGraph: Sendable {
         self.entries = entries
         root = bom.subject?.bomRef
 
-        var depths: [String: Int] = [:], parents: [String: String] = [:]
+        var depths: [String: Int] = [:], parents: [String: String] = [:], children: [String: [String]] = [:]
+        var queue: [String] = []
         if let root {
             depths[root] = 0
-            var queue = [root], head = 0
+            queue = [root]
+            var head = 0
             while head < queue.count {
                 let n = queue[head]; head += 1
                 for m in edges[n] ?? [] where depths[m] == nil {
                     depths[m] = depths[n]! + 1
                     parents[m] = n
+                    children[n, default: []].append(m)
                     queue.append(m)
                 }
             }
         }
         self.depths = depths
         self.parents = parents
+        self.children = children
+        order = queue
         unreachable = bom.components.compactMap(\.bomRef).filter { depths[$0] == nil }
     }
 
@@ -59,6 +67,9 @@ public struct DependencyGraph: Sendable {
         while let p = parents[out.last!] { out.append(p) }
         return out.reversed()
     }
+
+    /// The refs `bomRef` reaches first (its children on the shortest-path tree), document order.
+    public func treeChildren(_ bomRef: String) -> [String] { children[bomRef] ?? [] }
 
     /// Refs whose entry lists `bomRef` in `dependsOn`, document order.
     public func usedBy(_ bomRef: String) -> [String] { reverse[bomRef] ?? [] }

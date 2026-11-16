@@ -14,6 +14,13 @@ struct CompositionView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: t.pad(34)) {
+                if let map = a.map {
+                    section(title: L("How it hangs together"),
+                            caption: L("The product in the middle. Each ring is one step further away: %d chosen directly, %d pulled in, up to %d steps deep.",
+                                       a.composition.directCount ?? 0, a.composition.indirectCount ?? 0, map.rings)) {
+                        ProductMap(model: model, a: a, map: map, t: t)
+                    }
+                }
                 vendors
                 licences
                 depth
@@ -28,7 +35,10 @@ struct CompositionView: View {
 
     private var vendors: some View {
         let (named, others) = a.composition.top(a.composition.vendors, keep: 5)
-        let segments = named.map { StackedBar.Segment(label: $0.unknown ? L("no vendor named") : $0.label, count: $0.count, filter: vendorFilter($0), isOthers: $0.unknown) }
+        // The same colours as the map, so a vendor is one colour on the whole page.
+        let top = VendorPalette.top(a)
+        let segments = named.map { StackedBar.Segment(label: $0.unknown ? L("no vendor named") : $0.label, count: $0.count, filter: vendorFilter($0), isOthers: $0.unknown,
+                                                      colour: top.firstIndex(of: $0.label).map { VendorPalette.colours[$0] }) }
             + (others.map { [StackedBar.Segment(label: L("%d others", a.composition.vendors.count - named.count), count: $0.count, filter: nil, unknown: false, isOthers: true)] } ?? [])
         let ecosystems = a.composition.ecosystems.map { $0.unknown ? L("no package URL") : OverviewView.ecosystemName($0.label) + " " + "\($0.count)" }
         let vendorCount = a.composition.vendors.filter { !$0.unknown }.count
@@ -159,6 +169,8 @@ struct StackedBar: View {
         let filter: ComponentFilter?
         var unknown = false
         var isOthers = false
+        /// A fixed colour (vendors, as on the map); nil for the accent's fades.
+        var colour: Color? = nil
         var id: String { label }
     }
 
@@ -175,6 +187,7 @@ struct StackedBar: View {
         let s = segments[i]
         if s.unknown { return Color.red.opacity(0.35) }
         if s.isOthers { return Color.secondary.opacity(0.22) }
+        if let c = s.colour { return c }
         return Color.accentColor.opacity(Self.fades[min(i, Self.fades.count - 1)])
     }
 
