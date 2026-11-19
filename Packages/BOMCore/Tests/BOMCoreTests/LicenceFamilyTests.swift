@@ -60,7 +60,7 @@ import Testing
 
     @Test func completenessSummaryPerPart() {
         let a = WorkshopAnalysis.analyse(fixtureTree(laravelPath))!
-        let s = Dictionary(uniqueKeysWithValues: a.report.sections.map { ($0.scope, ($0.present, $0.evaluated)) })
+        let s = Dictionary(uniqueKeysWithValues: a.report!.sections.map { ($0.scope, ($0.present, $0.evaluated)) })
         // The SBOM 1 of 4: the format version is judged on the file (1.4), unlike rio, which uplifts it first.
         #expect(s[.sbom]! == (1, 4))
         #expect(s[.subject]! == (3, 11))

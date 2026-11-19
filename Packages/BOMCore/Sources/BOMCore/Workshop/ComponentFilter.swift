@@ -29,7 +29,7 @@ public struct ComponentFilter: Sendable, Equatable {
 
     /// Matching indexes into `bom.components`, document order.
     public func apply(_ a: WorkshopAnalysis) -> [Int] {
-        let offending: Set<Int>? = missing.map { rule in Set(a.profile.offenders(rule).compactMap(\.component)) }
+        let offending: Set<Int>? = missing.map { rule in Set(a.profile?.offenders(rule).compactMap(\.component) ?? []) }
         let needle = text.trimmingCharacters(in: .whitespaces).lowercased()
         return a.bom.components.indices.filter { i in
             let c = a.bom.components[i]

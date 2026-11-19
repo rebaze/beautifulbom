@@ -129,7 +129,9 @@ struct ProductMap: View {
                 if let c {
                     HStack(spacing: t.pad(8)) {
                         let licences = c.licenses.map(\.label)
-                        Pill(text: licences.isEmpty ? L("no licence stated") : licences.joined(separator: ", "),
+                        // A Debian package can state a dozen licences in one expression: one line in the card.
+                        let joined = licences.joined(separator: ", ")
+                        Pill(text: licences.isEmpty ? L("no licence stated") : joined.count > 60 ? String(joined.prefix(57)) + "…" : joined,
                              kind: licences.isEmpty ? .gap : .neutral, t: t)
                         Pill(text: c.hashes.isEmpty ? L("no hash") : L("hash"), kind: c.hashes.isEmpty ? .gap : .neutral, t: t)
                     }

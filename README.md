@@ -17,7 +17,8 @@
   <a href="docs/release.md"><img src="https://img.shields.io/badge/notarized-Developer%20ID-2ea44f" alt="Signed and notarized"></a>
   <img src="https://img.shields.io/badge/network-never-2ea44f" alt="Never goes online">
   <br>
-  <img src="https://img.shields.io/badge/CycloneDX-1.2%E2%80%931.6-1f6feb" alt="CycloneDX 1.2 to 1.6">
+  <img src="https://img.shields.io/badge/CycloneDX-1.2%E2%80%931.7-1f6feb" alt="CycloneDX 1.2 to 1.7">
+  <img src="https://img.shields.io/badge/SPDX-2.3%20%C2%B7%203.0-1f6feb" alt="SPDX 2.3 and 3.0">
   <img src="https://img.shields.io/badge/AIBOM-CycloneDX%201.6-1f6feb" alt="AIBOM">
   <img src="https://img.shields.io/badge/BSI%20TR--03183--2-2.1.0-1f6feb" alt="BSI TR-03183-2 2.1.0">
   <img src="https://img.shields.io/badge/languages-English%20%C2%B7%20Deutsch-1f6feb" alt="English and German">
@@ -44,7 +45,9 @@
   and every component, and jump to the place in the file where each one should be.
 - **Answer "why is this in here?"** Every component shows the path from your product to it, and
   who uses it.
-- **Read any JSON bill of materials exactly as written.** SPDX, AIBOMs, files a tool got wrong:
+- **Open what your tools write.** Syft, Trivy, cdxgen or the CycloneDX Maven plugin, CycloneDX or
+  SPDX: the same views, checked against real output of each.
+- **Read any JSON bill of materials exactly as written.** AIBOMs, files a tool got wrong:
   an outline, the source with line numbers, and the JSON Pointer of whatever you select.
 
 ## Every statement leads to the bytes
@@ -106,7 +109,7 @@ AIBOM can say and what a generator writes today.
 
 | | |
 | --- | --- |
-| **Formats** | CycloneDX 1.2 to 1.6 (JSON): every view. AIBOMs (CycloneDX 1.6 with a model): the model view. Any other JSON, SPDX included: the source reader. |
+| **Formats** | CycloneDX 1.2 to 1.7 and SPDX 2.3 and 3.0 (JSON): every view; the TR-03183-2 check reads CycloneDX. AIBOMs (CycloneDX 1.6 with a model): the model view. Any other JSON: the source reader. |
 | **Size** | A 50 MB SBOM with 120,000 components opens in about a second. |
 | **Privacy** | Never goes online: no upload, no account, no telemetry. Your client's SBOM stays on your Mac. |
 | **Room** | Presentation size (⌥⌘P), light and dark, English and German (View › Language), ⌘1–⌘5 for the views. |
@@ -120,8 +123,8 @@ AIBOM can say and what a generator writes today.
 
 Releases are signed by rebaze GmbH and notarized by Apple; each one lists SHA-256 checksums.
 
-**Limits today:** read-only; JSON only (no XML, no SPDX tag-value); the workshop views read
-CycloneDX, SPDX opens in the source reader.
+**Limits today:** read-only; JSON only (no XML, no SPDX tag-value); SPDX gets every view but no
+TR-03183-2 verdict, as in rio.
 
 ## Build from source
 

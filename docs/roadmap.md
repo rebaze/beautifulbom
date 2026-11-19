@@ -18,13 +18,20 @@ and again on Toni's Mac from the public download. The repository is public since
 How to release: `docs/release.md`. Open: hand-check.md section 7 (the DMG on a Mac that never saw
 the app); whether the repository gets a licence.
 
-## Next, in Toni's order of 2026-11-16
+## Done: SBOMs as clients produce them (2026-11-19)
 
-1. **SBOMs as clients produce them**: generate SBOMs from public projects (for example
-   rebaze/sbom-kickstart-demo) with Syft, Trivy, cdxgen and the CycloneDX Maven plugin; check the
-   views hold up; give SPDX files the workshop views (today SPDX opens in Source only).
-2. **Talk material** for "What an AIBOM could say, and what tools write today", when a talk is set.
-3. **Comparing two SBOMs**: release against release, tool against tool.
+Syft, Trivy, cdxgen and the CycloneDX Maven plugin on four public subjects, every view checked
+(`scripts/real-sboms.sh`, `scripts/real-sweep.sh`, `docs/findings.md`); nine real CycloneDX files
+in the rio parity tests; SPDX 2.3 and 3.0 get every view without a TR verdict
+(`docs/design-spdx.md`).
+
+## Next, in Toni's order of 2026-11-19
+
+1. **Comparing two SBOMs**: release against release, tool against tool (Juice Shop: cdxgen 1,108,
+   Syft 584, Trivy 533 components from the same source).
+2. **The gap list for the client**: TR-03183-2 gaps per part and component as a PDF handout and
+   CSV, made locally; clients ask for a written list (Toni, 2026-11-19).
+3. **Talk material** for "What an AIBOM could say, and what tools write today", when a talk is set.
 
 ## Parked
 

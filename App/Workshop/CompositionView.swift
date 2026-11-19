@@ -134,7 +134,7 @@ struct CompositionView: View {
             }
         } else if case .notFromProduct(let linked) = a.composition.reach {
             section(title: L("How deep it goes"), caption: nil) {
-                EvidenceButton(a.bom.tree.evidence(a.bom.root, "dependencies")) {
+                EvidenceButton(a.bom.tree.evidence(a.bom.root, a.bom.rootKey("dependencies"))) {
                     HStack(spacing: t.pad(10)) {
                         Image(systemName: "point.3.connected.trianglepath.dotted").foregroundStyle(.secondary)
                         Text(L("The dependency data links %d components among themselves, but no entry starts at the product, so it cannot say how deep anything is.", linked)).font(t.font(17))
@@ -145,7 +145,7 @@ struct CompositionView: View {
             }
         } else if a.graph != nil, let subject = a.bom.subject {
             section(title: L("How deep it goes"), caption: nil) {
-                EvidenceButton(a.bom.tree.evidence(subject.entry, "bom-ref")) {
+                EvidenceButton(a.bom.tree.evidence(subject.entry, a.bom.key("bom-ref"))) {
                     HStack(spacing: t.pad(10)) {
                         Image(systemName: "point.3.connected.trianglepath.dotted").foregroundStyle(.secondary)
                         Text(L("The product has no bom-ref, so the dependency data cannot say how deep anything is.")).font(t.font(17))
@@ -156,7 +156,7 @@ struct CompositionView: View {
             }
         } else {
             section(title: L("How deep it goes"), caption: nil) {
-                EvidenceButton(a.bom.tree.evidence(a.bom.root, "dependencies")) {
+                EvidenceButton(a.bom.tree.evidence(a.bom.root, a.bom.rootKey("dependencies"))) {
                     HStack(spacing: t.pad(10)) {
                         Image(systemName: "point.3.connected.trianglepath.dotted").foregroundStyle(.secondary)
                         Text(L("This SBOM has no dependency data.")).font(t.font(17))

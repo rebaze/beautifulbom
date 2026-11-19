@@ -30,6 +30,12 @@ struct WorkshopContent: View {
     let analysis: WorkshopAnalysis
 
     var body: some View {
+        // Numbers in Text follow the app's language, not the Mac's region ("1,108", not "1.108").
+        content.environment(\.locale, L10n.locale)
+    }
+
+    @ViewBuilder
+    private var content: some View {
         switch model.tab {
         case .overview:
             OverviewView(model: model, a: analysis)
@@ -47,7 +53,7 @@ struct WorkshopContent: View {
     }
 }
 
-/// The tabs of a CycloneDX document, as text with a dark pill on the current one.
+/// The tabs of a bill of materials, as text with a dark pill on the current one.
 struct TabBar: View {
     let model: DocumentModel
 

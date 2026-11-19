@@ -8,29 +8,33 @@ public struct WorkshopAnalysis: Sendable {
     /// The AI view's reading; nil unless the BOM is about a machine-learning model.
     public let ai: AIBOMAnalysis?
     public let composition: Composition
-    public let profile: ProfileResult
-    public let report: CompletenessReport
+    /// The TR-03183-2 checks; nil for SPDX, which rio does not judge either (docs/design-spdx.md).
+    public let profile: ProfileResult?
+    public let report: CompletenessReport?
     /// Offenders per component index, in rule order.
     private let byComponent: [Int: [Offender]]
     /// The first component with each bom-ref.
     private let indexByRef: [String: Int]
 
-    /// Nil when the tree is not CycloneDX 1.2 or later.
+    /// Nil when the tree is neither CycloneDX 1.2 or later nor SPDX 2.x JSON.
     public static func analyse(_ tree: JSONTree) -> WorkshopAnalysis? {
         guard let bom = BOMDocument.recognize(tree) else { return nil }
         let graph = DependencyGraph(bom)
-        let profile = checkTR031832(bom)
+        let cyclonedx = bom.format == .cyclonedx
+        let profile = cyclonedx ? checkTR031832(bom) : nil
         var byComponent: [Int: [Offender]] = [:]
-        for o in profile.offenders { if let i = o.component { byComponent[i, default: []].append(o) } }
+        for o in profile?.offenders ?? [] { if let i = o.component { byComponent[i, default: []].append(o) } }
         var indexByRef: [String: Int] = [:]
         for (i, c) in bom.components.enumerated() { if let r = c.bomRef, indexByRef[r] == nil { indexByRef[r] = i } }
         let map = graph.map { DependencyMap($0) }.flatMap { $0.slices.isEmpty ? nil : $0 }
-        return WorkshopAnalysis(bom: bom, graph: graph, map: map, ai: AIBOMAnalysis.analyse(bom), composition: Composition(bom, graph: graph),
-                                profile: profile, report: CompletenessReport(bom, profile), byComponent: byComponent,
+        return WorkshopAnalysis(bom: bom, graph: graph, map: map, ai: cyclonedx ? AIBOMAnalysis.analyse(bom) : nil,
+                                composition: Composition(bom, graph: graph),
+                                profile: profile, report: profile.map { CompletenessReport(bom, $0) }, byComponent: byComponent,
                                 indexByRef: indexByRef)
     }
 
-    public var verdict: Verdict { Verdict(report) }
+    /// Nil without the TR-03183-2 checks (SPDX).
+    public var verdict: Verdict? { report.map(Verdict.init) }
 
     /// Offenders for one component, in rule order.
     public func offenders(component index: Int) -> [Offender] { byComponent[index] ?? [] }
@@ -41,7 +45,7 @@ public struct WorkshopAnalysis: Sendable {
     /// TR-03183-2 rules that apply to one component at its level: name, version, level and the
     /// fields its level demands (11 at full level, 4 at referenced).
     public func ruleCount(component index: Int) -> Int {
-        guard profile.componentLevels.indices.contains(index) else { return 0 }
+        guard let profile, profile.componentLevels.indices.contains(index) else { return 0 }
         return 3 + profile.componentLevels[index].fields.count
     }
 

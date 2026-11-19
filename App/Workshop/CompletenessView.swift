@@ -10,7 +10,8 @@ struct CompletenessView: View {
     @State private var expanded: Set<RuleID> = LaunchOptions.evidence.flatMap(RuleID.init).map { [$0] } ?? []
 
     private var t: Typo { Typo(s: model.scale) }
-    private var report: CompletenessReport { a.report }
+    /// Only read when there is a report (CycloneDX); SPDX shows `notChecked`.
+    private var report: CompletenessReport { a.report! }
 
     /// Flattened, so a row with 100 000 offenders stays lazy.
     private enum Item: Identifiable {
@@ -50,6 +51,44 @@ struct CompletenessView: View {
     }
 
     var body: some View {
+        if a.report == nil { notChecked } else { checked }
+    }
+
+    /// SPDX: no TR verdict (neither this app nor rio judges SPDX); what the packages state instead.
+    private var notChecked: some View {
+        let cs = a.bom.components
+        let facts: [(String, Int)] = [
+            (L("Package URL"), cs.filter { $0.purl != nil }.count),
+            (L("Version"), cs.filter { $0.version != nil }.count),
+            (L("Licence"), cs.filter { !$0.licenses.isEmpty }.count),
+            (L("Checksum"), cs.filter { !$0.hashes.isEmpty }.count),
+            (L("Supplier"), cs.filter { $0.supplierName != nil }.count),
+        ]
+        return ScrollView {
+            VStack(alignment: .leading, spacing: t.pad(14)) {
+                Eyebrow(text: L("BSI TR-03183-2 2.1.0 · SPDX %@", a.bom.specVersion.value), t: t)
+                Text(L("Not checked: this SBOM is SPDX.")).font(t.serif(36))
+                Text(L("The TR-03183-2 checks read CycloneDX 1.6 and later, field by field, as rio's profile does. Neither tool reads SPDX for the TR, so there is no verdict here. A conversion to CycloneDX would be judged like any CycloneDX file."))
+                    .font(t.font(16)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                Text(L("What the packages state")).font(t.serif(24)).padding(.top, t.pad(16))
+                Text(L("Counted as the file states them, without a verdict: %d packages.", cs.count))
+                    .font(t.font(14)).foregroundStyle(.secondary)
+                Grid(alignment: .leading, horizontalSpacing: t.pad(16), verticalSpacing: t.pad(10)) {
+                    ForEach(facts, id: \.0) { fact in
+                        GridRow {
+                            Text(fact.0).font(t.font(16))
+                            CoverageBar(covered: fact.1, total: max(1, cs.count), t: t).frame(width: t.pad(320), height: t.pad(8))
+                            Text(L("%d of %d", fact.1, cs.count)).font(t.font(14)).foregroundStyle(.secondary).monospacedDigit()
+                        }
+                    }
+                }
+            }
+            .frame(maxWidth: t.pad(900), alignment: .leading)
+            .padding(t.pad(28))
+        }
+    }
+
+    private var checked: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 0) {
                 ForEach(items) { item in
@@ -68,7 +107,7 @@ struct CompletenessView: View {
         case .header:
             VStack(alignment: .leading, spacing: t.pad(6)) {
                 Eyebrow(text: L("BSI TR-03183-2 2.1.0 · presence and form of fields"), t: t)
-                Text(a.verdict.headline).font(t.serif(36))
+                Text(a.verdict!.headline).font(t.serif(36))
                 Text(L("Each row counts the components that carry the field in the form the TR asks for. It does not check that the values are true."))
                     .font(t.font(14)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
                 summary.padding(.top, t.pad(14))

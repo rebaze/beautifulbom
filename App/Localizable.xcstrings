@@ -4335,6 +4335,159 @@
           }
         }
       }
+    },
+    "Checksum": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Checksum"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prüfsumme"
+          }
+        }
+      }
+    },
+    "BSI TR-03183-2 2.1.0 · SPDX %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BSI TR-03183-2 2.1.0 · SPDX %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "BSI TR-03183-2 2.1.0 · SPDX %@"
+          }
+        }
+      }
+    },
+    "Not checked: this SBOM is SPDX.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not checked: this SBOM is SPDX."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nicht geprüft: Dieses SBOM ist SPDX."
+          }
+        }
+      }
+    },
+    "The TR-03183-2 checks read CycloneDX 1.6 and later, field by field, as rio's profile does. Neither tool reads SPDX for the TR, so there is no verdict here. A conversion to CycloneDX would be judged like any CycloneDX file.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The TR-03183-2 checks read CycloneDX 1.6 and later, field by field, as rio's profile does. Neither tool reads SPDX for the TR, so there is no verdict here. A conversion to CycloneDX would be judged like any CycloneDX file."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Prüfungen nach TR-03183-2 lesen CycloneDX 1.6 und neuer, Feld für Feld, wie das Profil von rio. Keines der beiden Werkzeuge liest SPDX für die TR, daher gibt es hier kein Urteil. Eine Konvertierung nach CycloneDX würde wie jede CycloneDX-Datei beurteilt."
+          }
+        }
+      }
+    },
+    "What the packages state": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "What the packages state"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Was die Pakete angeben"
+          }
+        }
+      }
+    },
+    "Counted as the file states them, without a verdict: %d packages.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Counted as the file states them, without a verdict: %d packages."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gezählt, wie die Datei sie angibt, ohne Urteil: %d Pakete."
+          }
+        }
+      }
+    },
+    "Software bill of materials · SPDX %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Software bill of materials · SPDX %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Software Bill of Materials · SPDX %@"
+          }
+        }
+      }
+    },
+    "The TR-03183-2 checks read CycloneDX. Everything else here is shown as the file states it, without a verdict.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The TR-03183-2 checks read CycloneDX. Everything else here is shown as the file states it, without a verdict."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Prüfungen nach TR-03183-2 lesen CycloneDX. Alles andere hier steht so, wie die Datei es angibt, ohne Urteil."
+          }
+        }
+      }
+    },
+    "Creator": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Creator"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ersteller"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

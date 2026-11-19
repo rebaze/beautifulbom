@@ -61,7 +61,7 @@ func analyseCommand(_ path: String) throws {
         print("  stages: modelMs=\(ms(s0, s1)) graphMs=\(ms(s1, s2)) checksMs=\(ms(s2, s3)) compositionMs=\(ms(s3, s4)) offenders=\(profile.offenders.count)")
     }
     print("file=\((path as NSString).lastPathComponent) bytes=\(bytes.count) components=\(a?.bom.components.count ?? 0) "
-        + "graph=\(a?.graph != nil) offenders=\(a?.profile.offenders.count ?? 0) parseMs=\(ms(t0, t1)) analyseMs=\(ms(t1, t2)) "
+        + "graph=\(a?.graph != nil) format=\(a.map { "\($0.bom.format)" } ?? "-") offenders=\(a?.profile?.offenders.count ?? 0) parseMs=\(ms(t0, t1)) analyseMs=\(ms(t1, t2)) "
         + "peakRSSMB=\(peakRSSMB())")
 }
 

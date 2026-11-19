@@ -54,7 +54,7 @@ struct ComponentsView: View {
             .frame(maxWidth: t.pad(360))
 
             licenceMenu
-            gapMenu
+            if a.report != nil { gapMenu }
             depthMenu
             if !model.componentFilter.isEmpty {
                 Button(L("Clear")) { model.componentFilter = ComponentFilter() }
@@ -103,7 +103,7 @@ struct ComponentsView: View {
     }
 
     private var gapMenu: some View {
-        let rules = a.report.sections.first { $0.scope == .components }?.rows.filter { !$0.offenders.isEmpty }.map(\.rule) ?? []
+        let rules = a.report?.sections.first { $0.scope == .components }?.rows.filter { !$0.offenders.isEmpty }.map(\.rule) ?? []
         return Menu {
             Button(L("Any fields")) { model.componentFilter.missing = nil }
             Section(L("Missing or malformed")) {
@@ -141,7 +141,7 @@ struct ComponentsView: View {
             Text(L("Ecosystem")).frame(width: t.pad(120), alignment: .leading)
             Text(L("Licence")).frame(width: t.pad(190), alignment: .leading)
             Text(L("Depth")).frame(width: t.pad(110), alignment: .leading)
-            Text(L("TR fields")).frame(width: t.pad(150), alignment: .leading)
+            if a.report != nil { Text(L("TR fields")).frame(width: t.pad(150), alignment: .leading) }
         }
         .font(t.font(12, .medium))
         .foregroundStyle(.secondary)
@@ -170,7 +170,7 @@ struct ComponentsView: View {
                 .frame(width: t.pad(120), alignment: .leading)
                 licenceChips(c).frame(width: t.pad(190), alignment: .leading)
                 depthDots(depth, deepest: deepest).frame(width: t.pad(110), alignment: .leading)
-                HStack(spacing: t.pad(8)) {
+                if a.report != nil { HStack(spacing: t.pad(8)) {
                     // Only the rules that apply at this component's level.
                     let rules = a.ruleCount(component: i)
                     if rules > 0 {
@@ -179,7 +179,7 @@ struct ComponentsView: View {
                     if gaps == 0 { Image(systemName: "checkmark").foregroundStyle(.green) }
                     else { Text(Lp(gaps, "1 gap", "%d gaps")).font(t.font(12)).foregroundStyle(.secondary).monospacedDigit().lineLimit(1) }
                 }
-                .frame(width: t.pad(150), alignment: .leading)
+                .frame(width: t.pad(150), alignment: .leading) }
             }
             .font(t.font(14))
             .padding(.vertical, t.pad(7))

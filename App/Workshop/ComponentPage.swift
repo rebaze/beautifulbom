@@ -11,7 +11,7 @@ struct ComponentPage: View {
     private var t: Typo { Typo(s: model.scale) }
     private var c: Component { a.bom.components[index] }
     private var tree: JSONTree { a.bom.tree }
-    private func ev(_ key: String) -> Evidence? { c.node.map { tree.evidence($0, key) } }
+    private func ev(_ key: String) -> Evidence? { c.node.map { tree.evidence($0, a.bom.key(key)) } }
 
     var body: some View {
         ScrollView {
@@ -32,7 +32,8 @@ struct ComponentPage: View {
                         integrity
                     }
                     GridRow {
-                        gaps
+                        // SPDX is not checked against the TR (docs/design-spdx.md): no gaps card.
+                        if a.profile != nil { gaps }
                         references
                     }
                 }
@@ -91,7 +92,7 @@ struct ComponentPage: View {
                     }
                 }
             } else if a.graph == nil {
-                EvidenceButton(tree.evidence(a.bom.root, "dependencies")) {
+                EvidenceButton(tree.evidence(a.bom.root, a.bom.rootKey("dependencies"))) {
                     Text(L("This SBOM has no dependency data, so it cannot say why this component is here.")).font(t.font(15))
                 }
             } else {

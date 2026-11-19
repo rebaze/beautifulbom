@@ -1,0 +1,108 @@
+{
+  "@context": "https://spdx.org/rdf/3.0.1/spdx-context.jsonld",
+  "@graph": [
+    {
+      "type": "CreationInfo",
+      "@id": "_:creationinfo",
+      "specVersion": "3.0.1",
+      "created": "2026-11-18T09:30:00Z",
+      "createdBy": ["https://example.com/spdx/acme"],
+      "createdUsing": ["https://example.com/spdx/tool"]
+    },
+    {
+      "type": "Organization",
+      "spdxId": "https://example.com/spdx/acme",
+      "creationInfo": "_:creationinfo",
+      "name": "Acme Devices GmbH"
+    },
+    {
+      "type": "Tool",
+      "spdxId": "https://example.com/spdx/tool",
+      "creationInfo": "_:creationinfo",
+      "name": "example-scanner-2.1.0"
+    },
+    {
+      "type": "SpdxDocument",
+      "spdxId": "https://example.com/spdx/doc",
+      "creationInfo": "_:creationinfo",
+      "name": "acme-shop",
+      "rootElement": ["https://example.com/spdx/shop"]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://example.com/spdx/shop",
+      "creationInfo": "_:creationinfo",
+      "name": "acme-shop",
+      "software_packageVersion": "1.4.0",
+      "software_primaryPurpose": "application",
+      "software_packageUrl": "pkg:generic/acme/acme-shop@1.4.0",
+      "software_downloadLocation": "https://example.com/acme-shop-1.4.0.tar.gz",
+      "suppliedBy": "https://example.com/spdx/acme",
+      "verifiedUsing": [{ "type": "Hash", "algorithm": "sha512", "hashValue": "0a1b2c" }]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://example.com/spdx/express",
+      "creationInfo": "_:creationinfo",
+      "name": "express",
+      "software_packageVersion": "4.21.2",
+      "software_primaryPurpose": "library",
+      "software_packageUrl": "pkg:npm/express@4.21.2",
+      "software_homePage": "http://expressjs.com/",
+      "summary": "Fast, unopinionated, minimalist web framework",
+      "verifiedUsing": [{ "type": "Hash", "algorithm": "sha256", "hashValue": "aabbcc" }]
+    },
+    {
+      "type": "software_Package",
+      "spdxId": "https://example.com/spdx/body-parser",
+      "creationInfo": "_:creationinfo",
+      "name": "body-parser",
+      "software_packageVersion": "1.20.3",
+      "software_packageUrl": "pkg:npm/body-parser@1.20.3"
+    },
+    {
+      "type": "simplelicensing_LicenseExpression",
+      "spdxId": "https://example.com/spdx/lic-mit",
+      "creationInfo": "_:creationinfo",
+      "simplelicensing_licenseExpression": "MIT"
+    },
+    {
+      "type": "simplelicensing_LicenseExpression",
+      "spdxId": "https://example.com/spdx/lic-dual",
+      "creationInfo": "_:creationinfo",
+      "simplelicensing_licenseExpression": "MIT OR Apache-2.0"
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://example.com/spdx/rel-1",
+      "creationInfo": "_:creationinfo",
+      "from": "https://example.com/spdx/shop",
+      "relationshipType": "dependsOn",
+      "to": ["https://example.com/spdx/express"]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://example.com/spdx/rel-2",
+      "creationInfo": "_:creationinfo",
+      "from": "https://example.com/spdx/express",
+      "relationshipType": "dependsOn",
+      "to": ["https://example.com/spdx/body-parser"]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://example.com/spdx/rel-3",
+      "creationInfo": "_:creationinfo",
+      "from": "https://example.com/spdx/express",
+      "relationshipType": "hasDeclaredLicense",
+      "to": ["https://example.com/spdx/lic-dual"]
+    },
+    {
+      "type": "Relationship",
+      "spdxId": "https://example.com/spdx/rel-4",
+      "creationInfo": "_:creationinfo",
+      "from": "https://example.com/spdx/express",
+      "relationshipType": "hasConcludedLicense",
+      "to": ["https://example.com/spdx/lic-mit"]
+    }
+  ]
+}

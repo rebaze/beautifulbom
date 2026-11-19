@@ -10,7 +10,7 @@ import Testing
         #expect(a.bom.components.count > 1000)
         #expect(a.graph != nil)
         #expect(a.graph?.unreachable.isEmpty == true)
-        #expect(a.profile.evaluation("components.dependencies")?.failed == 0)
+        #expect(a.profile!.evaluation("components.dependencies")?.failed == 0)
         #expect((a.composition.depthHistogram?.keys.max() ?? 99) <= 8)
     }
 }

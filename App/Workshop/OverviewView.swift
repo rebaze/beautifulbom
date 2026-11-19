@@ -34,9 +34,10 @@ struct OverviewView: View {
     private var header: some View {
         VStack(alignment: .leading, spacing: t.pad(6)) {
             EvidenceButton(.located(a.bom.specVersion.node)) {
-                Eyebrow(text: L("Software bill of materials · CycloneDX %@", a.bom.specVersion.value), t: t)
+                Eyebrow(text: a.bom.format == .spdx ? L("Software bill of materials · SPDX %@", a.bom.specVersion.value)
+                                                    : L("Software bill of materials · CycloneDX %@", a.bom.specVersion.value), t: t)
             }
-            EvidenceButton(subject.map { tree.evidence($0.entry, "name") } ?? a.bom.metadata.map { tree.evidence($0, "component") }) {
+            EvidenceButton(subject.map { tree.evidence($0.entry, "name") } ?? a.bom.metadata.map { tree.evidence($0, a.bom.rootKey("component")) }) {
                 Text(ProductTitle(subject?.name).title ?? model.fileName ?? L("Unnamed product"))
                     .font(t.serif(42))
                     .tracking(-0.4 * t.s)
@@ -221,7 +222,7 @@ struct OverviewView: View {
             Eyebrow(text: L("About this SBOM"), t: t).padding(.bottom, t.pad(6))
             field(L("Made by")) {
                 if a.bom.tools.isEmpty {
-                    EvidenceButton(a.bom.metadata.map { tree.evidence($0, "tools") }) { Pill(text: L("no tool named"), kind: .gap, t: t) }
+                    EvidenceButton(a.bom.metadata.map { tree.evidence($0, a.bom.metadataKey("tools")) }) { Pill(text: L("no tool named"), kind: .gap, t: t) }
                 } else {
                     VStack(alignment: .leading, spacing: t.pad(2)) {
                         ForEach(a.bom.tools, id: \.node) { tool in
@@ -240,24 +241,25 @@ struct OverviewView: View {
                         Text(Self.formatTimestamp(ts.value))
                     }
                 } else {
-                    EvidenceButton(a.bom.metadata.map { tree.evidence($0, "timestamp") } ?? tree.evidence(a.bom.root, "metadata")) {
+                    EvidenceButton(a.bom.metadata.map { tree.evidence($0, a.bom.metadataKey("timestamp")) } ?? tree.evidence(a.bom.root, a.bom.rootKey("metadata"))) {
                         Pill(text: L("no timestamp"), kind: .gap, t: t)
                     }
                 }
             }
-            field(L("Manufacturer")) {
-                let evidence = a.bom.metadata.map { tree.evidence($0, "manufacturer") } ?? tree.evidence(a.bom.root, "metadata")
+            // SPDX names who created the document (creators: Organization), not a manufacturer.
+            field(a.bom.format == .spdx ? L("Creator") : L("Manufacturer")) {
+                let evidence = a.bom.metadata.map { tree.evidence($0, a.bom.metadataKey("manufacturer")) } ?? tree.evidence(a.bom.root, a.bom.rootKey("metadata"))
                 EvidenceButton(evidence) {
                     if let name = a.bom.manufacturerLabel { Text(name) } else { Pill(text: L("none named"), kind: .gap, t: t) }
                 }
             }
             if let supplier = a.bom.supplierName {
                 field(L("Supplier")) {
-                    EvidenceButton(a.bom.metadata.map { tree.evidence($0, "supplier") }) { Text(supplier) }
+                    EvidenceButton(a.bom.metadata.map { tree.evidence($0, a.bom.metadataKey("supplier")) }) { Text(supplier) }
                 }
             }
             field(L("Format")) {
-                EvidenceButton(.located(a.bom.specVersion.node)) { Text("CycloneDX \(a.bom.specVersion.value)") }
+                EvidenceButton(.located(a.bom.specVersion.node)) { Text("\(a.bom.format == .spdx ? "SPDX" : "CycloneDX") \(a.bom.specVersion.value)") }
             }
         }
     }
@@ -285,9 +287,34 @@ struct OverviewView: View {
 
     // MARK: Verdict
 
+    @ViewBuilder
     private var verdict: some View {
-        let v = a.verdict
-        return Button { model.show(tab: .completeness) } label: {
+        if let v = a.verdict, let report = a.report { verdict(v, report) } else { notChecked }
+    }
+
+    /// SPDX: neither this app nor rio judges it against the TR; say so where the verdict would be.
+    private var notChecked: some View {
+        Button { model.show(tab: .completeness) } label: {
+            VStack(alignment: .leading, spacing: t.pad(8)) {
+                Eyebrow(text: L("BSI TR-03183-2 2.1.0"), t: t)
+                Text(L("Not checked: this SBOM is SPDX.")).font(t.serif(22)).fixedSize(horizontal: false, vertical: true)
+                Text(L("The TR-03183-2 checks read CycloneDX. Everything else here is shown as the file states it, without a verdict."))
+                    .font(t.font(14)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)
+                HStack {
+                    Spacer()
+                    Text(L("Completeness →")).foregroundStyle(Color.accentColor)
+                }
+                .font(t.font(12))
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .panel(t)
+            .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+    }
+
+    private func verdict(_ v: Verdict, _ report: CompletenessReport) -> some View {
+        Button { model.show(tab: .completeness) } label: {
             VStack(alignment: .leading, spacing: t.pad(8)) {
                 Eyebrow(text: L("BSI TR-03183-2 2.1.0"), t: t)
                 Text(v.headline)
@@ -300,7 +327,7 @@ struct OverviewView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 Grid(alignment: .leading, horizontalSpacing: t.pad(12), verticalSpacing: t.pad(6)) {
-                    ForEach(a.report.sections.filter { $0.evaluated > 0 }) { section in
+                    ForEach(report.sections.filter { $0.evaluated > 0 }) { section in
                         GridRow {
                             Text(CompletenessView.sectionTitle(section.scope)).font(t.font(14))
                             CoverageBar(covered: section.present, total: section.evaluated, t: t).frame(height: t.pad(8))

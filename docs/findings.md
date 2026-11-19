@@ -156,6 +156,10 @@ each rendered in every view (`scripts/real-sweep.sh`, gallery in `build/screensh
   - "built on" named the first of 98 direct dependencies; it now needs exactly one.
   - Labels on the grey and pale red bar segments were white on light grey; now dark.
   - A Debian image states over 100 licence names; the caption lists ten and "n more".
-- **SPDX**: Syft and Trivy write SPDX 2.3 JSON, cdxgen SPDX 3.0.1 JSON-LD; all opened in Source
-  only (`docs/design-spdx.md`).
+- **SPDX**: Syft and Trivy write SPDX 2.3 JSON, cdxgen SPDX 3.0.1 JSON-LD. Both now get every
+  view (`docs/design-spdx.md`). Trivy's SPDX tells the same story as its CycloneDX (533, 1 → 532);
+  Syft's SPDX states relationships its CycloneDX lacks (73 → 529 instead of "not from the
+  product"); cdxgen's SPDX 3 states no licence in SPDX terms (only in its own extension).
+- Numbers followed the Mac's region ("1.108" in English); the workshop views now take the app's
+  language for numbers.
 - cdxgen writes absolute paths of the checkout (the user name); the script replaces them.

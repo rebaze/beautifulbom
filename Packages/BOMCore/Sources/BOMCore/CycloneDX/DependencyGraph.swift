@@ -17,16 +17,27 @@ public struct DependencyGraph: Sendable {
     /// Components (subject excluded) that appear in the dependency data, as a ref or a target.
     public let linkedCount: Int
 
+    /// CycloneDX: `dependencies`. SPDX: the dependency relationships (`SPDXEdges`). Nil without any.
     public init?(_ bom: BOMDocument) {
         let tree = bom.tree
-        guard let list = tree.member(bom.root, "dependencies"), tree.kind(list) == .array else { return nil }
         var edges: [String: [String]] = [:], reverse: [String: [String]] = [:], entries: [String: NodeID] = [:]
-        for e in tree.objectElements(list) {
-            guard let ref = tree.memberString(e, "ref") else { continue }
-            if entries[ref] == nil { entries[ref] = e }
-            let targets = tree.elements(tree.member(e, "dependsOn")).compactMap { tree.string($0) }
-            edges[ref, default: []].append(contentsOf: targets)
-            for t in targets where !(reverse[t]?.contains(ref) ?? false) { reverse[t, default: []].append(ref) }
+        switch bom.format {
+        case .spdx:
+            guard let spdx = bom.spdxEdges else { return nil }
+            edges = spdx.edges
+            entries = spdx.entries
+            for (ref, targets) in spdx.edges.sorted(by: { (entries[$0.key]?.index ?? 0) < (entries[$1.key]?.index ?? 0) }) {
+                for t in targets where !(reverse[t]?.contains(ref) ?? false) { reverse[t, default: []].append(ref) }
+            }
+        case .cyclonedx:
+            guard let list = tree.member(bom.root, "dependencies"), tree.kind(list) == .array else { return nil }
+            for e in tree.objectElements(list) {
+                guard let ref = tree.memberString(e, "ref") else { continue }
+                if entries[ref] == nil { entries[ref] = e }
+                let targets = tree.elements(tree.member(e, "dependsOn")).compactMap { tree.string($0) }
+                edges[ref, default: []].append(contentsOf: targets)
+                for t in targets where !(reverse[t]?.contains(ref) ?? false) { reverse[t, default: []].append(ref) }
+            }
         }
         self.edges = edges
         self.reverse = reverse

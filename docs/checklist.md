@@ -120,4 +120,7 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ `RealToolTests`: dependency reach (no data, no product ref, not from the product, reached), files counted apart, product titles from "." and image digests.
 - ✅ `ParityTests`: nine CycloneDX files from Syft, Trivy, cdxgen and Maven judged as rio 0.10.2 judges them.
 - ✅ Snapshots: every view of 24 generated SBOMs renders (`scripts/real-sweep.sh`); the fixed Overviews and Composition for Syft, Trivy and the image.
+- ✅ `SPDXDocumentTests`, `SPDX3DocumentTests`: SPDX 2.3 (synthetic, Syft, Trivy) and 3.0 (synthetic, cdxgen) read into components, product, tools, licences, hashes, references and the dependency graph; no TR verdict.
+- ✅ Snapshots: every view of the SPDX files from Syft, Trivy and cdxgen; English "1,108", German "1.108".
+- ⏳ By hand: evidence buttons on an SPDX component page open the SPDX keys (`versionInfo`, `checksums`, `software_packageVersion`).
 

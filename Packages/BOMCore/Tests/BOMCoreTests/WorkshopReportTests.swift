@@ -6,27 +6,27 @@ import Testing
     let cern = WorkshopAnalysis.analyse(fixtureTree(cernPath))!
 
     @Test func laravelVersionGap() {
-        let gap = laravel.report.versionGap!
+        let gap = laravel.report!.versionGap!
         #expect(gap.found == "1.4")
         #expect(gap.required == "1.6")
         #expect(gap.evidence == .located(laravel.bom.specVersion.node))
-        #expect(laravel.report.sections.map(\.scope) == [.sbom, .subject, .components])
-        #expect(!laravel.report.sections[0].rows.contains { $0.rule.requirement == .specVersion })
+        #expect(laravel.report!.sections.map(\.scope) == [.sbom, .subject, .components])
+        #expect(!laravel.report!.sections[0].rows.contains { $0.rule.requirement == .specVersion })
     }
 
     @Test func laravelNotes() {
-        let rows = laravel.report.sections[2].rows
+        let rows = laravel.report!.sections[2].rows
         #expect(rows.first { $0.rule.requirement == .creator }?.introducedIn == "1.6")
         #expect(rows.first { $0.rule.requirement == .distributionLicences }?.introducedIn == "1.6")
         #expect(rows.first { $0.rule.requirement == .filename }?.introducedIn == nil)
-        #expect(cern.report.sections[2].rows.first { $0.rule.requirement == .filename }?.introducedIn == "1.3")
+        #expect(cern.report!.sections[2].rows.first { $0.rule.requirement == .filename }?.introducedIn == "1.3")
         let creator = rows.first { $0.rule.requirement == .creator }!
         #expect(creator.covered == 0 && creator.total == 62 && creator.offenders.count == 62)
         #expect(creator.section == "§5.2.2")
     }
 
     @Test func laravelVerdict() {
-        let v = laravel.verdict
+        let v = laravel.verdict!
         #expect(!v.ready)
         #expect(v.versionGap == "1.4")
         #expect(v.gaps == [.timestamp, .manufacturer, .hashes, .licences, .dependencies, .fileProperties])
@@ -35,23 +35,23 @@ import Testing
     @Test func rioPassVerdict() {
         let a = WorkshopAnalysis.analyse(fixtureTree("rio/bsi-pass.cdx.json"))!
         #expect(a.verdict == Verdict(ready: true, versionGap: nil, gaps: []))
-        #expect(a.report.versionGap == nil)
+        #expect(a.report!.versionGap == nil)
     }
 
     @Test func brokenFileStillReported() {
         let a = WorkshopAnalysis.analyse(fixtureTree("edge/cyclonedx-broken.json"))
         #expect(a != nil)
-        #expect((a?.report.parseErrors ?? 0) >= 1)
-        #expect(laravel.report.parseErrors == 0)
+        #expect((a?.report?.parseErrors ?? 0) >= 1)
+        #expect(laravel.report!.parseErrors == 0)
         #expect(WorkshopAnalysis.analyse(fixtureTree("edge/workshop-broken.json")) == nil)
     }
 
     @Test func brokenFileIsNeverReady() {
         let a = WorkshopAnalysis.analyse(fixtureTree("edge/bsi-pass-broken.cdx.json"))!
-        #expect(a.report.parseErrors > 0)
-        #expect(a.report.sections.flatMap(\.rows).allSatisfy { $0.outcome != .fail })
-        #expect(!a.verdict.ready)
-        #expect(a.verdict.parseErrors == a.report.parseErrors)
+        #expect(a.report!.parseErrors > 0)
+        #expect(a.report!.sections.flatMap(\.rows).allSatisfy { $0.outcome != .fail })
+        #expect(!a.verdict!.ready)
+        #expect(a.verdict!.parseErrors == a.report!.parseErrors)
     }
 
     @Test func vendorFilterMatchesTheSlice() {

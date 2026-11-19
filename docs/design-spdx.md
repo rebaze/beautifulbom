@@ -1,6 +1,7 @@
 # SPDX in the workshop views
 
-Updated: 2026-11-19. Status: in progress.
+Updated: 2026-11-19. Status: built (SPDX 2.3 and 3.0 JSON); tests in `SPDXDocumentTests`,
+`SPDX3DocumentTests`.
 
 ## Why
 
@@ -48,6 +49,24 @@ evidence of an edge is its relationship object.
 
 ## SPDX 3.0 (JSON-LD)
 
-cdxgen writes `@graph` with `software_Package` elements and `Relationship` elements
-(`from`, `to[]`, `relationshipType` such as `dependsOn`, `contains`, `describes`). Same mapping
-with the 3.0 names; second step, after 2.3.
+Recognised by `@context` naming `spdx.org/rdf/3` and a `@graph`. `software_Package` elements are
+components (reference `spdxId`); the product is the document's `rootElement`. `CreationInfo` gives
+the version, `created`, `createdBy` (Creator) and `createdUsing` (tools; else `Tool` elements).
+Package fields: `software_packageVersion`, `software_packageUrl`, `software_primaryPurpose`,
+`verifiedUsing` hashes (`sha512` → SHA-512), `suppliedBy`, `originatedBy`,
+`software_downloadLocation`, `software_homePage`. Licences only from `hasConcludedLicense` /
+`hasDeclaredLicense` relationships to a `simplelicensing_LicenseExpression`. Edges: `dependsOn`,
+`hasDynamicLink`, `hasStaticLink`, `hasOptionalDependency`, `hasProvidedDependency`; `contains` with
+the rule above.
+
+cdxgen 12.9.2 keeps licences only in its own CycloneDX extension property (a JSON string); in SPDX
+terms its packages state none, and the views say so.
+
+## In the views
+
+The format line says SPDX and its version; the Overview's row reads "Creator" (SPDX names who
+created the document, not a manufacturer); the TR card and Completeness say "Not checked: this SBOM
+is SPDX", and Completeness counts what the packages state (package URL, version, licence, checksum,
+supplier) without a verdict; Components drops the TR column and filter, component pages the gaps
+card. Evidence asks the document for the format's key (`BOMDocument.key`, `metadataKey`,
+`rootKey`).

@@ -89,7 +89,7 @@ final class DocumentModel {
         if let ref = LaunchOptions.component, let i = analysis?.componentIndex(bomRef: ref) {
             openComponent(i)
         }
-        if let rule = LaunchOptions.evidence.flatMap(RuleID.init), let first = analysis?.profile.offenders(rule).first {
+        if let rule = LaunchOptions.evidence.flatMap(RuleID.init), let first = analysis?.profile?.offenders(rule).first {
             show(first.evidence)
         }
         if let query = LaunchOptions.find { typeIntoFindBar(query) }
