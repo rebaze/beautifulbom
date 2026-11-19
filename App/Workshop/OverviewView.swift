@@ -176,9 +176,11 @@ struct OverviewView: View {
     /// The picture of a card with a link stands beside the number at normal sizes, under it at presentation size.
     private var beside: Bool { t.s <= 1.25 }
 
-    /// "BSD-3-Clause" fits a chip as "BSD-3"; other identifiers stay as they are.
+    /// "BSD-3-Clause" fits a chip as "BSD-3"; a long expression ("GPL-2.0-or-later AND …", as Debian
+    /// packages state them) is cut to fit a card; Composition shows it whole.
     static func shortLicence(_ s: String) -> String {
-        s.hasSuffix("-Clause") ? String(s.dropLast("-Clause".count)) : s
+        let short = s.hasSuffix("-Clause") ? String(s.dropLast("-Clause".count)) : s
+        return short.count > 28 ? String(short.prefix(26)) + "…" : short
     }
 
     static func ecosystemName(_ purlType: String) -> String {
