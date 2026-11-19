@@ -33,7 +33,7 @@ import Testing
         #expect(map.rings == 1)
         #expect(map.deepest == 20)
         #expect(map.notDrawn == 6020)
-        let laravel = DependencyMap(DependencyGraph(CycloneDXDocument.recognize(fixtureTree(laravelPath))!)!)
+        let laravel = DependencyMap(DependencyGraph(BOMDocument.recognize(fixtureTree(laravelPath))!)!)
         #expect(laravel.deepest == 6)
         #expect(laravel.notDrawn == 0)
     }

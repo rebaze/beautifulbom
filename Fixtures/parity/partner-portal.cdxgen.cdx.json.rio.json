@@ -1,0 +1,277 @@
+{
+ "rio": "rio 0.10.2 (commit: 35c8da3efe782f4cfebd64aa400e513d03bb6db1, built: 2026-11-14T20:10:55Z)",
+ "input": "Fixtures/tools/partner-portal.cdxgen.cdx.json",
+ "specVersionInput": "1.7",
+ "evaluations": [
+  {
+   "scope": "sbom",
+   "requirement": "specVersion",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "sbom",
+   "requirement": "timestamp",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "vulnerabilities",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "name",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "version",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "level",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "filename",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "dependencies",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "distributionLicences",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "deployableHash",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "executable",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "archive",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "structured",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "components",
+   "requirement": "name",
+   "evaluated": 6,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "version",
+   "evaluated": 6,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "level",
+   "evaluated": 6,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "creator",
+   "evaluated": 6,
+   "failed": 6
+  },
+  {
+   "scope": "components",
+   "requirement": "filename",
+   "evaluated": 6,
+   "failed": 6
+  },
+  {
+   "scope": "components",
+   "requirement": "dependencies",
+   "evaluated": 6,
+   "failed": 6
+  },
+  {
+   "scope": "components",
+   "requirement": "distributionLicences",
+   "evaluated": 6,
+   "failed": 6
+  },
+  {
+   "scope": "components",
+   "requirement": "deployableHash",
+   "evaluated": 6,
+   "failed": 6
+  },
+  {
+   "scope": "components",
+   "requirement": "executable",
+   "evaluated": 6,
+   "failed": 6
+  },
+  {
+   "scope": "components",
+   "requirement": "archive",
+   "evaluated": 6,
+   "failed": 6
+  },
+  {
+   "scope": "components",
+   "requirement": "structured",
+   "evaluated": 6,
+   "failed": 6
+  }
+ ],
+ "profileLevels": {
+  "assembled": 0,
+  "full": 7,
+  "identified": 0,
+  "logical": 0,
+  "referenced": 0
+ },
+ "findings": [
+  {
+   "scope": "sbom",
+   "component": null,
+   "missing": [
+    "creator"
+   ]
+  },
+  {
+   "scope": "subject",
+   "component": null,
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:maven/org.apache.logging.log4j/log4j-core@2.25.2?type=jar",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:maven/org.apache.logging.log4j/log4j-api@2.25.2?type=jar",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.20.0?type=jar",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.20?type=jar",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.20.0?type=jar",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:maven/org.apache.commons/commons-lang3@3.19.0?type=jar",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  }
+ ]
+}

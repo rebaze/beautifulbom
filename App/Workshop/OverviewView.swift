@@ -37,7 +37,7 @@ struct OverviewView: View {
                 Eyebrow(text: L("Software bill of materials · CycloneDX %@", a.bom.specVersion.value), t: t)
             }
             EvidenceButton(subject.map { tree.evidence($0.entry, "name") } ?? a.bom.metadata.map { tree.evidence($0, "component") }) {
-                Text(subject?.name ?? model.fileName ?? L("Unnamed product"))
+                Text(ProductTitle(subject?.name).title ?? model.fileName ?? L("Unnamed product"))
                     .font(t.serif(42))
                     .tracking(-0.4 * t.s)
                     .lineLimit(2)
@@ -53,9 +53,15 @@ struct OverviewView: View {
 
     private var subtitle: String {
         var parts: [String] = []
+        let title = ProductTitle(subject?.name)
+        // A name that says nothing (".") is shown as the file says it, next to the file name.
+        if title.title == nil, let name = subject?.name { parts.append(L("product named “%@” in the SBOM", name)) }
+        if let digest = title.digest { parts.append(digest) }
         if let type = subject?.type { parts.append(type) }
         if let v = subject?.version { parts.append(v) }
-        if let first = a.graph?.direct.first, let c = a.bom.component(bomRef: first) {
+        // "Built on" only when the product names exactly one direct dependency; with several,
+        // the first in the file is an accident of order.
+        if let direct = a.graph?.direct, direct.count == 1, let c = a.bom.component(bomRef: direct[0]) {
             parts.append(L("built on %@", [c.displayName, c.version].compactMap { $0 }.joined(separator: " ")))
         }
         return parts.joined(separator: " · ")
@@ -65,14 +71,21 @@ struct OverviewView: View {
 
     private var stats: some View {
         HStack(alignment: .top, spacing: t.pad(12)) {
-            stat(value: "\(a.bom.components.count)", label: L("components"), target: .components) { componentsPicture }
-            if let direct = a.composition.directCount, let indirect = a.composition.indirectCount {
+            let files = a.composition.files.count
+            stat(value: "\(a.composition.packageCount)", label: files == 0 ? L("components") : L("components · %d files", files),
+                 target: .components) { componentsPicture }
+            switch a.composition.reach {
+            case .reached(let direct, let indirect):
                 stat(value: "\(direct) → \(indirect)", label: L("chosen directly → pulled in"), target: .composition,
                      link: a.map == nil ? nil : L("See the map →")) {
                     if let map = a.map { MiniMap(a: a, map: map).frame(width: 96 * min(t.s, 1.4), height: 96 * min(t.s, 1.4)) }
                 }
-            } else {
-                stat(value: "–", label: a.graph == nil ? L("no dependency data") : L("product has no bom-ref"), target: .composition) { EmptyView() }
+            case .noData:
+                stat(value: "–", label: L("no dependency data"), target: .composition) { EmptyView() }
+            case .noProductRef:
+                stat(value: "–", label: L("product has no bom-ref"), target: .composition) { EmptyView() }
+            case .notFromProduct:
+                stat(value: "–", label: L("dependencies do not start at the product"), target: .composition) { EmptyView() }
             }
             let known = a.composition.ecosystems.filter { !$0.unknown }
             stat(value: "\(known.count)", label: known.count == 1 ? L("ecosystem") : L("ecosystems"), target: .composition) {
@@ -188,7 +201,7 @@ struct OverviewView: View {
         return Grid(alignment: .leading, horizontalSpacing: t.pad(16), verticalSpacing: t.pad(10)) {
             GridRow {
                 Text(L("Vendors")).font(t.font(13)).foregroundStyle(.secondary)
-                StackedBar(segments: vendorSegments, total: a.bom.components.count, t: t, height: 26, showLegend: false) { model.showComponents($0) }
+                StackedBar(segments: vendorSegments, total: a.composition.packageCount, t: t, height: 26, showLegend: false) { model.showComponents($0) }
             }
             GridRow {
                 Text(L("Licences")).font(t.font(13)).foregroundStyle(.secondary)

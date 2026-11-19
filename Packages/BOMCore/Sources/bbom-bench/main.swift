@@ -48,9 +48,9 @@ func analyseCommand(_ path: String) throws {
     let a = WorkshopAnalysis.analyse(tree)
     let t2 = now()
     // Stage by stage, for profiling.
-    if let bom = CycloneDXDocument.recognize(tree) {
+    if let bom = BOMDocument.recognize(tree) {
         let s0 = now()
-        _ = CycloneDXDocument.recognize(tree)
+        _ = BOMDocument.recognize(tree)
         let s1 = now()
         let graph = DependencyGraph(bom)
         let s2 = now()

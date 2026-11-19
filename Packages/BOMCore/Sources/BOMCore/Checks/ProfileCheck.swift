@@ -4,12 +4,12 @@ import Foundation
 /// `bsi-tr-03183-2@2.1.0` profile does (`internal/gate/profile.go`, with
 /// `gate.require: [name, version]`), except that `sbom.specVersion` is judged
 /// on the file as it is: rio raises an older file to 1.6 before it checks.
-public func checkTR031832(_ bom: CycloneDXDocument) -> ProfileResult {
+public func checkTR031832(_ bom: BOMDocument) -> ProfileResult {
     ProfileRun(bom).result()
 }
 
 private struct ProfileRun {
-    let bom: CycloneDXDocument
+    let bom: BOMDocument
     let tree: JSONTree
     let fields: FieldChecks
     let deps: Set<String>
@@ -21,7 +21,7 @@ private struct ProfileRun {
         var detail: String?
     }
 
-    init(_ bom: CycloneDXDocument) {
+    init(_ bom: BOMDocument) {
         self.bom = bom
         tree = bom.tree
         fields = FieldChecks(tree: bom.tree)
@@ -119,8 +119,8 @@ private struct ProfileRun {
         let v = bom.specVersion.value
         let metadata = bom.metadata
         let failed: [Requirement: Bool] = [
-            .specVersion: !(CycloneDXDocument.isDottedDecimal(v)
-                && CycloneDXDocument.compareVersions(v, TR031832.requiredSpecVersion) >= 0),
+            .specVersion: !(BOMDocument.isDottedDecimal(v)
+                && BOMDocument.compareVersions(v, TR031832.requiredSpecVersion) >= 0),
             .creator: !fields.validCreator(metadata.flatMap { tree.member($0, "manufacturer") }),
             .timestamp: !(metadata.flatMap { tree.memberString($0, "timestamp") }.map(FieldChecks.validTimestamp) ?? false),
             .vulnerabilities: !tree.elements(tree.member(bom.root, "vulnerabilities")).isEmpty,

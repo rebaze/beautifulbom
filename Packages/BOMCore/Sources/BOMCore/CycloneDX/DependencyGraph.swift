@@ -14,8 +14,10 @@ public struct DependencyGraph: Sendable {
     public let order: [String]
     /// Component bom-refs (subject excluded) not reached from the subject, document order.
     public let unreachable: [String]
+    /// Components (subject excluded) that appear in the dependency data, as a ref or a target.
+    public let linkedCount: Int
 
-    public init?(_ bom: CycloneDXDocument) {
+    public init?(_ bom: BOMDocument) {
         let tree = bom.tree
         guard let list = tree.member(bom.root, "dependencies"), tree.kind(list) == .array else { return nil }
         var edges: [String: [String]] = [:], reverse: [String: [String]] = [:], entries: [String: NodeID] = [:]
@@ -52,6 +54,7 @@ public struct DependencyGraph: Sendable {
         self.children = children
         order = queue
         unreachable = bom.components.compactMap(\.bomRef).filter { depths[$0] == nil }
+        linkedCount = Set(bom.components.compactMap(\.bomRef)).filter { edges[$0] != nil || reverse[$0] != nil }.count
     }
 
     /// The subject's direct dependencies, document order.

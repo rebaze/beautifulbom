@@ -2,11 +2,11 @@ import Testing
 @testable import BOMCore
 
 @Suite struct AIBOMTests {
-    let reference = AIBOMAnalysis.analyse(CycloneDXDocument.recognize(fixtureTree("aibom/zephyr-7b-beta.reference.aibom.json"))!)!
-    let generated = AIBOMAnalysis.analyse(CycloneDXDocument.recognize(fixtureTree("aibom/zephyr-7b-beta.generated.aibom.json"))!)!
+    let reference = AIBOMAnalysis.analyse(BOMDocument.recognize(fixtureTree("aibom/zephyr-7b-beta.reference.aibom.json"))!)!
+    let generated = AIBOMAnalysis.analyse(BOMDocument.recognize(fixtureTree("aibom/zephyr-7b-beta.generated.aibom.json"))!)!
 
     @Test func anSBOMIsNotAnAIBOM() {
-        #expect(AIBOMAnalysis.analyse(CycloneDXDocument.recognize(fixtureTree(laravelPath))!) == nil)
+        #expect(AIBOMAnalysis.analyse(BOMDocument.recognize(fixtureTree(laravelPath))!) == nil)
     }
 
     @Test func referenceModelIsTheSubject() {

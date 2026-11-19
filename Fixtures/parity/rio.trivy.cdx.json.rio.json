@@ -1,0 +1,1094 @@
+{
+ "rio": "rio 0.10.2 (commit: 35c8da3efe782f4cfebd64aa400e513d03bb6db1, built: 2026-11-14T20:10:55Z)",
+ "input": "Fixtures/tools/rio.trivy.cdx.json",
+ "specVersionInput": "1.7",
+ "evaluations": [
+  {
+   "scope": "sbom",
+   "requirement": "specVersion",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "sbom",
+   "requirement": "timestamp",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "vulnerabilities",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "name",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "version",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "level",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "filename",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "dependencies",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "distributionLicences",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "deployableHash",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "executable",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "archive",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "structured",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "components",
+   "requirement": "name",
+   "evaluated": 64,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "version",
+   "evaluated": 64,
+   "failed": 4
+  },
+  {
+   "scope": "components",
+   "requirement": "level",
+   "evaluated": 64,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "creator",
+   "evaluated": 64,
+   "failed": 64
+  },
+  {
+   "scope": "components",
+   "requirement": "filename",
+   "evaluated": 64,
+   "failed": 64
+  },
+  {
+   "scope": "components",
+   "requirement": "dependencies",
+   "evaluated": 64,
+   "failed": 64
+  },
+  {
+   "scope": "components",
+   "requirement": "distributionLicences",
+   "evaluated": 64,
+   "failed": 64
+  },
+  {
+   "scope": "components",
+   "requirement": "deployableHash",
+   "evaluated": 64,
+   "failed": 64
+  },
+  {
+   "scope": "components",
+   "requirement": "executable",
+   "evaluated": 64,
+   "failed": 64
+  },
+  {
+   "scope": "components",
+   "requirement": "archive",
+   "evaluated": 64,
+   "failed": 64
+  },
+  {
+   "scope": "components",
+   "requirement": "structured",
+   "evaluated": 64,
+   "failed": 64
+  }
+ ],
+ "profileLevels": {
+  "assembled": 0,
+  "full": 65,
+  "identified": 0,
+  "logical": 0,
+  "referenced": 0
+ },
+ "findings": [
+  {
+   "scope": "sbom",
+   "component": null,
+   "missing": [
+    "creator"
+   ]
+  },
+  {
+   "scope": "subject",
+   "component": null,
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/sync@v0.24.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/sync@v0.24.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "tools/security/go.mod",
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "go.mod",
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/dario.cat/mergo@v1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/bmatcuk/doublestar/v4@v4.10.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/cloudflare/circl@v1.6.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/cyclonedx/cyclonedx-go@v0.11.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/cyclonedx/cyclonedx-go@v0.12.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/cyclonedx/cyclonedx-gomod@v1.12.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/cyphar/filepath-securejoin@v0.6.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/dgryski/go-minhash@v0.0.0-20190315135803-ad340ca03076",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/ekzhu/minhash-lsh@v0.0.0-20190924033628-faac2c6342f8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/emirpasic/gods@v1.18.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/go-enry/go-license-detector/v4@v4.3.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/go-git/gcfg@v1.5.1-0.20230307220236-3a3c6141e376",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/go-git/go-billy/v5@v5.9.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/go-git/go-git/v5@v5.19.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/golang/groupcache@v0.0.0-20241129210726-2c02b8208cf8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/google/go-cmp@v0.7.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/google/uuid@v1.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/hhatto/gorst@v0.0.0-20181029133204-ca9f730cac5b",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/inconshreveable/mousetrap@v1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/jbenet/go-context@v0.0.0-20150711004518-d14ea06fba99",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/jdkato/prose@v1.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/kevinburke/ssh_config@v1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/klauspost/cpuid/v2@v2.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/mattn/go-colorable@v0.1.14",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/mattn/go-isatty@v0.0.20",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/microsoft/go-winio@v0.6.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/montanaflynn/stats@v0.6.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/opencontainers/go-digest@v1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/opencontainers/image-spec@v1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/package-url/packageurl-go@v0.1.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/peterbourgon/ff/v3@v3.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/pjbgf/sha1cd@v0.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/pkg/errors@v0.9.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/protonmail/go-crypto@v1.1.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/rebaze/rio",
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/rebaze/rio/tools/security",
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/rs/zerolog@v1.35.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/russross/blackfriday/v2@v2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/santhosh-tekuri/jsonschema/v6@v6.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/sergi/go-diff@v1.3.2-0.20230802210424-5b0b94c5c0d3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/shogo82148/go-shuffle@v1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/skeema/knownhosts@v1.3.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/spf13/cobra@v1.10.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/spf13/pflag@v1.0.9",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/github.com/xanzy/ssh-agent@v0.3.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/crypto@v0.58.1-0.20261009181718-2f1f834330b2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/exp@v0.0.0-20260410095643-746e56fc9e2f",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/mod@v0.41.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/net@v0.62.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/sys@v0.49.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/telemetry@v0.0.0-20260924152758-ed294f943157",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/text@v0.41.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/text@v0.43.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/tools@v0.51.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/golang.org/x/vuln@v1.8.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/gonum.org/v1/gonum@v0.8.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/gopkg.in/neurosnap/sentences.v1@v1.0.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/gopkg.in/warnings.v0@v0.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/gopkg.in/yaml.v3@v3.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:golang/oras.land/oras-go/v2@v2.7.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  }
+ ]
+}

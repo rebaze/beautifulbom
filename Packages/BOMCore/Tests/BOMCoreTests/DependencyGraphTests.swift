@@ -2,7 +2,7 @@ import Testing
 @testable import BOMCore
 
 @Suite struct DependencyGraphTests {
-    let laravel = DependencyGraph(CycloneDXDocument.recognize(fixtureTree(laravelPath))!)!
+    let laravel = DependencyGraph(BOMDocument.recognize(fixtureTree(laravelPath))!)!
 
     @Test func laravelDirect() {
         #expect(laravel.direct == ["laravel/laravel-7.12.0.0"])
@@ -28,7 +28,7 @@ import Testing
     }
 
     @Test func cernHasNoGraph() {
-        #expect(DependencyGraph(CycloneDXDocument.recognize(fixtureTree(cernPath))!) == nil)
+        #expect(DependencyGraph(BOMDocument.recognize(fixtureTree(cernPath))!) == nil)
     }
 
     @Test func cycleTerminates() {

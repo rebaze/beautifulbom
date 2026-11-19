@@ -3,7 +3,7 @@ import Testing
 
 @Suite struct CompositionTests {
     static func composition(_ path: String) -> Composition {
-        let doc = CycloneDXDocument.recognize(fixtureTree(path))!
+        let doc = BOMDocument.recognize(fixtureTree(path))!
         return Composition(doc, graph: DependencyGraph(doc))
     }
     let laravel = composition(laravelPath)

@@ -1,12 +1,12 @@
 import Testing
 @testable import BOMCore
 
-func bom(_ json: String) -> CycloneDXDocument? { CycloneDXDocument.recognize(tree(json)) }
+func bom(_ json: String) -> BOMDocument? { BOMDocument.recognize(tree(json)) }
 
 @Suite struct CycloneDXModelTests {
-    let laravel = CycloneDXDocument.recognize(fixtureTree(laravelPath))!
-    let cern = CycloneDXDocument.recognize(fixtureTree(cernPath))!
-    let nested = CycloneDXDocument.recognize(fixtureTree("synthetic/nested-1.6.cdx.json"))!
+    let laravel = BOMDocument.recognize(fixtureTree(laravelPath))!
+    let cern = BOMDocument.recognize(fixtureTree(cernPath))!
+    let nested = BOMDocument.recognize(fixtureTree("synthetic/nested-1.6.cdx.json"))!
 
     @Test func laravelRecognised() {
         #expect(laravel.specVersion.value == "1.4")
@@ -65,7 +65,7 @@ func bom(_ json: String) -> CycloneDXDocument? { CycloneDXDocument.recognize(tre
     }
 
     @Test func notCycloneDX() {
-        #expect(CycloneDXDocument.recognize(fixtureTree("edge/duplicates.json")) == nil)
+        #expect(BOMDocument.recognize(fixtureTree("edge/duplicates.json")) == nil)
         #expect(bom(#"{"bomFormat":"SPDX","specVersion":"2.3"}"#) == nil)
         #expect(bom(#"{"bomFormat":"CycloneDX","specVersion":"1.1"}"#) == nil)
         #expect(bom(#"{"bomFormat":"CycloneDX","specVersion":"1.7"}"#) != nil)
@@ -75,9 +75,9 @@ func bom(_ json: String) -> CycloneDXDocument? { CycloneDXDocument.recognize(tre
     }
 
     @Test func compareVersionsLikeRio() {
-        #expect(CycloneDXDocument.compareVersions("1.10", "1.6") == 1)
-        #expect(CycloneDXDocument.compareVersions("1.6", "1.6.0") == 0)
-        #expect(CycloneDXDocument.compareVersions("1.x", "1.6") == 1)
-        #expect(CycloneDXDocument.compareVersions("1.4", "1.6") == -1)
+        #expect(BOMDocument.compareVersions("1.10", "1.6") == 1)
+        #expect(BOMDocument.compareVersions("1.6", "1.6.0") == 0)
+        #expect(BOMDocument.compareVersions("1.x", "1.6") == 1)
+        #expect(BOMDocument.compareVersions("1.4", "1.6") == -1)
     }
 }

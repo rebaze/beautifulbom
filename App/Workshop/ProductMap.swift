@@ -172,7 +172,7 @@ struct ProductMap: View {
 
     // MARK: Data
 
-    private var centreLabel: String { a.bom.subject?.name ?? model.fileName ?? "" }
+    private var centreLabel: String { ProductTitle(a.bom.subject?.name).title ?? model.fileName ?? "" }
 
     private func steps(_ depth: Int) -> String {
         depth == 1 ? L("chosen directly") : L("%d steps from the product", depth)

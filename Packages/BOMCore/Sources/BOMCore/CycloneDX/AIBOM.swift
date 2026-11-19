@@ -56,7 +56,7 @@ public struct AIBOMAnalysis: Sendable {
     static func depth(_ m: Model) -> Int { 1 + (m.ancestors.map(depth).max() ?? 0) }
 
     /// Nil unless the BOM is about a model: its subject is one, or every component is a model or data.
-    public static func analyse(_ bom: CycloneDXDocument) -> AIBOMAnalysis? {
+    public static func analyse(_ bom: BOMDocument) -> AIBOMAnalysis? {
         let tree = bom.tree
         let entry: Component
         if let s = bom.subject, s.type == "machine-learning-model" {
@@ -102,7 +102,7 @@ public struct AIBOMAnalysis: Sendable {
         return tree.evidence(params, "datasets")
     }
 
-    private static func read(_ c: Component, _ bom: CycloneDXDocument, depth: Int = 0) -> Model {
+    private static func read(_ c: Component, _ bom: BOMDocument, depth: Int = 0) -> Model {
         let tree = bom.tree
         let card = tree.member(c.entry, "modelCard").flatMap { tree.kind($0) == .object ? $0 : nil }
         let params = card.flatMap { tree.member($0, "modelParameters") }

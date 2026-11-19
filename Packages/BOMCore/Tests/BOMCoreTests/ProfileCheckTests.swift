@@ -2,7 +2,7 @@ import Testing
 @testable import BOMCore
 
 /// A CycloneDX 1.6 document with a valid subject and the given components.
-func profile(components: String, extra: String = "") -> (CycloneDXDocument, ProfileResult) {
+func profile(components: String, extra: String = "") -> (BOMDocument, ProfileResult) {
     let doc = bom(#"""
     {"bomFormat":"CycloneDX","specVersion":"1.6",
      "metadata":{"timestamp":"2026-11-15T10:00:00Z","component":{"bom-ref":"s","name":"s","version":"1"}},
@@ -16,7 +16,7 @@ func evaluated(_ r: ProfileResult, _ id: String) -> Int? { r.evaluation(id)?.eva
 
 @Suite struct ProfileCheckTests {
     @Test func laravelCounts() {
-        let r = checkTR031832(CycloneDXDocument.recognize(fixtureTree(laravelPath))!)
+        let r = checkTR031832(BOMDocument.recognize(fixtureTree(laravelPath))!)
         for f in ["name", "version", "level"] {
             #expect(evaluated(r, "components.\(f)") == 62)
             #expect(failed(r, "components.\(f)") == 0)
@@ -36,7 +36,7 @@ func evaluated(_ r: ProfileResult, _ id: String) -> Int? { r.evaluation(id)?.eva
     }
 
     @Test func laravelTimestampEvidence() {
-        let doc = CycloneDXDocument.recognize(fixtureTree(laravelPath))!
+        let doc = BOMDocument.recognize(fixtureTree(laravelPath))!
         let r = checkTR031832(doc)
         guard case .absent(let a) = r.offenders(RuleID("sbom.timestamp")!).first?.evidence else { Issue.record("not absent"); return }
         #expect(a.key == "timestamp")
@@ -157,7 +157,7 @@ func evaluated(_ r: ProfileResult, _ id: String) -> Int? { r.evaluation(id)?.eva
     }
 
     @Test func nonObjectEntry() {
-        let doc = CycloneDXDocument.recognize(fixtureTree("synthetic/nested-1.6.cdx.json"))!
+        let doc = BOMDocument.recognize(fixtureTree("synthetic/nested-1.6.cdx.json"))!
         let r = checkTR031832(doc)
         #expect(evaluated(r, "components.name") == 7)
         let oops = r.offenders.filter { $0.component == 4 }

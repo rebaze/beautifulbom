@@ -9,7 +9,8 @@ struct CompositionView: View {
     let a: WorkshopAnalysis
 
     private var t: Typo { Typo(s: model.scale) }
-    private var total: Int { a.bom.components.count }
+    /// Packages only: files (Syft on an image) are counted apart.
+    private var total: Int { a.composition.packageCount }
 
     var body: some View {
         ScrollView {
@@ -44,8 +45,9 @@ struct CompositionView: View {
         let vendorCount = a.composition.vendors.filter { !$0.unknown }.count
         let who = vendorCount == 0
             ? L("No component names a vendor (no group, no namespace in its package URL).")
-            : L("%d components from %d vendors.", total, vendorCount)
-        return section(title: L("Who wrote it"), caption: who + " " + L("Ecosystems: %@.", ecosystems.joined(separator: ", "))) {
+            : vendorCount == 1 ? L("%d components from 1 vendor.", total) : L("%d components from %d vendors.", total, vendorCount)
+        let files = a.composition.files.isEmpty ? "" : " " + L("%d files listed as components are not counted here.", a.composition.files.count)
+        return section(title: L("Who wrote it"), caption: who + " " + L("Ecosystems: %@.", ecosystems.joined(separator: ", ")) + files) {
             StackedBar(segments: segments, total: total, t: t) { model.showComponents($0) }
         }
     }
@@ -87,7 +89,9 @@ struct CompositionView: View {
         let rest = slices.filter { $0 != major }
         let restCount = Set(rest.flatMap(\.components)).subtracting(major.components).count
         if rest.isEmpty { return L("All %d components: %@.", total, major.label) }
-        let list = rest.map { "\($0.unknown ? L("none stated") : $0.label) (\($0.count))" }.joined(separator: ", ")
+        // Ten names at most: a Debian image states more than a hundred licence names.
+        var list = rest.prefix(10).map { "\($0.unknown ? L("none stated") : $0.label) (\($0.count))" }.joined(separator: ", ")
+        if rest.count > 10 { list += ", " + Lp(rest.count - 10, "1 more licence", "%d more licences") }
         return L("%d of %d under %@. The other %d: %@.", major.count, total, major.label, restCount, list)
     }
 
@@ -127,6 +131,17 @@ struct CompositionView: View {
                     }
                 }
                 .frame(height: t.pad(220))
+            }
+        } else if case .notFromProduct(let linked) = a.composition.reach {
+            section(title: L("How deep it goes"), caption: nil) {
+                EvidenceButton(a.bom.tree.evidence(a.bom.root, "dependencies")) {
+                    HStack(spacing: t.pad(10)) {
+                        Image(systemName: "point.3.connected.trianglepath.dotted").foregroundStyle(.secondary)
+                        Text(L("The dependency data links %d components among themselves, but no entry starts at the product, so it cannot say how deep anything is.", linked)).font(t.font(17))
+                        Pill(text: L("no entry for the product"), kind: .gap, t: t)
+                    }
+                    .padding(.vertical, t.pad(4))
+                }
             }
         } else if a.graph != nil, let subject = a.bom.subject {
             section(title: L("How deep it goes"), caption: nil) {
@@ -212,7 +227,8 @@ struct StackedBar: View {
                                     if usable * CGFloat(s.count) / CGFloat(max(1, total)) > 90 * t.s, i == 0 {
                                         Text("\(s.label) \(s.count)")
                                             .font(t.font(13, .semibold))
-                                            .foregroundStyle(.white)
+                                            // Grey and pale red segments are light: dark text there.
+                                            .foregroundStyle(s.unknown || s.isOthers ? AnyShapeStyle(.primary.opacity(0.8)) : AnyShapeStyle(.white))
                                             .padding(.leading, t.pad(10))
                                             .lineLimit(1)
                                     }

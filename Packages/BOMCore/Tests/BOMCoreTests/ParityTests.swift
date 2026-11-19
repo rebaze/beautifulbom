@@ -19,7 +19,7 @@ import Testing
     }()
 
     @Test func expectationsExist() {
-        #expect(Self.files.count == 5)
+        #expect(Self.files.count == 14) // 5 examples and cases, 9 written by Syft, Trivy, cdxgen and Maven
     }
 
     @Test(arguments: files)
@@ -27,10 +27,10 @@ import Testing
         let url = fixturesDirectory.appendingPathComponent("parity").appendingPathComponent(file)
         let expected = try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as! [String: Any]
         let input = (expected["input"] as! String).replacingOccurrences(of: "Fixtures/", with: "")
-        let doc = try #require(CycloneDXDocument.recognize(fixtureTree(input)))
+        let doc = try #require(BOMDocument.recognize(fixtureTree(input)))
         let result = checkTR031832(doc)
         let inputVersion = expected["specVersionInput"] as! String
-        let uplifted = CycloneDXDocument.compareVersions(inputVersion, "1.6") < 0
+        let uplifted = BOMDocument.compareVersions(inputVersion, "1.6") < 0
 
         // Evaluations: same rules, order and counts; specVersion judged on the file.
         let rio = (expected["evaluations"] as! [[String: Any]]).map {

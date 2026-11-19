@@ -8,7 +8,7 @@ public struct Composition: Sendable {
         public let label: String
         public let unknown: Bool
         public var count: Int { components.count }
-        /// Indexes into `CycloneDXDocument.components`, document order.
+        /// Indexes into `BOMDocument.components`, document order.
         public let components: [Int]
     }
 
@@ -18,15 +18,35 @@ public struct Composition: Sendable {
     /// Components by licence family (`LicenceFamily.rawValue` as label), in the enum's order;
     /// empty families left out. "none" is the unknown slice.
     public let families: [Slice]
-    /// Depth → reachable components; nil without dependency data.
+    /// How far the dependency data reaches from the product.
+    public enum Reach: Sendable, Hashable {
+        /// No `dependencies` array.
+        case noData
+        /// Dependency data, but the product has no bom-ref to start from.
+        case noProductRef
+        /// The product has a bom-ref, but no entry starts at it (Syft); `linked` components
+        /// appear in the dependency data among themselves.
+        case notFromProduct(linked: Int)
+        case reached(direct: Int, indirect: Int)
+    }
+
+    public let reach: Reach
+    /// Depth → reachable components; nil unless the data reaches from the product.
     public let depthHistogram: [Int: Int]?
     public let directCount: Int?
     public let indirectCount: Int?
+    /// Components of type "file" (Syft lists every file of an image), document order. They are
+    /// counted here and kept out of the vendor, licence, ecosystem and family slices.
+    public let files: [Int]
+    /// Components that are not files.
+    public let packageCount: Int
 
-    public init(_ bom: CycloneDXDocument, graph: DependencyGraph?) {
+    public init(_ bom: BOMDocument, graph: DependencyGraph?) {
         var vendors: [String?: [Int]] = [:], licenses: [String?: [Int]] = [:], ecosystems: [String?: [Int]] = [:]
         var families: [LicenceFamily: [Int]] = [:]
+        var files: [Int] = []
         for (i, c) in bom.components.enumerated() {
+            if c.type == "file" { files.append(i); continue }
             families[LicenceFamily.of(c), default: []].append(i)
             vendors[Self.vendor(of: c), default: []].append(i)
             ecosystems[Self.nonEmpty(c.packageURL?.type), default: []].append(i)
@@ -40,15 +60,23 @@ public struct Composition: Sendable {
         self.families = LicenceFamily.allCases.compactMap { f in
             families[f].map { Slice(label: f.rawValue, unknown: f == .none, components: $0) }
         }
-        if let graph, graph.root != nil {
+        self.files = files
+        packageCount = bom.components.count - files.count
+        if let graph, graph.root != nil, !graph.direct.isEmpty {
             let histogram = graph.depthHistogram
             depthHistogram = histogram
             directCount = graph.direct.count
             indirectCount = histogram.values.reduce(0, +) - graph.direct.count
+            reach = .reached(direct: directCount!, indirect: indirectCount!)
         } else {
             depthHistogram = nil
             directCount = nil
             indirectCount = nil
+            if let graph {
+                reach = graph.root == nil ? .noProductRef : .notFromProduct(linked: graph.linkedCount)
+            } else {
+                reach = .noData
+            }
         }
     }
 

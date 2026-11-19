@@ -1,0 +1,1692 @@
+{
+ "rio": "rio 0.10.2 (commit: 35c8da3efe782f4cfebd64aa400e513d03bb6db1, built: 2026-11-14T20:10:55Z)",
+ "input": "Fixtures/tools/python-slim.trivy.cdx.json",
+ "specVersionInput": "1.7",
+ "evaluations": [
+  {
+   "scope": "sbom",
+   "requirement": "specVersion",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "sbom",
+   "requirement": "timestamp",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "vulnerabilities",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "name",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "version",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "level",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "filename",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "dependencies",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "distributionLicences",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "deployableHash",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "executable",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "archive",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "structured",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "components",
+   "requirement": "name",
+   "evaluated": 107,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "version",
+   "evaluated": 107,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "level",
+   "evaluated": 107,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "creator",
+   "evaluated": 107,
+   "failed": 107
+  },
+  {
+   "scope": "components",
+   "requirement": "filename",
+   "evaluated": 107,
+   "failed": 107
+  },
+  {
+   "scope": "components",
+   "requirement": "dependencies",
+   "evaluated": 107,
+   "failed": 107
+  },
+  {
+   "scope": "components",
+   "requirement": "distributionLicences",
+   "evaluated": 107,
+   "failed": 107
+  },
+  {
+   "scope": "components",
+   "requirement": "deployableHash",
+   "evaluated": 107,
+   "failed": 107
+  },
+  {
+   "scope": "components",
+   "requirement": "executable",
+   "evaluated": 107,
+   "failed": 107
+  },
+  {
+   "scope": "components",
+   "requirement": "archive",
+   "evaluated": 107,
+   "failed": 107
+  },
+  {
+   "scope": "components",
+   "requirement": "structured",
+   "evaluated": 107,
+   "failed": 107
+  }
+ ],
+ "profileLevels": {
+  "assembled": 0,
+  "full": 108,
+  "identified": 0,
+  "logical": 0,
+  "referenced": 0
+ },
+ "findings": [
+  {
+   "scope": "sbom",
+   "component": null,
+   "missing": [
+    "creator"
+   ]
+  },
+  {
+   "scope": "subject",
+   "component": null,
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "debian@13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/adduser@3.152?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/apt@3.0.4?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/base-files@13.8%2Bdeb13u7?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/base-passwd@3.6.7?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/bash@5.2.37-2%2Bb10?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/bsdutils@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/ca-certificates@20250419%2Bdeb13u1?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/coreutils@9.7-3?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/dash@0.5.12-12?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/debconf@1.5.91?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/debian-archive-keyring@2025.1?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/debianutils@5.23.2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/diffutils@3.10-4?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/dpkg@1.22.22?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/findutils@4.10.0-3?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/gcc-14-base@14.2.0-19?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/grep@3.11-4%2Bb1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/gzip@1.13-1%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/hostname@3.25?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/init-system-helpers@1.69~deb13u1?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libacl1@2.3.2-2%2Bb1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libapt-pkg7.0@3.0.4?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libattr1@2.5.2-3?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libaudit-common@4.0.2-2%2Bdeb13u1?arch=all&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libaudit1@4.0.2-2%2Bdeb13u1?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libblkid1@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libbsd0@0.12.2-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libbz2-1.0@1.0.8-6?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libc-bin@2.41-12%2Bdeb13u4?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libc6@2.41-12%2Bdeb13u4?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libcap-ng0@0.8.5-4%2Bb1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libcap2@2.75-10%2Bdeb13u1%2Bb3?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libcrypt1@4.4.38-1?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libdb5.3t64@5.3.28%2Bdfsg2-9?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libdebconfclient0@0.280?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libffi8@3.4.8-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libgcc-s1@14.2.0-19?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libgdbm6t64@1.24-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libgmp10@6.3.0%2Bdfsg-3?arch=arm64&distro=debian-13.7&epoch=2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libhogweed6t64@3.10.1-1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/liblastlog2-2@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/liblz4-1@1.10.0-4?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/liblzma5@5.8.1-1%2Bdeb13u2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libmd0@1.1.0-2%2Bb1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libmount1@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libncursesw6@6.5%2B20250216-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libnettle8t64@3.10.1-1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libpam-modules-bin@1.7.0-5?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libpam-modules@1.7.0-5?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libpam-runtime@1.7.0-5?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libpam0g@1.7.0-5?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libpcre2-8-0@10.46-1~deb13u3?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libreadline8t64@8.2-6?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libseccomp2@2.6.0-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libselinux1@3.8.1-1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libsemanage-common@3.8.1-1?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libsemanage2@3.8.1-1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libsepol2@3.8.1-1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libsmartcols1@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libsqlite3-0@3.46.1-7%2Bdeb13u2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libssl3t64@3.5.7-1~deb13u3?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libstdc%2B%2B6@14.2.0-19?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libsystemd0@257.13-1~deb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libtinfo6@6.5%2B20250216-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libudev1@257.13-1~deb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libuuid1@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libxxhash0@0.8.3-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/libzstd1@1.5.7%2Bdfsg-1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/login.defs@4.17.4-2?arch=all&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/login@4.16.0-2%2Breally2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/mawk@1.3.4.20250131-1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/mount@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/ncurses-base@6.5%2B20250216-2?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/ncurses-bin@6.5%2B20250216-2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/netbase@6.5?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/openssl-provider-legacy@3.5.7-1~deb13u3?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/openssl@3.5.7-1~deb13u3?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/passwd@4.17.4-2?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/perl-base@5.40.1-6%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/readline-common@8.2-6?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/sed@4.9-2%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/sqv@1.3.0-3%2Bb2?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/sysvinit-utils@3.14-4?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/tar@1.35%2Bdfsg-3.1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/tzdata@2026f-0%2Bdeb13u1?arch=all&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/util-linux@2.41.5-0%2Bdeb13u1?arch=arm64&distro=debian-13.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:deb/debian/zlib1g@1.3.dfsg%2Breally1.3.1-1%2Bb1?arch=arm64&distro=debian-13.7&epoch=1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/cachecontrol@0.14.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/certifi@2026.10.19",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/distlib@0.4.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/distro@1.9.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/idna@3.18",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/msgpack@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/packaging@26.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/pip@26.2.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/platformdirs@4.10.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/pygments@2.20.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/pyproject-hooks@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/requests@2.34.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/resolvelib@1.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/rich@14.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/setuptools@70.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/tomli-w@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/tomli@2.4.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/truststore@0.10.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:pypi/urllib3@2.7.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  }
+ ]
+}

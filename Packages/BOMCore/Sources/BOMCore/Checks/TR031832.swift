@@ -126,7 +126,7 @@ public struct Evaluation: Sendable, Hashable {
 /// One failed rule for one component (or the document, or the subject).
 public struct Offender: Sendable, Hashable {
     public let rule: RuleID
-    /// Index into `CycloneDXDocument.components`; nil for the document and the subject.
+    /// Index into `BOMDocument.components`; nil for the document and the subject.
     public let component: Int?
     /// rio's identifier: what a reader searches for in the SBOM.
     public let identity: String

@@ -12,7 +12,7 @@ import sys
 
 INPUTS = sorted(glob.glob("Fixtures/public/*.json")) + sorted(glob.glob("Fixtures/rio/*.json")) + [
     "Fixtures/synthetic/tr-edge-1.6.cdx.json"
-]
+] + sorted(glob.glob("Fixtures/tools/*.cdx.json"))  # SBOMs as Syft, Trivy, cdxgen and Maven write them
 MANIFEST = """version: 1
 artifacts:
   - id: parity

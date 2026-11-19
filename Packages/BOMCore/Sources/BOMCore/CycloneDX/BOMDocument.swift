@@ -1,6 +1,6 @@
 /// A CycloneDX SBOM read from the tree. Nothing is copied out of the source
 /// except decoded strings; every part keeps the node it came from.
-public struct CycloneDXDocument: Sendable {
+public struct BOMDocument: Sendable {
     public let tree: JSONTree
     public let root: NodeID
     public let specVersion: Located<String>
@@ -18,13 +18,13 @@ public struct CycloneDXDocument: Sendable {
     public static let minimumVersion = "1.2"
 
     /// The document when the tree is CycloneDX 1.2 or later; nil otherwise.
-    public static func recognize(_ tree: JSONTree) -> CycloneDXDocument? {
+    public static func recognize(_ tree: JSONTree) -> BOMDocument? {
         guard let root = tree.root, tree.kind(root) == .object,
               tree.memberString(root, "bomFormat") == "CycloneDX",
               let versionNode = tree.member(root, "specVersion"), let version = tree.string(versionNode),
               isDottedDecimal(version), compareVersions(version, minimumVersion) >= 0
         else { return nil }
-        return CycloneDXDocument(tree: tree, root: root, specVersion: Located(version, node: versionNode))
+        return BOMDocument(tree: tree, root: root, specVersion: Located(version, node: versionNode))
     }
 
     private init(tree: JSONTree, root: NodeID, specVersion: Located<String>) {

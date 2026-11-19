@@ -1,0 +1,7657 @@
+{
+ "rio": "rio 0.10.2 (commit: 35c8da3efe782f4cfebd64aa400e513d03bb6db1, built: 2026-11-14T20:10:55Z)",
+ "input": "Fixtures/tools/juice-shop.trivy.cdx.json",
+ "specVersionInput": "1.7",
+ "evaluations": [
+  {
+   "scope": "sbom",
+   "requirement": "specVersion",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "sbom",
+   "requirement": "timestamp",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "sbom",
+   "requirement": "vulnerabilities",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "name",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "version",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "level",
+   "evaluated": 1,
+   "failed": 0
+  },
+  {
+   "scope": "subject",
+   "requirement": "creator",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "filename",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "dependencies",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "distributionLicences",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "deployableHash",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "executable",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "archive",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "subject",
+   "requirement": "structured",
+   "evaluated": 1,
+   "failed": 1
+  },
+  {
+   "scope": "components",
+   "requirement": "name",
+   "evaluated": 533,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "version",
+   "evaluated": 533,
+   "failed": 1
+  },
+  {
+   "scope": "components",
+   "requirement": "level",
+   "evaluated": 533,
+   "failed": 0
+  },
+  {
+   "scope": "components",
+   "requirement": "creator",
+   "evaluated": 533,
+   "failed": 533
+  },
+  {
+   "scope": "components",
+   "requirement": "filename",
+   "evaluated": 533,
+   "failed": 533
+  },
+  {
+   "scope": "components",
+   "requirement": "dependencies",
+   "evaluated": 533,
+   "failed": 533
+  },
+  {
+   "scope": "components",
+   "requirement": "distributionLicences",
+   "evaluated": 533,
+   "failed": 533
+  },
+  {
+   "scope": "components",
+   "requirement": "deployableHash",
+   "evaluated": 533,
+   "failed": 533
+  },
+  {
+   "scope": "components",
+   "requirement": "executable",
+   "evaluated": 533,
+   "failed": 533
+  },
+  {
+   "scope": "components",
+   "requirement": "archive",
+   "evaluated": 533,
+   "failed": 533
+  },
+  {
+   "scope": "components",
+   "requirement": "structured",
+   "evaluated": 533,
+   "failed": 533
+  }
+ ],
+ "profileLevels": {
+  "assembled": 0,
+  "full": 534,
+  "identified": 0,
+  "logical": 0,
+  "referenced": 0
+ },
+ "findings": [
+  {
+   "scope": "sbom",
+   "component": null,
+   "missing": [
+    "creator"
+   ]
+  },
+  {
+   "scope": "subject",
+   "component": null,
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "package-lock.json",
+   "missing": [
+    "version",
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40adraffy/ens-normalize@1.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40ai-sdk/gateway@3.0.238",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40ai-sdk/openai-compatible@2.0.94",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40ai-sdk/provider-utils@4.0.67",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40ai-sdk/provider@3.0.19",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40babel/helper-string-parser@7.29.14",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40babel/helper-validator-identifier@7.29.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40babel/parser@7.29.14",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40babel/types@7.29.14",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40colors/colors@1.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40colors/colors@1.6.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40dabh/diagnostics@2.0.9",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40fontsource/roboto@5.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40gar/promisify@1.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40hexagon/base64@1.1.28",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40levischuck/tiny-cbor@0.2.11",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40material/material-color-utilities@0.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40noble/curves@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40noble/hashes@1.3.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40noble/hashes@2.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40npmcli/fs@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40npmcli/move-file@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40opentelemetry/api@1.10.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40otplib/core@13.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40otplib/hotp@13.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40otplib/plugin-base32-scure@13.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40otplib/plugin-crypto-noble@13.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40otplib/totp@13.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40otplib/uri@13.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-android@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-asym-key@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-cms@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-csr@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-ecc@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-pfx@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-pkcs8@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-pkcs9@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-rsa@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-schema@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-x509-attr@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-x509-post-quantum@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/asn1-x509@2.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/utils@2.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40peculiar/x509@2.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40scarf/scarf@1.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40scure/base@2.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40simplewebauthn/server@14.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40so-ric/colorspace@1.1.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40socket.io/component-emitter@3.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40standard-schema/spec@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40swc/helpers@0.3.17",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40tokenizer/token@0.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40tootallnate/once@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/cors@2.8.19",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/debug@4.1.13",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/ms@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/node@22.7.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/node@26.6.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/triple-beam@1.3.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/validator@13.15.10",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40types/ws@8.18.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/%40vercel/oidc@3.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/abbrev@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/abort-controller@3.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/accepts@1.3.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/acorn@7.4.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/aes-js@4.0.0-beta.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/agent-base@6.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/agent-base@9.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/agentkeepalive@4.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/aggregate-error@3.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ai@6.0.333",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ansi-regex@5.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/append-field@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/aproba@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/are-we-there-yet@3.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/argparse@1.0.10",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/array-buffer-byte-length@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/array-flatten@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/asap@2.0.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/asn1js@3.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/assert-never@1.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ast-types@0.13.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/async@3.2.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/available-typed-arrays@1.0.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/babel-walk@3.0.0-canary-5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/balanced-match@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/base64-js@0.0.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/base64-js@1.5.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/base64url@0.0.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/basic-auth@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/basic-ftp@6.2.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/batch@0.6.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/beercss@4.0.23",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/bindings@1.5.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/bintrees@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/bl@4.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/bluebird@3.7.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/body-parser@1.20.9",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/brace-expansion@1.1.22",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/brotli@1.3.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/browserify-zlib@0.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/buffer@5.7.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/buffer@6.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/busboy@1.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/bytes@3.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/cacache@15.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/call-bind-apply-helpers@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/call-bind@1.0.9",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/call-bound@1.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/character-parser@2.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/check-types@6.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/chownr@1.1.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/chownr@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/clarinet@0.12.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/clean-stack@2.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/clone@2.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/color-convert@3.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/color-name@2.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/color-string@2.1.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/color-support@1.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/color@5.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/compressible@2.0.18",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/compression@1.8.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/concat-map@0.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/config@3.3.12",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/console-control-strings@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/constantinople@4.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/content-disposition@0.5.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/content-type@1.0.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/cookie-parser@1.4.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/cookie-signature@1.0.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/cookie@0.7.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/cookieconsent@3.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/core-util-is@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/cors@2.8.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/crypto-js@3.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/data-uri-to-buffer@8.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/debug@2.6.9",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/debug@4.4.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/decompress-response@6.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/deep-equal@2.2.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/deep-extend@0.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/define-data-property@1.1.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/define-properties@1.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/degenerator@7.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/delegates@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/depd@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/depd@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/destroy@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/detect-libc@2.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/dfa@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/doctypes@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/domelementtype@1.3.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/domhandler@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/domutils@1.1.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/dottie@2.0.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/double-ended-queue@0.9.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/dunder-proto@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/duplexer2@0.1.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ee-first@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/emoji-regex@8.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/enabled@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/encodeurl@2.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/encoding@0.1.14",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/end-of-stream@1.4.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/engine.io-parser@5.2.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/engine.io@6.6.12",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/env-paths@2.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/err-code@2.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/errorhandler@1.5.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/es-define-property@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/es-errors@1.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/es-get-iterator@1.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/es-object-atoms@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/escape-html@1.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/escodegen@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/esprima@1.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/esprima@4.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/estraverse@5.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/esutils@2.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/etag@1.8.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ethers@6.17.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/event-target-shim@5.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/eventemitter3@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/events@3.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/eventsource-parser@3.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/expand-template@2.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/express-ipfilter@1.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/express-jwt@0.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/express-rate-limit@7.5.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/express-robots-txt@0.5.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/express-security.txt@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/express@4.22.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fast.js@0.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/feature-policy@0.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fecha@4.2.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/file-stream-rotator@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/file-type@16.5.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/file-uri-to-path@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/finale-rest@1.2.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/finalhandler@1.3.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fn.name@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fontkit@1.9.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/for-each@0.3.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/foreachasync@3.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/forwarded@0.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fresh@0.5.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fs-constants@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fs-extra@11.3.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fs-minipass@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/fs.realpath@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/function-bind@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/functions-have-names@1.2.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/gauge@4.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/geojson-utils@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/get-intrinsic@1.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/get-proto@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/get-uri@8.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/github-from-package@0.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/glob@7.2.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/gopd@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/graceful-fs@4.2.12",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/handlebars@4.7.10",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/has-bigints@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/has-property-descriptors@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/has-symbols@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/has-tostringtag@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/has-unicode@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/hashids@2.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/hasown@2.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/hbs@4.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/he@0.4.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/helmet@4.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/hoister@0.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/html-entities@1.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/htmlparser2@3.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/http-cache-semantics@4.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/http-errors@1.8.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/http-errors@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/http-proxy-agent@4.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/http-proxy-agent@9.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/https-proxy-agent@5.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/https-proxy-agent@9.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/humanize-ms@1.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/i18n@0.11.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/iconv-lite@0.4.24",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/iconv-lite@0.7.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ieee754@1.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/imurmurhash@0.1.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/indent-string@4.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/infer-owner@1.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/inflection@1.13.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/inflight@1.0.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/inherits@2.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ini@1.3.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/internal-slot@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/invariant@2.2.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ip-address@10.7.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ip6@0.2.13",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ipaddr.js@1.9.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-arguments@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-array-buffer@3.0.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-bigint@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-boolean-object@1.2.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-callable@1.2.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-core-module@2.18.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-date-object@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-expression@4.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-fullwidth-code-point@3.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-lambda@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-map@2.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-number-object@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-promise@2.2.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-regex@1.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-set@2.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-shared-array-buffer@1.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-stream@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-string@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-symbol@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-weakmap@2.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/is-weakset@2.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/isarray@0.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/isarray@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/isarray@2.0.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/isexe@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/js-stringify@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/js-tokens@4.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/js-yaml@3.15.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/json-schema@0.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/json5@2.2.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/jsonfile@6.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/jsonwebtoken@0.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/jsonwebtoken@0.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/jstransformer@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/jwa@0.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/jws@0.2.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/kuler@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/libxml2-wasm@0.7.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/linebreak@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/lodash@2.4.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/lodash@4.18.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/logform@2.7.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/loose-envify@1.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/lru-cache@6.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/lru-cache@7.18.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/make-fetch-happen@9.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/make-plural@4.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/make-plural@6.2.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/marsdb@0.6.11",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/material-dynamic-colors@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/material-icons@1.13.14",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/math-interval-parser@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/math-intrinsics@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/media-typer@0.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/merge-descriptors@1.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/messageformat-formatters@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/messageformat-parser@4.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/messageformat@2.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/methods@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mime-db@1.52.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mime-db@1.54.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mime-types@2.1.35",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mime@1.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mimic-response@3.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minimatch@3.1.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minimist@1.2.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minipass-collect@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minipass-fetch@1.4.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minipass-flush@1.0.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minipass-pipeline@1.2.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minipass-sized@1.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minipass@3.3.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minipass@5.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/minizlib@2.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mkdirp-classic@0.5.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mkdirp@1.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/moment-timezone@0.5.48",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/moment@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/moment@2.31.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/morgan@1.12.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ms@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ms@2.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/multer@2.5.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/mustache@4.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/napi-build-utils@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/negotiator@0.6.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/negotiator@0.6.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/neo-async@2.6.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/neoip@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/netmask@2.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/node-abi@3.101.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/node-addon-api@7.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/node-gyp@8.4.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/node-int64@0.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/nopt@5.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/notevil@1.3.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/npmlog@6.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/object-assign@4.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/object-inspect@1.14.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/object-is@1.1.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/object-keys@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/object.assign@4.1.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/on-finished@2.4.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/on-headers@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/once@1.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/one-time@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/opentype.js@0.7.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/otplib@13.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/p-map@4.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pac-proxy-agent@9.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pac-resolver@9.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pako@0.2.9",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pako@1.0.11",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/parseurl@1.3.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/path-is-absolute@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/path-parse@1.0.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/path-to-regexp@0.1.13",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pdfkit@0.11.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/peek-readable@4.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pg-connection-string@2.14.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/png-js@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/possible-typed-array-names@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/prebuild-install@7.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/process-nextick-args@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/process@0.11.10",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/prom-client@15.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/promise-inflight@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/promise-retry@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/promise@7.3.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/proxy-addr@2.0.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/proxy-agent-negotiate@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/proxy-agent@8.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/proxy-from-env@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-attrs@3.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-code-gen@3.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-error@2.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-filters@4.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-lexer@5.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-linker@4.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-load@3.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-parser@6.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-runtime@3.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-strip-comments@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug-walk@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pug@3.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pump@3.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pvtsutils@1.3.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/pvutils@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/qs@6.16.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/quickjs-wasi@3.7.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/range-parser@1.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/range_check@2.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/raw-body@2.5.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/rc@1.2.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/readable-stream@1.0.34",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/readable-stream@2.3.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/readable-stream@3.6.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/readable-stream@4.8.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/readable-web-to-node-stream@3.0.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/reflect-metadata@0.2.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/regexp.prototype.flags@1.5.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/resolve@1.22.14",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/restructure@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/retry-as-promised@7.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/retry@0.12.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/rimraf@3.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/safe-buffer@5.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/safe-buffer@5.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/safe-regex-test@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/safe-stable-stringify@2.5.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/safer-buffer@2.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/sanitize-filename@1.6.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/sanitize-html@1.4.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/semver@7.8.6",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/send@0.19.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/sequelize-pool@7.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/sequelize@6.37.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/serve-index@1.9.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/serve-static@1.16.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/set-blocking@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/set-function-length@1.2.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/set-function-name@2.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/setprototypeof@1.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/side-channel-list@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/side-channel-map@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/side-channel-weakmap@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/side-channel@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/signal-exit@3.0.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/simple-concat@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/simple-get@4.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/smart-buffer@4.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/socket.io-adapter@2.5.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/socket.io-parser@4.2.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/socket.io@4.8.4",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/socks-proxy-agent@10.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/socks-proxy-agent@6.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/socks@2.8.10",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/source-map@0.6.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/sprintf-js@1.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/sprintf-js@1.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/sqlite3@5.1.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ssri@8.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/stack-trace@0.0.10",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/statuses@1.5.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/statuses@2.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/stop-iteration-iterator@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/streamsearch@1.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/string-width@4.2.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/string_decoder@0.10.31",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/string_decoder@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/string_decoder@1.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/strip-ansi@6.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/strip-json-comments@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/strtok3@6.3.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/supports-preserve-symlinks-flag@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/svg-captcha@1.4.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/swagger-ui-dist@5.35.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/swagger-ui-express@5.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tar-fs@2.1.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tar-stream@2.2.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tar@6.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tdigest@0.1.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/text-hex@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tiny-inflate@1.0.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/toidentifier@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/token-stream@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/token-types@4.2.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/toposort-class@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/triple-beam@1.4.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/truncate-utf8-bytes@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tslib@1.14.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tslib@2.7.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tslib@2.9.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tsyringe@4.10.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/tunnel-agent@0.6.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/type-is@1.6.18",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/uglify-js@3.19.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/undici-types@6.19.8",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/undici-types@8.9.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/undici@6.29.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/unicode-properties@1.4.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/unicode-trie@2.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/unique-filename@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/unique-slug@2.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/universalify@2.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/unpipe@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/unzipper@0.12.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/utf8-byte-length@1.0.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/util-deprecate@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/utils-merge@1.0.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/uuid@8.3.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/validator@13.15.35",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/vary@1.1.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/void-elements@3.1.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/walk@2.3.15",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/which-boxed-primitive@1.1.1",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/which-collection@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/which-typed-array@1.1.24",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/which@2.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/wide-align@1.1.5",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/winston-transport@4.9.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/winston@3.19.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/with@7.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/wkx@0.5.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/wordwrap@1.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/wrappy@1.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ws@8.21.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/ws@8.21.3",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/yallist@4.0.0",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/z85@0.0.2",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  },
+  {
+   "scope": "components",
+   "component": "pkg:npm/zod@4.6.7",
+   "missing": [
+    "creator",
+    "filename",
+    "dependencies",
+    "distributionLicences",
+    "deployableHash",
+    "executable",
+    "archive",
+    "structured"
+   ]
+  }
+ ]
+}

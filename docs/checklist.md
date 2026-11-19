@@ -114,3 +114,10 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ actionlint and shellcheck clean; the scripts run under macOS's bash 3.2.
 - ✅ On GitHub: CI green on the `xcode-27` runner; the tag `v0.1.0` produced the notarized assets, `verify` passed on macOS 15 and 27, the release is published; the public download verifies on Toni's Mac too.
 - ⏳ By hand: the downloaded DMG opens on a Mac that never saw the app, without "Open Anyway" (hand-check.md, 7).
+
+## SBOMs as the tools write them (findings.md, 2026-11-19)
+
+- ✅ `RealToolTests`: dependency reach (no data, no product ref, not from the product, reached), files counted apart, product titles from "." and image digests.
+- ✅ `ParityTests`: nine CycloneDX files from Syft, Trivy, cdxgen and Maven judged as rio 0.10.2 judges them.
+- ✅ Snapshots: every view of 24 generated SBOMs renders (`scripts/real-sweep.sh`); the fixed Overviews and Composition for Syft, Trivy and the image.
+

@@ -3,7 +3,7 @@ import Testing
 @testable import BOMCore
 
 @Suite struct DependencyMapTests {
-    let laravel = DependencyMap(DependencyGraph(CycloneDXDocument.recognize(fixtureTree(laravelPath))!)!)
+    let laravel = DependencyMap(DependencyGraph(BOMDocument.recognize(fixtureTree(laravelPath))!)!)
 
     private func slice(_ map: DependencyMap, _ ref: String) -> (Int, DependencyMap.Slice)? {
         map.slices.enumerated().first { $0.element.ref == ref }.map { ($0.offset, $0.element) }

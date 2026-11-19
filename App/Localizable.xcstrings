@@ -4182,6 +4182,159 @@
           }
         }
       }
+    },
+    "%d files listed as components are not counted here.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d files listed as components are not counted here."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d als Komponenten gelistete Dateien sind hier nicht mitgezählt."
+          }
+        }
+      }
+    },
+    "The dependency data links %d components among themselves, but no entry starts at the product, so it cannot say how deep anything is.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The dependency data links %d components among themselves, but no entry starts at the product, so it cannot say how deep anything is."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Abhängigkeitsdaten verbinden %d Komponenten untereinander, aber kein Eintrag beginnt beim Produkt; daher lässt sich nicht sagen, wie tief etwas liegt."
+          }
+        }
+      }
+    },
+    "no entry for the product": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "no entry for the product"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "kein Eintrag für das Produkt"
+          }
+        }
+      }
+    },
+    "product named “%@” in the SBOM": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "product named “%@” in the SBOM"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "im SBOM heißt das Produkt „%@“"
+          }
+        }
+      }
+    },
+    "components · %d files": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "components · %d files"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Komponenten · %d Dateien"
+          }
+        }
+      }
+    },
+    "dependencies do not start at the product": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dependencies do not start at the product"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abhängigkeiten beginnen nicht beim Produkt"
+          }
+        }
+      }
+    },
+    "1 more licence": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 more licence"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 weitere Lizenz"
+          }
+        }
+      }
+    },
+    "%d more licences": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d more licences"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d weitere Lizenzen"
+          }
+        }
+      }
+    },
+    "%d components from 1 vendor.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d components from 1 vendor."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d Komponenten von 1 Anbieter."
+          }
+        }
+      }
     }
   },
   "version": "1.0"

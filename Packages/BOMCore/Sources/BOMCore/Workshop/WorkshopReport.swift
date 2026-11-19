@@ -1,7 +1,7 @@
 /// Everything the workshop views show about one SBOM, computed once off the
 /// main thread. No UI types: the app lays it out and localises it.
 public struct WorkshopAnalysis: Sendable {
-    public let bom: CycloneDXDocument
+    public let bom: BOMDocument
     public let graph: DependencyGraph?
     /// The map of the product; nil without dependency data from the product.
     public let map: DependencyMap?
@@ -17,7 +17,7 @@ public struct WorkshopAnalysis: Sendable {
 
     /// Nil when the tree is not CycloneDX 1.2 or later.
     public static func analyse(_ tree: JSONTree) -> WorkshopAnalysis? {
-        guard let bom = CycloneDXDocument.recognize(tree) else { return nil }
+        guard let bom = BOMDocument.recognize(tree) else { return nil }
         let graph = DependencyGraph(bom)
         let profile = checkTR031832(bom)
         var byComponent: [Int: [Offender]] = [:]
@@ -83,7 +83,7 @@ public struct CompletenessReport: Sendable {
     public let parseErrors: Int
     public let sections: [Section]
 
-    init(_ bom: CycloneDXDocument, _ profile: ProfileResult) {
+    init(_ bom: BOMDocument, _ profile: ProfileResult) {
         let version = bom.specVersion.value
         let spec = profile.evaluations.first { $0.rule == RuleID(.sbom, .specVersion) }
         versionGap = (spec?.failed ?? 0) > 0
@@ -95,7 +95,7 @@ public struct CompletenessReport: Sendable {
         sections = Scope.allCases.map { scope in
             let rows = profile.evaluations.filter { $0.rule.scope == scope && $0.rule.requirement != .specVersion }.map { e in
                 let introduced = TR031832.introducedIn(e.rule.requirement)
-                    .flatMap { CycloneDXDocument.compareVersions(version, $0) < 0 ? $0 : nil }
+                    .flatMap { BOMDocument.compareVersions(version, $0) < 0 ? $0 : nil }
                 return Row(rule: e.rule, covered: e.evaluated - e.failed, total: e.evaluated, outcome: e.outcome,
                            section: TR031832.section(e.rule), introducedIn: introduced, offenders: offenders[e.rule] ?? [])
             }

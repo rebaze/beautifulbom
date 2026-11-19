@@ -1,0 +1,4 @@
+syft 1.57.2
+trivy 0.76.2
+cdxgen 12.9.2
+Apache Maven 3.9.16 (2bdd9fddda4b155ebf8000e807eb73fd829a51d5)

@@ -131,3 +131,31 @@ bars, legend and Components list carry the same facts.
 Left as designed: "n of N fields present" counts rules met by every component; ⌘F in the Components
 search goes to Source; a merged slice opens every part at that depth; OR with an unclassified
 licence takes the classified side. Not measured: `LineNumberRuler` on 50 MB files after Find.
+
+## SBOMs as the tools write them (2026-11-19)
+
+24 SBOMs from Syft 1.57.2, Trivy 0.76.2, cdxgen 12.9.2 and the CycloneDX Maven plugin 2.9.1 on
+four public subjects (`scripts/real-sboms.sh`, a Java service, Juice Shop, rio, `python:3.13-slim`),
+each rendered in every view (`scripts/real-sweep.sh`, gallery in `build/screenshots/real/`).
+
+- **CycloneDX 1.7 is the default** of Syft, Trivy and cdxgen; only the Maven plugin writes 1.6.
+  The views read 1.7; rio 0.10.2 checks it too.
+- **Parity holds on real output**: rio and the app judge all nine committed CycloneDX files alike
+  (`Fixtures/tools/`, `Fixtures/parity/`).
+- **Fast**: analysis of 2,753 components takes 23 ms; parsing 2.2 MB 19 ms.
+- **The same source, different counts**: Juice Shop has 1,108 components by cdxgen, 601 by Syft,
+  533 by Trivy. Material for comparing two SBOMs.
+- **Fixed in the views**:
+  - Syft's product has a bom-ref but no dependency entry starts at it: the Overview said "0 → 0",
+    Composition "the product has no bom-ref". Both now say the dependencies do not start at the
+    product (`Composition.Reach`).
+  - Directory scans name the product "."; the title is now the file name, with "product named "."
+    in the SBOM". Image scans put the digest into the name; it moves to the subtitle.
+  - Syft lists every file of an image as a component (2,657 of 2,753): files are counted apart and
+    kept out of vendors, licences and ecosystems.
+  - "built on" named the first of 98 direct dependencies; it now needs exactly one.
+  - Labels on the grey and pale red bar segments were white on light grey; now dark.
+  - A Debian image states over 100 licence names; the caption lists ten and "n more".
+- **SPDX**: Syft and Trivy write SPDX 2.3 JSON, cdxgen SPDX 3.0.1 JSON-LD; all opened in Source
+  only (`docs/design-spdx.md`).
+- cdxgen writes absolute paths of the checkout (the user name); the script replaces them.

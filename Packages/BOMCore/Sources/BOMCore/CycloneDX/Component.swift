@@ -151,3 +151,30 @@ public struct Tool: Sendable, Hashable {
     public let version: String?
     public let node: NodeID
 }
+
+/// How the product's name reads as a title. Directory scans name the product "." and image scans
+/// add the digest to the name; both make poor headlines.
+public struct ProductTitle: Sendable, Hashable {
+    /// The headline; nil when the name says nothing (absent, empty, ".", "/"), so the view uses the
+    /// file name and says what the SBOM calls the product.
+    public let title: String?
+    /// The digest after "@", shortened to 12 hex digits, for the subtitle.
+    public let digest: String?
+
+    public init(_ name: String?) {
+        let n = name?.trimmingCharacters(in: .whitespaces) ?? ""
+        if n.isEmpty || n.allSatisfy({ $0 == "." || $0 == "/" }) {
+            title = nil
+            digest = nil
+            return
+        }
+        if let at = n.range(of: "@sha256:"), at.lowerBound > n.startIndex {
+            title = String(n[..<at.lowerBound])
+            let hex = n[at.upperBound...]
+            digest = "sha256:" + hex.prefix(12) + (hex.count > 12 ? "…" : "")
+        } else {
+            title = n
+            digest = nil
+        }
+    }
+}

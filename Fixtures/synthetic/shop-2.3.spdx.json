@@ -1,0 +1,101 @@
+{
+  "spdxVersion": "SPDX-2.3",
+  "dataLicense": "CC0-1.0",
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "acme-shop",
+  "documentNamespace": "https://example.com/spdx/acme-shop-1.4.0",
+  "creationInfo": {
+    "licenseListVersion": "3.25",
+    "creators": [
+      "Organization: Acme Devices GmbH",
+      "Tool: example-scanner-2.1.0"
+    ],
+    "created": "2026-11-18T09:30:00Z"
+  },
+  "packages": [
+    {
+      "name": "acme-shop",
+      "SPDXID": "SPDXRef-Package-shop",
+      "versionInfo": "1.4.0",
+      "supplier": "Organization: Acme Devices GmbH",
+      "downloadLocation": "https://example.com/acme-shop-1.4.0.tar.gz",
+      "primaryPackagePurpose": "APPLICATION",
+      "licenseConcluded": "LicenseRef-Acme-Proprietary",
+      "licenseDeclared": "NOASSERTION",
+      "copyrightText": "NOASSERTION",
+      "checksums": [
+        { "algorithm": "SHA512", "checksumValue": "0a1b2c" }
+      ],
+      "externalRefs": [
+        { "referenceCategory": "PACKAGE-MANAGER", "referenceType": "purl", "referenceLocator": "pkg:generic/acme/acme-shop@1.4.0" }
+      ]
+    },
+    {
+      "name": "express",
+      "SPDXID": "SPDXRef-Package-express",
+      "versionInfo": "4.21.2",
+      "originator": "Person: TJ Holowaychuk",
+      "downloadLocation": "https://registry.npmjs.org/express/-/express-4.21.2.tgz",
+      "homepage": "http://expressjs.com/",
+      "primaryPackagePurpose": "LIBRARY",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "MIT",
+      "summary": "Fast, unopinionated, minimalist web framework",
+      "checksums": [
+        { "algorithm": "SHA256", "checksumValue": "aabbcc" }
+      ],
+      "externalRefs": [
+        { "referenceCategory": "SECURITY", "referenceType": "cpe23Type", "referenceLocator": "cpe:2.3:a:expressjs:express:4.21.2:*:*:*:*:*:*:*" },
+        { "referenceCategory": "PACKAGE-MANAGER", "referenceType": "purl", "referenceLocator": "pkg:npm/express@4.21.2" }
+      ]
+    },
+    {
+      "name": "body-parser",
+      "SPDXID": "SPDXRef-Package-body-parser",
+      "versionInfo": "1.20.3",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT",
+      "licenseDeclared": "MIT",
+      "externalRefs": [
+        { "referenceCategory": "PACKAGE-MANAGER", "referenceType": "purl", "referenceLocator": "pkg:npm/body-parser@1.20.3" }
+      ]
+    },
+    {
+      "name": "bytes",
+      "SPDXID": "SPDXRef-Package-bytes",
+      "versionInfo": "3.1.2",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "NOASSERTION",
+      "licenseDeclared": "NOASSERTION",
+      "externalRefs": [
+        { "referenceCategory": "PACKAGE-MANAGER", "referenceType": "purl", "referenceLocator": "pkg:npm/bytes@3.1.2" }
+      ]
+    },
+    {
+      "name": "@types/node",
+      "SPDXID": "SPDXRef-Package-types-node",
+      "versionInfo": "22.10.0",
+      "downloadLocation": "NOASSERTION",
+      "licenseConcluded": "MIT OR Apache-2.0",
+      "externalRefs": [
+        { "referenceCategory": "PACKAGE-MANAGER", "referenceType": "purl", "referenceLocator": "pkg:npm/%40types/node@22.10.0" }
+      ]
+    },
+    {
+      "name": "left-alone",
+      "SPDXID": "SPDXRef-Package-left-alone",
+      "versionInfo": "0.1.0",
+      "downloadLocation": "NOASSERTION"
+    }
+  ],
+  "relationships": [
+    { "spdxElementId": "SPDXRef-DOCUMENT", "relationshipType": "DESCRIBES", "relatedSpdxElement": "SPDXRef-Package-shop" },
+    { "spdxElementId": "SPDXRef-Package-shop", "relationshipType": "CONTAINS", "relatedSpdxElement": "SPDXRef-Package-express" },
+    { "spdxElementId": "SPDXRef-Package-shop", "relationshipType": "CONTAINS", "relatedSpdxElement": "SPDXRef-Package-body-parser" },
+    { "spdxElementId": "SPDXRef-Package-shop", "relationshipType": "CONTAINS", "relatedSpdxElement": "SPDXRef-Package-bytes" },
+    { "spdxElementId": "SPDXRef-Package-shop", "relationshipType": "CONTAINS", "relatedSpdxElement": "SPDXRef-Package-types-node" },
+    { "spdxElementId": "SPDXRef-Package-express", "relationshipType": "DEPENDS_ON", "relatedSpdxElement": "SPDXRef-Package-body-parser" },
+    { "spdxElementId": "SPDXRef-Package-bytes", "relationshipType": "DEPENDENCY_OF", "relatedSpdxElement": "SPDXRef-Package-body-parser" },
+    { "spdxElementId": "SPDXRef-Package-types-node", "relationshipType": "DEV_DEPENDENCY_OF", "relatedSpdxElement": "SPDXRef-Package-shop" }
+  ]
+}
