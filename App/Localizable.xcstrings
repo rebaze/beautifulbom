@@ -4948,6 +4948,40 @@
         }
       }
     },
+    "listed %d times": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "listed %d times"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d-mal aufgeführt"
+          }
+        }
+      }
+    },
+    "The file lists this package several times with the same version, for example once per workflow that uses it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The file lists this package several times with the same version, for example once per workflow that uses it."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Die Datei führt dieses Paket mehrfach mit derselben Version auf, zum Beispiel einmal je Workflow, der es nutzt."
+          }
+        }
+      }
+    },
     "1 package in both.": {
       "extractionState": "manual",
       "localizations": {

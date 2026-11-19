@@ -19,6 +19,9 @@ subpath (`npm/express`), else group and name. Several versions of one package pa
 versions first, then the rest in version order as "different version", the remainder on one side
 only. Files listed as components are counted, not paired; the products are not paired. Dotted
 versions (optional "v") give a direction; anything else is "not comparable".
+Entries that pair the same way (same package, kind and versions; Syft lists a GitHub Action once
+per workflow) are one row, "listed 3 times"; every count still counts entries, so the numbers add
+up to each file's packages.
 
 ## The view
 

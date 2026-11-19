@@ -2,7 +2,8 @@
 /// source. Components are paired by identity (the package URL without version, qualifiers and
 /// subpath; else group and name), several versions of one package as sets: equal versions first,
 /// then the rest in version order as changed, the remainder on one side only. Files listed as
-/// components (Syft on an image) are counted, not paired. The products are not paired.
+/// components (Syft on an image) are counted, not paired. The products are not paired. Entries
+/// that pair the same way (Syft lists a GitHub Action once per workflow) become one row with `times`.
 public struct BOMComparison: Sendable {
     public enum Kind: Sendable, Hashable { case same, changed, onlyA, onlyB }
     public enum Direction: Sendable, Hashable { case up, down, unknown }
@@ -20,8 +21,11 @@ public struct BOMComparison: Sendable {
         public let indexB: Int?
         /// For changed rows: newer, older, or not comparable.
         public let direction: Direction
-        /// Both sides state licences, and not the same ones.
+        /// Both sides state licences, and not the same ones (for any of the merged entries).
         public let licenceDiffers: Bool
+        /// How many entries this row stands for: a package listed several times with the same
+        /// version on each side is one row. The indexes point to the first.
+        public let times: Int
     }
 
     /// What one side states, for the table of facts.
@@ -47,10 +51,11 @@ public struct BOMComparison: Sendable {
     /// Sorted by name, then the version on side A (else B).
     public let rows: [Row]
 
+    /// Entries, not rows: same + changed + onlyA is the packages of A.
     public var counts: Counts {
         var s = 0, c = 0, oa = 0, ob = 0
         for r in rows {
-            switch r.kind { case .same: s += 1; case .changed: c += 1; case .onlyA: oa += 1; case .onlyB: ob += 1 }
+            switch r.kind { case .same: s += r.times; case .changed: c += r.times; case .onlyA: oa += r.times; case .onlyB: ob += r.times }
         }
         return Counts(same: s, changed: c, onlyA: oa, onlyB: ob)
     }
@@ -82,7 +87,7 @@ public struct BOMComparison: Sendable {
                 return Row(kind: kind, name: name, ecosystem: eco, versionA: x?.version, versionB: y?.version,
                            indexA: x?.index, indexB: y?.index,
                            direction: kind == .changed ? Self.direction(x?.version, y?.version) : .unknown,
-                           licenceDiffers: !la.isEmpty && !lb.isEmpty && la != lb)
+                           licenceDiffers: !la.isEmpty && !lb.isEmpty && la != lb, times: 1)
             }
             // Equal versions first.
             for x in restA {
@@ -99,9 +104,28 @@ public struct BOMComparison: Sendable {
             for x in restA.dropFirst(restB.count) { rows.append(row(.onlyA, x, nil)) }
             for y in restB.dropFirst(restA.count) { rows.append(row(.onlyB, nil, y)) }
         }
-        self.rows = rows.sorted {
-            $0.name != $1.name ? $0.name < $1.name : Self.precedes($0.versionA ?? $0.versionB, $1.versionA ?? $1.versionB)
+        // One row per kind, package and pair of versions, with the number of entries; the order
+        // is that of the first entry.
+        struct Key: Hashable { let kind: Kind; let name: String; let eco: String?; let va: String?; let vb: String? }
+        var merged: [Row] = []
+        var at: [Key: Int] = [:]
+        for r in rows.sorted(by: {
+            $0.name != $1.name ? $0.name < $1.name
+                : $0.ecosystem != $1.ecosystem ? ($0.ecosystem ?? "") < ($1.ecosystem ?? "")
+                : Self.precedes($0.versionA ?? $0.versionB, $1.versionA ?? $1.versionB)
+        }) {
+            let k = Key(kind: r.kind, name: r.name, eco: r.ecosystem, va: r.versionA, vb: r.versionB)
+            if let i = at[k] {
+                let m = merged[i]
+                merged[i] = Row(kind: m.kind, name: m.name, ecosystem: m.ecosystem, versionA: m.versionA, versionB: m.versionB,
+                                indexA: m.indexA, indexB: m.indexB, direction: m.direction,
+                                licenceDiffers: m.licenceDiffers || r.licenceDiffers, times: m.times + 1)
+            } else {
+                at[k] = merged.count
+                merged.append(r)
+            }
         }
+        self.rows = merged
     }
 
     // MARK: Identity and versions

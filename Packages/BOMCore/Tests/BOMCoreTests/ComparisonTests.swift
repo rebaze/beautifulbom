@@ -81,6 +81,23 @@ import Testing
         #expect(BOMComparison.direction("v1.2", "v1.3") == .up)
     }
 
+    /// Syft lists a GitHub Action once per workflow that uses it: one row, listed three times;
+    /// the counts still count every entry, so they add up to the packages of each file.
+    @Test func duplicatesMergeIntoOneRow() {
+        let action = { (v: String) in #"{"name":"actions/setup-python","version":"\#(v)","purl":"pkg:github/actions/setup-python@\#(v)"}"# }
+        let x = doc([action("v7.0.0"), action("v7.0.0"), action("v7.0.0"), #"{"name":"a","version":"1"}"#, #"{"name":"a","version":"1"}"#].joined(separator: ","))
+        let y = doc([action("v7.1.0"), action("v7.1.0"), action("v7.1.0"), #"{"name":"a","version":"1"}"#, #"{"name":"a","version":"1"}"#].joined(separator: ","))
+        let c = BOMComparison(x, y)
+        #expect(c.rows.map { "\($0.name) \($0.kind) ×\($0.times)" } == ["a same ×2", "actions/setup-python changed ×3"])
+        #expect(c.counts == BOMComparison.Counts(same: 2, changed: 3, onlyA: 0, onlyB: 0))
+        #expect(c.rows.first { $0.kind == .changed }?.direction == .up)
+    }
+
+    @Test func distinctVersionsStaySeparate() {
+        #expect(cmp.rows.allSatisfy { $0.times == 1 })
+        #expect(cmp.rows.count == 6)
+    }
+
     /// The same Java service, by the Maven plugin and by Syft on the source: Syft reads the
     /// declared dependencies from pom.xml (no transitive ones) and lists the project twice.
     @Test func mavenAgainstSyft() {

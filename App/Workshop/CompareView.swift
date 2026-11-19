@@ -60,22 +60,22 @@ struct CompareView: View {
         if n.changed == 0 {
             second.append(L("No package has a different version."))
         } else {
-            let up = c.rows.filter { $0.kind == .changed && $0.direction == .up }.count
-            let down = c.rows.filter { $0.kind == .changed && $0.direction == .down }.count
+            let up = Self.entries(c.rows.filter { $0.kind == .changed && $0.direction == .up })
+            let down = Self.entries(c.rows.filter { $0.kind == .changed && $0.direction == .down })
             second.append(Lp(n.changed, "1 has a different version", "%d have a different version")
                           + ": " + L("%d newer in %@, %d older.", up, b, down))
         }
         for (kind, side, doc) in [(BOMComparison.Kind.onlyA, a, c.docA), (.onlyB, b, c.docB)] {
             let rows = c.rows.filter { $0.kind == kind }
-            let optional = rows.filter { r in
+            let optional = Self.entries(rows.filter { r in
                 let i = kind == .onlyA ? r.indexA : r.indexB
                 return i.map { ["optional", "excluded"].contains(doc.components[$0].scope ?? "") } ?? false
-            }.count
+            })
             if optional > 0 {
-                second.append(L("Of the %d only in %@, %d are marked optional or excluded.", rows.count, side, optional))
+                second.append(L("Of the %d only in %@, %d are marked optional or excluded.", Self.entries(rows), side, optional))
             }
         }
-        let licences = c.rows.filter(\.licenceDiffers).count
+        let licences = Self.entries(c.rows.filter(\.licenceDiffers))
         if licences > 0 { second.append(Lp(licences, "1 package states other licences on each side.", "%d packages state other licences on each side.")) }
         return VStack(alignment: .leading, spacing: t.pad(8)) {
             Eyebrow(text: sameTool ? L("Two SBOMs side by side · one tool, two files") : L("Two SBOMs side by side"), t: t)
@@ -239,12 +239,16 @@ struct CompareView: View {
 
     private static let shown = 40
 
+    /// The entries the rows stand for: a package listed three times on each side is one row and
+    /// three entries, so the numbers match the headline and the packages of each file.
+    private static func entries(_ rows: [BOMComparison.Row]) -> Int { rows.reduce(0) { $0 + $1.times } }
+
     @ViewBuilder
     private var changed: some View {
         let rows = c.rows.filter { $0.kind == .changed }
         if !rows.isEmpty {
             VStack(alignment: .leading, spacing: t.pad(6)) {
-                (Text(L("Different versions")).font(t.serif(24)) + Text("  \(rows.count)").font(t.font(16)).foregroundStyle(.secondary))
+                (Text(L("Different versions")).font(t.serif(24)) + Text("  \(Self.entries(rows))").font(t.font(16)).foregroundStyle(.secondary))
                 ForEach(Array(rows.prefix(Self.shown).enumerated()), id: \.offset) { _, r in
                     rowView(r) {
                         HStack(spacing: t.pad(6)) {
@@ -265,7 +269,7 @@ struct CompareView: View {
         let (a, b) = names
         let doc = kind == .onlyA ? c.docA : c.docB
         return VStack(alignment: .leading, spacing: t.pad(6)) {
-            (Text(L("Only in %@", kind == .onlyA ? a : b)).font(t.serif(24)) + Text("  \(rows.count)").font(t.font(16)).foregroundStyle(.secondary))
+            (Text(L("Only in %@", kind == .onlyA ? a : b)).font(t.serif(24)) + Text("  \(Self.entries(rows))").font(t.font(16)).foregroundStyle(.secondary))
             if rows.isEmpty { Text(L("Nothing.")).font(t.font(14)).foregroundStyle(.secondary) }
             ForEach(Array(rows.prefix(Self.shown).enumerated()), id: \.offset) { _, r in
                 rowView(r) {
@@ -285,6 +289,10 @@ struct CompareView: View {
     private func rowView<Detail: View>(_ r: BOMComparison.Row, @ViewBuilder detail: () -> Detail) -> some View {
         let label = HStack(spacing: t.pad(10)) {
             Text(r.name).font(t.font(14, .medium)).lineLimit(1)
+            if r.times > 1 {
+                Text(L("listed %d times", r.times)).font(t.font(13)).foregroundStyle(.secondary)
+                    .help(L("The file lists this package several times with the same version, for example once per workflow that uses it."))
+            }
             Spacer(minLength: t.pad(8))
             detail()
             if let e = r.ecosystem { Chip(text: OverviewView.ecosystemName(e), t: t) }
