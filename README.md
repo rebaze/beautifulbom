@@ -22,6 +22,7 @@
   <img src="https://img.shields.io/badge/BSI%20TR--03183--2-2.1.0-1f6feb" alt="BSI TR-03183-2 2.1.0">
   <img src="https://img.shields.io/badge/languages-English%20%C2%B7%20Deutsch-1f6feb" alt="English and German">
   <a href="https://github.com/rebaze/beautifulbom/actions/workflows/ci.yaml"><img src="https://github.com/rebaze/beautifulbom/actions/workflows/ci.yaml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-1f6feb" alt="Apache-2.0"></a>
 </p>
 
 <p align="center">
@@ -126,7 +127,8 @@ CycloneDX, SPDX opens in the source reader.
 
 Xcode 27.2, [XcodeGen](https://github.com/yonaskolb/XcodeGen) and
 [xcbeautify](https://github.com/cpisciotta/xcbeautify), then `make test` and `make install`.
-Everything else: [docs/development.md](docs/development.md).
+Everything else: [docs/development.md](docs/development.md). Licensed under the
+[Apache License 2.0](LICENSE).
 
 ---
 
