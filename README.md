@@ -81,6 +81,15 @@ is there in the required form, never whether its value is true, and never a verd
 conformity. The rules count exactly as the `bsi-tr-03183-2@2.1.0` profile of
 [rio](https://github.com/rebaze/rio) does, so both tools give the same answer for the same file.
 
+### A gap list to take home
+
+<img src="docs/images/handout.png" width="560" alt="The first page of the gap list handout: product, file, SHA-256, the presence-and-form sentence, the summary per part and the first gaps with their places in the file">
+
+File › Export Gap List writes what is missing as a PDF handout for the team and as a CSV with every
+gap: part, component, field, TR section and the JSON Pointer to where it is or would be. The
+handout names the file's SHA-256, so everyone knows which bytes were read, and says that it
+reports presence and form only.
+
 ### Every component, and why it is there
 
 <img src="docs/images/component.png" alt="A component page: the path from the product to doctrine/lexer, identity, licence, integrity, TR-03183-2 gaps and external references">

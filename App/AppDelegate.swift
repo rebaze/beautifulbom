@@ -10,6 +10,7 @@ import SwiftUI
 ///   --window-size <WxH>  resize the document window (points), e.g. for screenshots
 ///   --view <tab>         open a tab: overview, composition, completeness, components, compare, source
 ///   --compare <path>     compare the opened file with this one (the Compare tab)
+///   --export-gaps <dir>  write the TR-03183-2 gap list as <file>-gaps.pdf and .csv into <dir>
 ///   --component <ref>    open the component page for a bom-ref
 ///   --evidence <rule>    show the first offender of a rule (e.g. sbom.timestamp) in the drawer
 ///   --language de|en     show the workshop views in this language (not saved)
@@ -42,6 +43,7 @@ enum LaunchOptions {
     }
     static let view = value("--view")
     static let compare = value("--compare")
+    static let exportGaps = value("--export-gaps")
     static let component = value("--component")
     static let evidence = value("--evidence")
     static let find = value("--find")

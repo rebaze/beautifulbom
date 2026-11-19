@@ -99,6 +99,11 @@ final class DocumentModel {
             show(first.evidence)
         }
         if let query = LaunchOptions.find { typeIntoFindBar(query) }
+        if let dir = LaunchOptions.exportGaps, analysis?.profile != nil {
+            let folder = URL(fileURLWithPath: dir, isDirectory: true)
+            writeGaps(.csv, to: folder.appendingPathComponent(exportBaseName + ".csv"))
+            writeGaps(.pdf, to: folder.appendingPathComponent(exportBaseName + ".pdf"))
+        }
     }
 
     /// `--find`: opens the find bar from the current tab and types `query` into it
@@ -138,6 +143,35 @@ final class DocumentModel {
         let compare: [WorkshopTab] = comparison == nil ? [] : [.compare]
         return analysis.ai != nil ? [.model] + compare + [.source]
             : [.overview, .composition, .completeness, .components] + compare + [.source]
+    }
+
+    // MARK: The gap list for the client
+
+    /// SHA-256 of the file's bytes: the handout names exactly what was read.
+    var fileSHA256: String { GapExport.sha256(bytes) }
+
+    private var exportBaseName: String {
+        let base = (fileName as NSString?)?.deletingPathExtension ?? "sbom"
+        return base + "-gaps"
+    }
+
+    /// File › Export Gap List as PDF… / as CSV….
+    func exportGaps(_ kind: GapExport.Kind) {
+        guard analysis?.profile != nil else { return }
+        let panel = NSSavePanel()
+        panel.allowedContentTypes = [kind == .pdf ? .pdf : .commaSeparatedText]
+        panel.nameFieldStringValue = exportBaseName + (kind == .pdf ? ".pdf" : ".csv")
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        writeGaps(kind, to: url)
+    }
+
+    @discardableResult
+    func writeGaps(_ kind: GapExport.Kind, to url: URL) -> Bool {
+        guard let analysis else { return false }
+        switch kind {
+        case .csv: return (try? GapExport.csv(analysis).write(to: url, options: .atomic)) != nil
+        case .pdf: return GapExport.pdf(analysis, fileName: fileName, sha256: fileSHA256, to: url)
+        }
     }
 
     // MARK: Comparing with a second file

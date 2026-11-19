@@ -5100,6 +5100,261 @@
           }
         }
       }
+    },
+    "Part": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Part"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Teil"
+          }
+        }
+      }
+    },
+    "Field": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Field"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Feld"
+          }
+        }
+      }
+    },
+    "TR section": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "TR section"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abschnitt der TR"
+          }
+        }
+      }
+    },
+    "Rule": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rule"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regel"
+          }
+        }
+      }
+    },
+    "JSON Pointer": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JSON Pointer"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "JSON Pointer"
+          }
+        }
+      }
+    },
+    "Gaps in the SBOM": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gaps in the SBOM"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lücken im SBOM"
+          }
+        }
+      }
+    },
+    "made by %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "made by %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "erstellt mit %@"
+          }
+        }
+      }
+    },
+    "listed on %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "listed on %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "aufgelistet am %@"
+          }
+        }
+      }
+    },
+    "This list reports the presence and form of fields only. It does not check that values are true, and it is not a statement of conformity. Every gap names the place in the file where the field is or would be (JSON Pointer).": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This list reports the presence and form of fields only. It does not check that values are true, and it is not a statement of conformity. Every gap names the place in the file where the field is or would be (JSON Pointer)."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Liste gibt nur an, ob Felder vorhanden sind und in der verlangten Form vorliegen. Sie prüft nicht, ob die Werte stimmen, und ist keine Bestätigung, dass die TR erfüllt ist. Jede Lücke nennt die Stelle in der Datei, an der das Feld steht oder stehen würde (JSON Pointer)."
+          }
+        }
+      }
+    },
+    "%d of %d fields present": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d of %d fields present"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d von %d Feldern vorhanden"
+          }
+        }
+      }
+    },
+    "%d of %d components lack it": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d of %d components lack it"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%d von %d Komponenten fehlt es"
+          }
+        }
+      }
+    },
+    "and %d more; the CSV lists all of them.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "and %d more; the CSV lists all of them."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "und %d weitere; die CSV-Datei nennt alle."
+          }
+        }
+      }
+    },
+    "Export gap list": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Export gap list"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lückenliste exportieren"
+          }
+        }
+      }
+    },
+    "As PDF handout…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As PDF handout…"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Als PDF-Handout …"
+          }
+        }
+      }
+    },
+    "As CSV…": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "As CSV…"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Als CSV …"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

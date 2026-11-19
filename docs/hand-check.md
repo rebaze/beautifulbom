@@ -94,3 +94,12 @@ not (step number and what you saw), and the agent turns each note into a fix or 
 35. [ ] Compare With… a file that is not an SBOM (e.g. `Fixtures/edge/malformed.json`).
     **Expect:** an alert naming the file; the window unchanged.
 
+## 9. The gap list (3 min)
+
+36. [ ] Laravel, Completeness › Export gap list › As PDF handout…, save. **Expect:** a PDF with
+    the file name and page numbers on each page; first page: product, SHA-256, the
+    presence-and-form sentence, the summary; nothing claims conformity.
+37. [ ] File › Export Gap List as CSV…, open it in Numbers and in Excel. **Expect:** one row per
+    gap, columns readable, umlauts intact in German (View › Language › Deutsch first).
+38. [ ] Open an SPDX file. **Expect:** both menu items unavailable; no export button.
+

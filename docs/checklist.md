@@ -130,3 +130,9 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ Snapshots: Juice Shop cdxgen against Trivy (English, German), partner-portal Maven against Syft, rio v0.9.0 against v0.10.2 (`build/screenshots/compare/`).
 - ⏳ By hand: File › Compare With… (⌥⌘K) opens the panel, a non-SBOM file gives the alert, the Compare tab appears; a row from A opens its component page.
 
+## The gap list for the client (design-gap-export.md, 2026-11-19)
+
+- ✅ `GapListTests`: one entry per offender, pointers to where a field is or would be, rule order, nothing for SPDX, CSV quoting and no spreadsheet formulas.
+- ✅ `--export-gaps`: Laravel (507 gaps, 5 pages) and Juice Shop by cdxgen (8,873 gaps, 4 pages); English and German; CSV with byte order mark.
+- ⏳ By hand: File › Export Gap List as PDF… and as CSV… save where chosen; the CSV opens in Numbers and Excel with umlauts intact; "Export gap list" on Completeness.
+

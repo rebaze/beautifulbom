@@ -20,6 +20,12 @@ struct BBOMCommands: Commands {
             Button("Compare With…") { model?.chooseComparison() }
                 .keyboardShortcut("k", modifiers: [.command, .option])
                 .disabled(model?.analysis == nil)
+            Divider()
+            Button("Export Gap List as PDF…") { model?.exportGaps(.pdf) }
+                .keyboardShortcut("e", modifiers: [.command, .shift])
+                .disabled(model?.analysis?.profile == nil)
+            Button("Export Gap List as CSV…") { model?.exportGaps(.csv) }
+                .disabled(model?.analysis?.profile == nil)
         }
         CommandGroup(after: .toolbar) {
             Button("Bigger") { model?.biggerText() }

@@ -106,7 +106,18 @@ struct CompletenessView: View {
         switch item {
         case .header:
             VStack(alignment: .leading, spacing: t.pad(6)) {
-                Eyebrow(text: L("BSI TR-03183-2 2.1.0 · presence and form of fields"), t: t)
+                HStack(alignment: .firstTextBaseline) {
+                    Eyebrow(text: L("BSI TR-03183-2 2.1.0 · presence and form of fields"), t: t)
+                    Spacer()
+                    // The written list the client's team works through.
+                    Menu(L("Export gap list")) {
+                        Button(L("As PDF handout…")) { model.exportGaps(.pdf) }
+                        Button(L("As CSV…")) { model.exportGaps(.csv) }
+                    }
+                    .menuStyle(.button)
+                    .fixedSize()
+                    .font(t.font(13))
+                }
                 Text(a.verdict!.headline).font(t.serif(36))
                 Text(L("Each row counts the components that carry the field in the form the TR asks for. It does not check that the values are true."))
                     .font(t.font(14)).foregroundStyle(.secondary).fixedSize(horizontal: false, vertical: true)

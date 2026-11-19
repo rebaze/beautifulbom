@@ -27,3 +27,9 @@ shot component      FILE=$L COMPONENT=doctrine/lexer-1.2.3.0
 shot source         FILE=$L VIEW=source SELECT=/components/3
 shot aibom          FILE=$Z
 shot compare        FILE=Fixtures/tools/partner-portal.maven.cdx.json VIEW=compare COMPARE=Fixtures/tools/partner-portal.syft.cdx.json
+
+# The first page of the gap list handout, as the app writes it.
+build/Build/Products/Release/BeautifulBOM.app/Contents/MacOS/BeautifulBOM -ApplePersistenceIgnoreState YES \
+  --open "$PWD/$L" --export-gaps "$TMP" --language en --snapshot "$TMP/window.png" > /dev/null 2>&1
+sips -s format png --resampleWidth 1100 "$TMP/laravel-7.12.0.cdx-1.4-gaps.pdf" --out "$OUT/handout.png" > /dev/null
+echo "$OUT/handout.png"
