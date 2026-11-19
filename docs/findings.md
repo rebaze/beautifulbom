@@ -177,3 +177,11 @@ each rendered in every view (`scripts/real-sweep.sh`, gallery in `build/screensh
 - rio v0.9.0 → v0.10.2 (Trivy): 64 packages in both, 9 with a different version (7 newer, 2 not
   comparable: Go pseudo-versions).
 - Pairing 1,108 against 533 packages takes 31 ms.
+
+## Large files and the new features (2026-11-19)
+
+- Comparing the 50 MB SBOM (76,289 packages) with the 10 MB one: 1.3 s, 590 MB peak, off the main
+  thread.
+- Gap list of the 50 MB SBOM: 534,031 gaps; the list 1.6 s, the CSV 2.6 s (97 MB), both off the
+  main thread; the handout stays 4 pages (50 names per rule). First version looked up the localised
+  labels per row on the main thread: 14 s; now the labels are looked up once.

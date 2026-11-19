@@ -113,6 +113,16 @@ case "parse":
         exit(2)
     }
     try parseCommand(args[2])
+case "gaps":
+    let bytes = Array(try Data(contentsOf: URL(fileURLWithPath: args[2])))
+    let a = WorkshopAnalysis.analyse(parseJSON(SourceDocument(bytes: bytes)))!
+    let t0 = DispatchTime.now()
+    let g = GapList(a)
+    let t1 = DispatchTime.now()
+    let csv = g.csv(header: ["a"], title: { $0.description })
+    let t2 = DispatchTime.now()
+    func ms(_ x: DispatchTime, _ y: DispatchTime) -> String { String(format: "%.0f", Double(y.uptimeNanoseconds - x.uptimeNanoseconds) / 1e6) }
+    print("entries=\(g.entries.count) gapListMs=\(ms(t0, t1)) csvMs=\(ms(t1, t2)) csvMB=\(csv.utf8.count / 1_000_000)")
 case "compare":
     guard args.count > 3 else {
         print("usage: bbom-bench compare <a> <b>")

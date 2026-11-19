@@ -14,12 +14,24 @@ enum GapExport {
 
     // MARK: CSV
 
-    /// UTF-8 with a byte order mark, so spreadsheet apps read the umlauts.
-    static func csv(_ a: WorkshopAnalysis) -> Data {
-        let header = [L("Part"), L("Component"), L("Version"), L("Package URL"), "bom-ref", L("Field"),
-                      L("TR section"), L("Rule"), L("JSON Pointer")]
-        let text = GapList(a).csv(header: header, part: { CompletenessView.sectionTitle($0) },
-                                  title: { CompletenessView.title($0.requirement) })
+    /// The localised words of the CSV, looked up once: a large SBOM has half a million gaps.
+    struct Labels: Sendable {
+        let header: [String]
+        let parts: [Scope: String]
+        let titles: [Requirement: String]
+    }
+
+    static func labels() -> Labels {
+        Labels(header: [L("Part"), L("Component"), L("Version"), L("Package URL"), "bom-ref", L("Field"),
+                        L("TR section"), L("Rule"), L("JSON Pointer")],
+               parts: Dictionary(uniqueKeysWithValues: Scope.allCases.map { ($0, CompletenessView.sectionTitle($0)) }),
+               titles: Dictionary(uniqueKeysWithValues: Requirement.allCases.map { ($0, CompletenessView.title($0)) }))
+    }
+
+    /// UTF-8 with a byte order mark, so spreadsheet apps read the umlauts. Off the main thread.
+    nonisolated static func csv(_ list: GapList, _ labels: Labels) -> Data {
+        let text = list.csv(header: labels.header, part: { labels.parts[$0] ?? $0.rawValue },
+                            title: { labels.titles[$0.requirement] ?? $0.description })
         return Data([0xEF, 0xBB, 0xBF]) + Data(text.utf8)
     }
 
@@ -28,8 +40,8 @@ enum GapExport {
     /// Names of components listed per rule in the handout; the CSV has all of them.
     static let namesPerRule = 50
 
-    static func pdf(_ a: WorkshopAnalysis, fileName: String?, sha256: String, to url: URL) -> Bool {
-        let text = handout(a, fileName: fileName, sha256: sha256)
+    static func pdf(_ a: WorkshopAnalysis, _ list: GapList, fileName: String?, sha256: String, to url: URL) -> Bool {
+        let text = handout(a, list, fileName: fileName, sha256: sha256)
         let info = NSPrintInfo()
         info.paperSize = NSSize(width: 595.28, height: 841.89) // A4
         info.topMargin = 56; info.bottomMargin = 56; info.leftMargin = 56; info.rightMargin = 56
@@ -58,7 +70,7 @@ enum GapExport {
         return op.run()
     }
 
-    private static func handout(_ a: WorkshopAnalysis, fileName: String?, sha256: String) -> NSAttributedString {
+    private static func handout(_ a: WorkshopAnalysis, _ list: GapList, fileName: String?, sha256: String) -> NSAttributedString {
         let out = NSMutableAttributedString()
         let serif = { (size: CGFloat) -> NSFont in
             let base = NSFont.systemFont(ofSize: size, weight: .semibold)
@@ -75,7 +87,6 @@ enum GapExport {
         let small = NSFont.systemFont(ofSize: 9)
         let mono = NSFont.monospacedSystemFont(ofSize: 8.5, weight: .regular)
         let grey = NSColor(white: 0.38, alpha: 1)
-        let list = GapList(a)
 
         add(L("BSI TR-03183-2 2.1.0 · presence and form of fields").uppercased(), NSFont.systemFont(ofSize: 8.5, weight: .medium), grey, after: 6)
         add(L("Gaps in the SBOM"), serif(26), after: 6)

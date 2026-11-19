@@ -100,9 +100,7 @@ final class DocumentModel {
         }
         if let query = LaunchOptions.find { typeIntoFindBar(query) }
         if let dir = LaunchOptions.exportGaps, analysis?.profile != nil {
-            let folder = URL(fileURLWithPath: dir, isDirectory: true)
-            writeGaps(.csv, to: folder.appendingPathComponent(exportBaseName + ".csv"))
-            writeGaps(.pdf, to: folder.appendingPathComponent(exportBaseName + ".pdf"))
+            writeGapsNow(into: URL(fileURLWithPath: dir, isDirectory: true))
         }
     }
 
@@ -155,23 +153,38 @@ final class DocumentModel {
         return base + "-gaps"
     }
 
-    /// File › Export Gap List as PDF… / as CSV….
+    /// File › Export Gap List as PDF… / as CSV…. The list and the CSV are made off the main thread
+    /// (a 50 MB SBOM has half a million gaps); only the handout's layout runs here.
     func exportGaps(_ kind: GapExport.Kind) {
         guard analysis?.profile != nil else { return }
         let panel = NSSavePanel()
         panel.allowedContentTypes = [kind == .pdf ? .pdf : .commaSeparatedText]
         panel.nameFieldStringValue = exportBaseName + (kind == .pdf ? ".pdf" : ".csv")
         guard panel.runModal() == .OK, let url = panel.url else { return }
-        writeGaps(kind, to: url)
+        Task { await writeGaps(kind, to: url) }
     }
 
     @discardableResult
-    func writeGaps(_ kind: GapExport.Kind, to url: URL) -> Bool {
+    func writeGaps(_ kind: GapExport.Kind, to url: URL) async -> Bool {
         guard let analysis else { return false }
+        let labels = GapExport.labels()
+        let list = await Task.detached(priority: .userInitiated) { GapList(analysis) }.value
         switch kind {
-        case .csv: return (try? GapExport.csv(analysis).write(to: url, options: .atomic)) != nil
-        case .pdf: return GapExport.pdf(analysis, fileName: fileName, sha256: fileSHA256, to: url)
+        case .csv:
+            return await Task.detached(priority: .userInitiated) {
+                (try? GapExport.csv(list, labels).write(to: url, options: .atomic)) != nil
+            }.value
+        case .pdf:
+            return GapExport.pdf(analysis, list, fileName: fileName, sha256: fileSHA256, to: url)
         }
+    }
+
+    /// --export-gaps: both files, before the snapshot is taken (checks only; blocks while it runs).
+    private func writeGapsNow(into folder: URL) {
+        guard let analysis else { return }
+        let list = GapList(analysis)
+        try? GapExport.csv(list, GapExport.labels()).write(to: folder.appendingPathComponent(exportBaseName + ".csv"), options: .atomic)
+        GapExport.pdf(analysis, list, fileName: fileName, sha256: fileSHA256, to: folder.appendingPathComponent(exportBaseName + ".pdf"))
     }
 
     // MARK: Comparing with a second file
