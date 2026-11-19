@@ -71,6 +71,28 @@ func value(_ flag: String) -> String? {
     return args[i + 1]
 }
 
+/// Pairs two SBOMs and prints the counts and the facts of each side.
+func compareCommand(_ pa: String, _ pb: String) throws {
+    func load(_ p: String) throws -> BOMDocument {
+        let bytes = Array(try Data(contentsOf: URL(fileURLWithPath: p)))
+        guard let d = BOMDocument.recognize(parseJSON(SourceDocument(bytes: bytes))) else { throw CocoaError(.fileReadCorruptFile) }
+        return d
+    }
+    let t0 = DispatchTime.now()
+    let c = BOMComparison(try load(pa), try load(pb))
+    let ms = Double(DispatchTime.now().uptimeNanoseconds - t0.uptimeNanoseconds) / 1e6
+    let n = c.counts
+    print("same=\(n.same) changed=\(n.changed) onlyA=\(n.onlyA) onlyB=\(n.onlyB) ms=\(String(format: "%.1f", ms))")
+    for (label, f) in [("A", c.a), ("B", c.b)] {
+        print("\(label): packages=\(f.packages) files=\(f.files) purl=\(f.withPurl) version=\(f.withVersion) licence=\(f.withLicence) hash=\(f.withHash) supplier=\(f.withSupplier) ecosystems=\(f.ecosystems.sorted { $0.value > $1.value }.prefix(4).map { "\($0.key):\($0.value)" })")
+    }
+    let changed = c.rows.filter { $0.kind == .changed }.prefix(5).map { "\($0.name) \($0.versionA ?? "-")→\($0.versionB ?? "-")" }
+    print("changed e.g.: \(changed)")
+    print("onlyA e.g.: \(c.rows.filter { $0.kind == .onlyA }.prefix(6).map(\.name))")
+    print("onlyB e.g.: \(c.rows.filter { $0.kind == .onlyB }.prefix(6).map(\.name))")
+    print("licence differs on same: \(c.rows.filter { $0.licenceDiffers }.count)")
+}
+
 switch args.dropFirst().first {
 case "generate":
     guard let size = value("--size").flatMap(Double.init), let out = value("--out") else {
@@ -91,7 +113,13 @@ case "parse":
         exit(2)
     }
     try parseCommand(args[2])
+case "compare":
+    guard args.count > 3 else {
+        print("usage: bbom-bench compare <a> <b>")
+        exit(2)
+    }
+    try compareCommand(args[2], args[3])
 default:
-    print("usage: bbom-bench generate --size <MB> [--minified] --out <path> | parse <path> | analyse <path>")
+    print("usage: bbom-bench generate --size <MB> [--minified] --out <path> | parse <path> | analyse <path> | compare <a> <b>")
     exit(2)
 }

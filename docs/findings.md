@@ -163,3 +163,17 @@ each rendered in every view (`scripts/real-sweep.sh`, gallery in `build/screensh
 - Numbers followed the Mac's region ("1.108" in English); the workshop views now take the app's
   language for numbers.
 - cdxgen writes absolute paths of the checkout (the user name); the script replaces them.
+
+## Comparing two SBOMs (2026-11-19)
+
+`bbom-bench compare <a> <b>`; the Compare tab (`docs/design-compare.md`).
+
+- Juice Shop v20.4.0: cdxgen and Trivy share 532 packages; 576 only in cdxgen, of which 509 carry
+  scope optional (development dependencies, which Trivy and Syft leave out by default); Syft adds
+  51 GitHub Actions from the workflows. Syft's CycloneDX and SPDX agree exactly (584 in both).
+- partner-portal: Syft on the source reads the three declared dependencies from pom.xml, not the
+  three transitive ones the Maven plugin resolves, and lists the project itself twice.
+- python:3.13-slim: Trivy and Syft share 89 packages; Trivy finds 19 Python packages, Syft 1.
+- rio v0.9.0 → v0.10.2 (Trivy): 64 packages in both, 9 with a different version (7 newer, 2 not
+  comparable: Go pseudo-versions).
+- Pairing 1,108 against 533 packages takes 31 ms.

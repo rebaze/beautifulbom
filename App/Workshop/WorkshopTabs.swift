@@ -2,7 +2,7 @@ import BOMCore
 import SwiftUI
 
 enum WorkshopTab: String, CaseIterable, Identifiable, Sendable {
-    case overview, composition, completeness, components, model, source
+    case overview, composition, completeness, components, compare, model, source
     var id: String { rawValue }
 
     @MainActor var title: String {
@@ -11,6 +11,7 @@ enum WorkshopTab: String, CaseIterable, Identifiable, Sendable {
         case .composition: L("Composition")
         case .completeness: L("Completeness")
         case .components: L("Components")
+        case .compare: L("Compare")
         case .model: L("Model")
         case .source: L("Source")
         }
@@ -45,6 +46,8 @@ struct WorkshopContent: View {
             CompletenessView(model: model, a: analysis)
         case .components:
             ComponentsView(model: model, a: analysis)
+        case .compare:
+            if let c = model.comparison { CompareView(model: model, c: c) }
         case .model:
             if let ai = analysis.ai { AIModelView(model: model, a: analysis, ai: ai) }
         case .source:

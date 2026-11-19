@@ -124,3 +124,9 @@ Status: ✅ verified · ⏳ to check by hand (needs a person at the Mac) · ❌ 
 - ✅ Snapshots: every view of the SPDX files from Syft, Trivy and cdxgen; English "1,108", German "1.108".
 - ⏳ By hand: evidence buttons on an SPDX component page open the SPDX keys (`versionInfo`, `checksums`, `software_packageVersion`).
 
+## Comparing two SBOMs (design-compare.md, 2026-11-19)
+
+- ✅ `ComparisonTests`: identity without version and qualifiers, versions paired as sets, direction, files left out, licence differences, facts; the Maven plugin against Syft on partner-portal.
+- ✅ Snapshots: Juice Shop cdxgen against Trivy (English, German), partner-portal Maven against Syft, rio v0.9.0 against v0.10.2 (`build/screenshots/compare/`).
+- ⏳ By hand: File › Compare With… (⌥⌘K) opens the panel, a non-SBOM file gives the alert, the Compare tab appears; a row from A opens its component page.
+

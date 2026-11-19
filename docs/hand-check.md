@@ -83,3 +83,14 @@ not (step number and what you saw), and the agent turns each note into a fix or 
     Applications, start it. **Expect:** one "downloaded from the Internet" question naming rebaze
     GmbH, no "Open Anyway", no warning about an unidentified developer; the welcome window.
 32. [ ] About: the version matches the release.
+
+## 8. Comparing two SBOMs (3 min)
+
+33. [ ] Open `Fixtures/tools/partner-portal.maven.cdx.json`, File › Compare With… (⌥⌘K), choose
+    `Fixtures/tools/partner-portal.syft.cdx.json`. **Expect:** the Compare tab: "3 packages in
+    both. 3 only in cyclonedx-maven-plugin, 2 only in syft."
+34. [ ] Click `log4j-api` under "Only in cyclonedx-maven-plugin". **Expect:** its component page;
+    Back (⌘[) returns to Compare.
+35. [ ] Compare With… a file that is not an SBOM (e.g. `Fixtures/edge/malformed.json`).
+    **Expect:** an alert naming the file; the window unchanged.
+

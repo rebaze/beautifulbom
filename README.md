@@ -97,6 +97,15 @@ Syntax colour, line numbers, and Find (⌘F) from every tab. Minified files are 
 without changing what you copy. Broken files stay readable: a banner lists each problem by line
 and column, and everything that could be parsed stays navigable.
 
+### Compare two SBOMs
+
+<img src="docs/images/compare.png" alt="Comparing the Maven plugin's SBOM with Syft's for the same Java service: 3 packages in both, 3 only in the Maven plugin, 2 only in Syft, and what each file states">
+
+File › Compare With… puts a second SBOM next to the open one: release against release, or two
+tools on the same source. One sentence says what is in both and what only on one side, and what
+the files state about the difference (for example, how many are marked optional); then what each
+file states, side by side, the packages with a different version, and those on one side only.
+
 ### AI bill of materials
 
 <img src="docs/images/aibom.png" alt="An AIBOM for zephyr-7b-beta: parameters, context length, datasets, the base model and what the file leaves out">

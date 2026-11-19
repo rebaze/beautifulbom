@@ -8,7 +8,8 @@ import SwiftUI
 ///   --appearance dark|light  force an appearance (checks without changing system settings)
 ///   --text-size <pt>     start with this text size (24 = presentation size)
 ///   --window-size <WxH>  resize the document window (points), e.g. for screenshots
-///   --view <tab>         open a tab: overview, composition, completeness, components, source
+///   --view <tab>         open a tab: overview, composition, completeness, components, compare, source
+///   --compare <path>     compare the opened file with this one (the Compare tab)
 ///   --component <ref>    open the component page for a bom-ref
 ///   --evidence <rule>    show the first offender of a rule (e.g. sbom.timestamp) in the drawer
 ///   --language de|en     show the workshop views in this language (not saved)
@@ -40,6 +41,7 @@ enum LaunchOptions {
         return parts.count == 2 ? NSSize(width: parts[0], height: parts[1]) : nil
     }
     static let view = value("--view")
+    static let compare = value("--compare")
     static let component = value("--component")
     static let evidence = value("--evidence")
     static let find = value("--find")

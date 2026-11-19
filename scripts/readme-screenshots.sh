@@ -26,3 +26,4 @@ shot completeness   FILE=$L VIEW=completeness
 shot component      FILE=$L COMPONENT=doctrine/lexer-1.2.3.0
 shot source         FILE=$L VIEW=source SELECT=/components/3
 shot aibom          FILE=$Z
+shot compare        FILE=Fixtures/tools/partner-portal.maven.cdx.json VIEW=compare COMPARE=Fixtures/tools/partner-portal.syft.cdx.json

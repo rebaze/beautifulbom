@@ -16,6 +16,11 @@ struct BBOMCommands: Commands {
             Button("Welcome to Beautiful BOM") { Welcome.show() }
                 .keyboardShortcut("1", modifiers: [.command, .shift])
         }
+        CommandGroup(after: .importExport) {
+            Button("Compare With…") { model?.chooseComparison() }
+                .keyboardShortcut("k", modifiers: [.command, .option])
+                .disabled(model?.analysis == nil)
+        }
         CommandGroup(after: .toolbar) {
             Button("Bigger") { model?.biggerText() }
                 .keyboardShortcut("+", modifiers: .command)

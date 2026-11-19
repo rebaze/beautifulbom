@@ -22,6 +22,7 @@ SUBJECTS=(
   "partner-portal|https://github.com/rebaze/sbom-kickstart-demo.git|6ef22cb37c45e17fa44cb728c3932eaf8ffb9ec5|partner-portal"
   "juice-shop|https://github.com/juice-shop/juice-shop.git|v20.4.0|."
   "rio|https://github.com/rebaze/rio.git|v0.10.2|."
+  "rio-0.9.0|https://github.com/rebaze/rio.git|v0.9.0|."
 )
 IMAGE="python:3.13-slim@sha256:e48f59cdba69a3cbd9ed2cf0f348d90d45a8d350d98134cf1070bc106ee9ed90"
 
@@ -55,7 +56,7 @@ for subject in "${SUBJECTS[@]}"; do
       # The repository has no lock file; npm writes one from the registry, without running scripts.
       (cd "$dir" && npm install --package-lock-only --ignore-scripts --no-audit --no-fund > /dev/null 2>&1)
       cdx_type=js ;;
-    rio) cdx_type=go ;;
+    rio*) cdx_type=go ;;
   esac
   # From inside the project with "." as the target, as a CI job runs them.
   pushd "$dir" > /dev/null

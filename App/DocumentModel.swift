@@ -2,6 +2,7 @@ import AppKit
 import BOMCore
 import Foundation
 import Observation
+import UniformTypeIdentifiers
 
 enum SelectionOrigin { case source, structure, breadcrumb, history, reveal, evidence, launch }
 
@@ -60,14 +61,19 @@ final class DocumentModel {
     func load() async {
         guard tree == nil else { return }
         let bytes = self.bytes
-        let (source, tree, display, analysis) = await Task.detached(priority: .userInitiated) {
+        let compareURL = LaunchOptions.compare.map { URL(fileURLWithPath: $0) }
+        let (source, tree, display, analysis, comparison) = await Task.detached(priority: .userInitiated) {
             let source = SourceDocument(bytes: bytes)
             // The display text needs only the source; it is built while the tree is parsed and analysed.
             async let display = DisplayText(source: source)
             let tree = parseJSON(source)
             let analysis = WorkshopAnalysis.analyse(tree)
-            return (source, tree, await display, analysis)
+            // --compare: built here, so a snapshot waits for it.
+            let comparison = analysis.flatMap { a in compareURL.flatMap { Self.comparison(a.bom, $0) } }
+            return (source, tree, await display, analysis, comparison)
         }.value
+        self.comparison = comparison
+        self.comparedFileName = comparison == nil ? nil : compareURL?.lastPathComponent
         self.source = source
         self.display = display
         self.analysis = analysis
@@ -129,7 +135,45 @@ final class DocumentModel {
     /// The tabs this document has: the workshop views for an SBOM, the model for an AIBOM, Source always.
     var tabs: [WorkshopTab] {
         guard let analysis else { return [.source] }
-        return analysis.ai != nil ? [.model, .source] : [.overview, .composition, .completeness, .components, .source]
+        let compare: [WorkshopTab] = comparison == nil ? [] : [.compare]
+        return analysis.ai != nil ? [.model] + compare + [.source]
+            : [.overview, .composition, .completeness, .components] + compare + [.source]
+    }
+
+    // MARK: Comparing with a second file
+
+    /// This file (A) against a second one (B); nil until File › Compare With….
+    private(set) var comparison: BOMComparison?
+    private(set) var comparedFileName: String?
+
+    /// File › Compare With…: pick a second SBOM, pair it with this one, show the Compare tab.
+    func chooseComparison() {
+        let panel = NSOpenPanel()
+        panel.allowedContentTypes = [.json]
+        panel.message = L("Choose an SBOM to compare with this one.")
+        guard panel.runModal() == .OK, let url = panel.url else { return }
+        Task { await compare(with: url) }
+    }
+
+    func compare(with url: URL) async {
+        guard let a = analysis?.bom else { return }
+        let result = await Task.detached(priority: .userInitiated) { Self.comparison(a, url) }.value
+        guard let result else {
+            let alert = NSAlert()
+            alert.messageText = L("%@ is not a CycloneDX or SPDX SBOM.", url.lastPathComponent)
+            alert.informativeText = L("Beautiful BOM compares CycloneDX 1.2 or later and SPDX 2.3 or 3.0 in JSON.")
+            alert.runModal()
+            return
+        }
+        comparison = result
+        comparedFileName = url.lastPathComponent
+        show(tab: .compare)
+    }
+
+    nonisolated static func comparison(_ a: BOMCore.BOMDocument, _ url: URL) -> BOMComparison? {
+        guard let data = try? Data(contentsOf: url),
+              let b = BOMCore.BOMDocument.recognize(parseJSON(SourceDocument(bytes: Array(data)))) else { return nil }
+        return BOMComparison(a, b)
     }
 
     func show(tab t: WorkshopTab) {

@@ -27,8 +27,7 @@ in the rio parity tests; SPDX 2.3 and 3.0 get every view without a TR verdict
 
 ## Next, in Toni's order of 2026-11-19
 
-1. **Comparing two SBOMs**: release against release, tool against tool (Juice Shop: cdxgen 1,108,
-   Syft 584, Trivy 533 components from the same source).
+1. ~~Comparing two SBOMs~~: built 2026-11-19 (`docs/design-compare.md`).
 2. **The gap list for the client**: TR-03183-2 gaps per part and component as a PDF handout and
    CSV, made locally; clients ask for a written list (Toni, 2026-11-19).
 3. **Talk material** for "What an AIBOM could say, and what tools write today", when a talk is set.

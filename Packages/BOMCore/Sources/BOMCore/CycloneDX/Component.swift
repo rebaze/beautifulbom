@@ -8,6 +8,8 @@ public struct Component: Sendable, Hashable {
     public let path: String
     public let isSubject: Bool
     public var bomRef, type, group, name, version, purl, description, author: String?
+    /// CycloneDX `scope`: required, optional (cdxgen: development dependencies) or excluded.
+    public var scope: String?
     public var packageURL: PackageURL?
     public var licenses: [License] = []
     public var hashes: [Hash] = []
@@ -50,6 +52,7 @@ public struct Component: Sendable, Hashable {
             case "version": version = tree.string(n)
             case "purl": purl = tree.string(n)
             case "description": description = tree.string(n)
+            case "scope": scope = tree.string(n)
             case "author": authorNode = n
             case "authors": authorsNode = n
             case "supplier": supplierNode = n
